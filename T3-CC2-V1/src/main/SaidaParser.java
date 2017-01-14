@@ -24,13 +24,13 @@ public class SaidaParser {
     		modificadoSemantico = true;
     		semanticos.append(texto);
     		semanticos.append("\n");
-    		//Principal.setErroSintSem();
+    		Principal.setErroSem();
     	}
     	else if(origem.equals("sintatico") || origem.equals("lexico")) { 
     		modificadoSintatico = true;
     		sintaticos.append(texto);
     		sintaticos.append("\n");
-    		//Principal.setErroSintSem();
+    		Principal.setErroSint();
         }
     	
     	else{

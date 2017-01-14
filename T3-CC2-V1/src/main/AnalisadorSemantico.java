@@ -55,7 +55,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	public String visitPrograma(ProgramaContext ctx) {
 	   
 	   /* Declaracao de variaveis */
-		if(ctx.corpo().declaracoes()!=null)
+		if(ctx.corpo()!=null && ctx.corpo().declaracoes()!=null)
 			visitDeclaracoes(ctx.corpo().declaracoes());
 		
 	   /* Comandos */
@@ -68,7 +68,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	public String visitCorpo(CorpoContext ctx) {
 		
 		/* Comandos */
-		visitComandos(ctx.comandos());
+		if(ctx!=null)
+			visitComandos(ctx.comandos());
 		
 		return null;
 	}
@@ -140,11 +141,12 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitCmd(CmdContext ctx) {
 		
-		int comando=0; // 1 - leitura, 2 - create, 3 - update, 4 - find, 5 - atribuicao
+		int comando=0; // 1 - leitura, 2 - create, 3 - update, 4 - find, 5 - atribuicao, 6 - plot
 		
 		/* QUAL COMANDO E */
 		List<ParseTree> filhos = ctx.children;
 		
+	if(filhos!=null){
 		for(ParseTree p : filhos){
 			if(p.getText().equals("read")){
 				comando = 1;
@@ -161,11 +163,13 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			}else if(p.getText().equals("=")){
 				comando = 5;
 			     break;
+			}else if(p.getText().equals("plot")){
+				comando = 6;
 			}
 			
 			
 		}// FIM QUAL COMANDO E
-		
+	
 		
 		
 		/* SEMANTICA : Verifica se variaveis passadas para create, read, update, find sao tipo graph e se foram declaradas */
@@ -183,8 +187,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				sp.println("Erro: variavel " + id + " não é do tipo graph", "semantico");
 			}
 			
-		}/* UPDATE */
-		else if(comando==3){
+		}/* UPDATE ou PLOT */
+		else if(comando==3 || comando==6){
 			String id = filhos.get(2).getText();
 			
 			/* variavel graph nao declarada */
@@ -211,6 +215,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			}
 			
 		}
+		
+	}
 		
 		/* FIM VERIFICACAO SEMANTICA DE GRAPH EM COMANDOS */
 		
@@ -351,6 +357,22 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			sp.println("Erro: incompatibilidade de tipo em parametro edges de create","semantico");		
 		}
 		
+		/* verifica em TYPE se tipo de grafo e valido */
+		ArrayList<String> tipos_grafos = new ArrayList<String>();
+		tipos_grafos.add("multi");
+		tipos_grafos.add("digraph");
+		
+		if(ctx.v1.STRING()!=null){
+			
+			for(String tipo : tipos_grafos){
+				if(ctx.v1.STRING().getText().equals("\"" + tipo + "\"")){
+					break;
+				}
+				sp.println("Erro: " + ctx.v1.STRING().getText() + " não é um tipo de grafo válido", "semantico");
+				
+			}
+		}
+		
 		return null;
 	}
 	
@@ -454,7 +476,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		}
 		
 		/* Pega nome grafo passado */
-		if(vertex && filhos.size()<=3){
+		if(vertex && filhos.size()>=5){
 			grafo_id = filhos.get(4).getText();
 		}else{
 			grafo_id = filhos.get(1).getText();

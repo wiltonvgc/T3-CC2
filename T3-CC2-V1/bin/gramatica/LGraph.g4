@@ -83,9 +83,8 @@ metrica : 'degree' | 'clustering'
 cmd :	salvar_opcional 'create' 'graph' IDENT '(' parametros_create ')'
 	| salvar_opcional 'read' 'graph' IDENT arquivo_grafo
 	| 'update' 'graph' IDENT 'with' '(' parametros_update ')'
-	| 'delete' 'graph' IDENT
 	| salvar_opcional 'find' metrica 'of' objeto_metrica
-	| 'plot' 'graph' IDENT '(' ')'
+	| 'plot' 'graph' IDENT 
 	| IDENT '=' atribuicao
 	;
 
@@ -96,12 +95,12 @@ parametros_create :
 	
 
 parametros_update : 
-	    'edges' '=' v1=valor_parametro ',' 'nodes' '=' v2=valor_parametro 
+	    'nodes' '=' v1=valor_parametro ',' 'edges' '=' v2=valor_parametro 
 	   ;
 
 
 valor_parametro :
-		NUM_INT | NUM_REAL | IDENT | STRING  
+		NUM_INT | NUM_REAL | IDENT | STRING 
 		;
 
 tipo:

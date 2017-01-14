@@ -1,7 +1,1 @@
-Erro: variavel grafo3 não é do tipo graph
-Erro: variavel n1 não declarada
-Erro: incompatibilidade de tipo em parametro edges de update
-Erro: variavel "A" não declarada
-Erro: variavel teste5 não declarada
-Erro: incompatibilidade de tipo em atribuicao de grafo2
 Fim da compilacao

@@ -17,10 +17,19 @@ import gramatica.LGraphParser.ProgramaContext;
 import tabelaDeSimbolos.TabelaDeSimbolos;
 public class Principal {
 	
+	private static boolean erroSem=false,erroSint=false;
+	
+	public static void setErroSem(){
+		erroSem = true;
+	}
+	public static void setErroSint(){
+		erroSint = true;
+	}
 	
 	public static void main(String [] args) throws IOException{
 		String path = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/teste1";
 		String out = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaSintatico/teste1.txt";
+		String outGerador = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaGerador/saida1.py";
 		
 		/* Saida para erro Lexico ou Sintatico */
 		SaidaParser sp = new SaidaParser();
@@ -45,20 +54,35 @@ public class Principal {
         parser.addErrorListener(s);
         
         	
-     
-       /* Se nao ocorreu erro sintatico/lexico faz semantico */
-      	/* Semantico */
+       /* Semantico */
         InicioContext arvore = parser.inicio();
         
         AnalisadorSemantico sem = new AnalisadorSemantico(tab,sp);
         sem.visitInicio(arvore);
         
+       /* Geracao de codigo para Python */
+        /* Se nao ocorreu erro Semantico e Sintatico e Lexico*/
+        if(!erroSint && !erroSem){
+        	//geracao de codigo 
+        	SaidaGerador sg = new SaidaGerador();
+        	
+        	GeradorDeCodigo gdc = new GeradorDeCodigo(sg);
+        	gdc.visitInicio(arvore);
+        	   /* Escrita arquivo erro Lexico ou Sintatico */
+            PrintWriter pw = new PrintWriter(outGerador);
+     		  pw.println(sg.toString());
+     		  pw.close();
+        	
+        }
+        else{
+        	/* Escrita arquivo erro Lexico ou Sintatico */
+            PrintWriter pw = new PrintWriter(out);
+     		  pw.println(sp.toString());
+     		  pw.close();
+        }
         
         
-        /* Escrita arquivo erro Lexico ou Sintatico */
-        PrintWriter pw = new PrintWriter(out);
- 		  pw.println(sp.toString());
- 		  pw.close();
+        
      	
 		
 	}
