@@ -65,7 +65,7 @@ comandos : (cmds+=cmd)*
 	;
 
 objeto_metrica :
-		'vertex' IDENT 'in' 'graph' IDENT | 'graph' IDENT
+		'vertex' STRING 'in' 'graph' IDENT | 'graph' IDENT
 		;
 
 salvar_opcional :
@@ -90,13 +90,13 @@ cmd :	salvar_opcional 'create' 'graph' IDENT '(' parametros_create ')'
 	;
 
 parametros_create : 
-	    'type' '=' valor_parametro ',' 'nodes' '=' valor_parametro ',' 'edges' '=' 
-		valor_parametro
+	    'type' '=' v1=valor_parametro ',' 'nodes' '=' v2=valor_parametro ',' 'edges' '=' 
+		v3=valor_parametro
 	   ;
 	
 
 parametros_update : 
-	    'edges' '=' valor_parametro ',' 'nodes' '=' valor_parametro 
+	    'edges' '=' v1=valor_parametro ',' 'nodes' '=' v2=valor_parametro 
 	   ;
 
 
@@ -109,7 +109,7 @@ tipo:
        ;
 
 atribuicao :
-		NUM_INT | NUM_REAL | IDENT | STRING | nodes | edges
+		NUM_INT | NUM_REAL | IDENT | STRING | nodes | edges 
 	  ;
 
 edges :

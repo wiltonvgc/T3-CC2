@@ -16,7 +16,7 @@ import gramatica.LGraphParser.InicioContext;
 import gramatica.LGraphParser.ProgramaContext;
 import tabelaDeSimbolos.TabelaDeSimbolos;
 public class Principal {
-
+	
 	
 	public static void main(String [] args) throws IOException{
 		String path = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/teste1";
@@ -44,10 +44,10 @@ public class Principal {
         MeuErroSintatico s = new MeuErroSintatico(sp);
         parser.addErrorListener(s);
         
-        
-    
-        
-        /* Semantico */
+        	
+     
+       /* Se nao ocorreu erro sintatico/lexico faz semantico */
+      	/* Semantico */
         InicioContext arvore = parser.inicio();
         
         AnalisadorSemantico sem = new AnalisadorSemantico(tab,sp);
@@ -59,7 +59,7 @@ public class Principal {
         PrintWriter pw = new PrintWriter(out);
  		  pw.println(sp.toString());
  		  pw.close();
-		
+     	
 		
 	}
 }

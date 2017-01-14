@@ -450,10 +450,8 @@ public class LGraphParser extends Parser {
 	}
 
 	public static class Objeto_metricaContext extends ParserRuleContext {
-		public List<TerminalNode> IDENT() { return getTokens(LGraphParser.IDENT); }
-		public TerminalNode IDENT(int i) {
-			return getToken(LGraphParser.IDENT, i);
-		}
+		public TerminalNode STRING() { return getToken(LGraphParser.STRING, 0); }
+		public TerminalNode IDENT() { return getToken(LGraphParser.IDENT, 0); }
 		public Objeto_metricaContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -486,7 +484,7 @@ public class LGraphParser extends Parser {
 				setState(79);
 				match(T__3);
 				setState(80);
-				match(IDENT);
+				match(STRING);
 				setState(81);
 				match(T__4);
 				setState(82);
@@ -833,6 +831,9 @@ public class LGraphParser extends Parser {
 	}
 
 	public static class Parametros_createContext extends ParserRuleContext {
+		public Valor_parametroContext v1;
+		public Valor_parametroContext v2;
+		public Valor_parametroContext v3;
 		public List<Valor_parametroContext> valor_parametro() {
 			return getRuleContexts(Valor_parametroContext.class);
 		}
@@ -869,7 +870,7 @@ public class LGraphParser extends Parser {
 			setState(139);
 			match(T__21);
 			setState(140);
-			valor_parametro();
+			((Parametros_createContext)_localctx).v1 = valor_parametro();
 			setState(141);
 			match(T__1);
 			setState(142);
@@ -877,7 +878,7 @@ public class LGraphParser extends Parser {
 			setState(143);
 			match(T__21);
 			setState(144);
-			valor_parametro();
+			((Parametros_createContext)_localctx).v2 = valor_parametro();
 			setState(145);
 			match(T__1);
 			setState(146);
@@ -885,7 +886,7 @@ public class LGraphParser extends Parser {
 			setState(147);
 			match(T__21);
 			setState(148);
-			valor_parametro();
+			((Parametros_createContext)_localctx).v3 = valor_parametro();
 			}
 		}
 		catch (RecognitionException re) {
@@ -900,6 +901,8 @@ public class LGraphParser extends Parser {
 	}
 
 	public static class Parametros_updateContext extends ParserRuleContext {
+		public Valor_parametroContext v1;
+		public Valor_parametroContext v2;
 		public List<Valor_parametroContext> valor_parametro() {
 			return getRuleContexts(Valor_parametroContext.class);
 		}
@@ -936,7 +939,7 @@ public class LGraphParser extends Parser {
 			setState(151);
 			match(T__21);
 			setState(152);
-			valor_parametro();
+			((Parametros_updateContext)_localctx).v1 = valor_parametro();
 			setState(153);
 			match(T__1);
 			setState(154);
@@ -944,7 +947,7 @@ public class LGraphParser extends Parser {
 			setState(155);
 			match(T__21);
 			setState(156);
-			valor_parametro();
+			((Parametros_updateContext)_localctx).v2 = valor_parametro();
 			}
 		}
 		catch (RecognitionException re) {
@@ -1633,7 +1636,7 @@ public class LGraphParser extends Parser {
 		"\2=>\3\2\2\2>\t\3\2\2\2?=\3\2\2\2@E\7#\2\2AB\7\4\2\2BD\7#\2\2CA\3\2\2"+
 		"\2DG\3\2\2\2EC\3\2\2\2EF\3\2\2\2FH\3\2\2\2GE\3\2\2\2HI\7\5\2\2IJ\5\36"+
 		"\20\2J\13\3\2\2\2KM\5\26\f\2LK\3\2\2\2MP\3\2\2\2NL\3\2\2\2NO\3\2\2\2O"+
-		"\r\3\2\2\2PN\3\2\2\2QR\7\6\2\2RS\7#\2\2ST\7\7\2\2TU\7\b\2\2UY\7#\2\2V"+
+		"\r\3\2\2\2PN\3\2\2\2QR\7\6\2\2RS\7&\2\2ST\7\7\2\2TU\7\b\2\2UY\7#\2\2V"+
 		"W\7\b\2\2WY\7#\2\2XQ\3\2\2\2XV\3\2\2\2Y\17\3\2\2\2Z\\\7\t\2\2[Z\3\2\2"+
 		"\2[\\\3\2\2\2\\\21\3\2\2\2]^\7\n\2\2^_\7\13\2\2_`\7#\2\2`\23\3\2\2\2a"+
 		"b\t\2\2\2b\25\3\2\2\2cd\5\20\t\2de\7\16\2\2ef\7\b\2\2fg\7#\2\2gh\7\17"+

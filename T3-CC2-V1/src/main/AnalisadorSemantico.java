@@ -290,8 +290,126 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			
 		}	/* FIM DE VERIFICACAO DE COMPATIBILIDADE EM ATRIBUICAO */
 		
+		/* SEMANTICO : VERIFICAO DE COMPATIBILIDADE DE PARAMETROS EM CREATE */
+		if(comando==2){
+			visitParametros_create(ctx.parametros_create());
+		}
+		
+
+		/* SEMANTICO : VERIFICAO DE COMPATIBILIDADE DE PARAMETROS EM UPDATE */
+		if(comando==3){
+			visitParametros_update(ctx.parametros_update());
+		}
+		
+		
+		
+		
+		
 		return null;
 	}
+	
+	@Override
+	public String visitParametros_create(Parametros_createContext ctx) {
+		
+		/* Pega tipo parametro 1 */
+		String tipo1 = visitValor_parametro(ctx.v1);
+		
+		
+		/* Pega tipo parametro 2 */
+		String tipo2 = visitValor_parametro(ctx.v2);
+		
+		
+		/* Pega tipo parametro 3 */
+		String tipo3 = visitValor_parametro(ctx.v3);
+		
+		if(!tipo1.equals("int") && !tipo1.equals("real") && !tipo1.equals("string")){
+			//E IDENT
+			tipo1= this.pilhaTabs.getTipo(tipo1);
+		}
+		
+		if(!tipo2.equals("int") && !tipo2.equals("real") && !tipo2.equals("string")){
+			//E IDENT
+			tipo2= this.pilhaTabs.getTipo(tipo2);
+		}
+		
+		if(!tipo3.equals("int") && !tipo3.equals("real") && !tipo3.equals("string")){
+			//E IDENT
+			tipo3= this.pilhaTabs.getTipo(tipo3);
+		}
+		
+		/* Verifica compatibilidade entre parametros */
+		/* TYPE */
+		if(!tipo1.equals("string")){
+			sp.println("Erro: incompatibilidade de tipo em parametro type de create","semantico");		
+		}
+		/* NODES */
+		if(!tipo2.equals("nodes")){
+			sp.println("Erro: incompatibilidade de tipo em parametro nodes de create","semantico");		
+		}
+		/* EDGES */
+		if(!tipo3.equals("edges")){
+			sp.println("Erro: incompatibilidade de tipo em parametro edges de create","semantico");		
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public String visitParametros_update(Parametros_updateContext ctx) {
+		
+
+		/* Pega tipo parametro 1 */
+		String tipo1 = visitValor_parametro(ctx.v1);
+		
+		
+		/* Pega tipo parametro 2 */
+		String tipo2 = visitValor_parametro(ctx.v2);
+		
+		if(!tipo1.equals("int") && !tipo1.equals("real") && !tipo1.equals("string")){
+			//E IDENT
+			tipo1= this.pilhaTabs.getTipo(tipo1);
+		}
+		
+		if(!tipo2.equals("int") && !tipo2.equals("real") && !tipo2.equals("string")){
+			//E IDENT
+			tipo2= this.pilhaTabs.getTipo(tipo2);
+		}
+		
+		/* Verifica compatibilidade entre parametros */
+		/* NODES */
+		if(!tipo1.equals("nodes")){
+			sp.println("Erro: incompatibilidade de tipo em parametro nodes de update","semantico");		
+		}
+		/* EDGES */
+		if(!tipo2.equals("edges")){
+			sp.println("Erro: incompatibilidade de tipo em parametro edges de update","semantico");		
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public String visitValor_parametro(Valor_parametroContext ctx) {
+		
+		String tipo=null;
+		
+		if(ctx.NUM_INT()!=null)
+			tipo = "int";
+		else if(ctx.NUM_REAL()!=null)
+			tipo = "real";
+		else if(ctx.IDENT()!=null){
+			tipo = ctx.IDENT().getText();
+			if(!this.pilhaTabs.existeSimbolo(tipo)){
+				sp.println("Erro: variavel " + tipo + " não declarada", "semantico");
+			}
+		}
+		else if(ctx.STRING()!=null)
+			tipo = "string";
+		
+		
+		return tipo;
+	}
+	
 	
 	@Override
 	public String visitAtribuicao(AtribuicaoContext ctx) {
@@ -336,9 +454,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		}
 		
 		/* Pega nome grafo passado */
-		if(vertex){
+		if(vertex && filhos.size()<=3){
 			grafo_id = filhos.get(4).getText();
-			
 		}else{
 			grafo_id = filhos.get(1).getText();
 			
@@ -366,25 +483,11 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		return super.visitMetrica(ctx);
 	}
 
-	
 
-	@Override
-	public String visitParametros_create(Parametros_createContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitParametros_create(ctx);
-	}
 
-	@Override
-	public String visitParametros_update(Parametros_updateContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitParametros_update(ctx);
-	}
 
-	@Override
-	public String visitValor_parametro(Valor_parametroContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitValor_parametro(ctx);
-	}
+
+
 
 	@Override
 	public String visitTipo(TipoContext ctx) {

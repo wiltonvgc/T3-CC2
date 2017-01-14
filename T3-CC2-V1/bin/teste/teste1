@@ -1,14 +1,19 @@
 begin
 
 	data var_1,var2,var3 : int,
-             a, b, c : float
+             a, b, c,grafo3,j : float,
+	     grafo2,grafo1,i,grafo5,teste :  graph,
+	     nos,g : nodes,
+	     aresta,n : edges
 	read graph grafo1 from file path
-	create graph grafo2 (type = "multi", nodes = jkl, edges = nos)
-	update graph grafo3 with (edges= g, nodes = n)
-	save find degree of graph grafo2
-	save find degree of vertex v1 in graph grafo2
+	create graph grafo2 (type = "multi", nodes = nos, edges = aresta)
+	update graph grafo3 with (edges= g, nodes = n1)
+	save find degree of graph grafo5
+	save find degree of vertex "A" in graph g
 
 	aresta = [(1,"A",4.5)]
 	nos = [1,"A","U",9.8]
+	grafo2 = teste5
+	
 end
 

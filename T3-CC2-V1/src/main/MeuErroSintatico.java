@@ -20,11 +20,13 @@ public class MeuErroSintatico implements ANTLRErrorListener {
 	SaidaParser sp;
 	static boolean existeErro = false;
 	
+	
 	public MeuErroSintatico(){
-		//
+		
 	}
 	public MeuErroSintatico(SaidaParser sp) {
 		this.sp = sp;
+		
 	}
 	
 	public static boolean setExisteErro(){
@@ -75,6 +77,7 @@ public class MeuErroSintatico implements ANTLRErrorListener {
 			/* avisa que já ocorreu erro sintatico a classe lexica de erro */
 			MeuErroLexico l = new MeuErroLexico();
 			l.setExisteErro();
+			
 			
 		}
 		
