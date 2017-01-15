@@ -1,2 +1,2 @@
-Erro: Variavel g já declarada anteriormente
+Erro: variavel grafo9 não declarada
 Fim da compilacao

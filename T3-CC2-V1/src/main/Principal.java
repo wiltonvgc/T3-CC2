@@ -2,10 +2,13 @@ package main;
 
 
 import java.util.List;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -28,9 +31,31 @@ public class Principal {
 	}
 	
 	public static void main(String [] args) throws IOException{
+		
+		/* Cria pasta para conter arquivos gerados pela compilacao */
+	    
+		
+        File f = new File("LGraph");
+       
+        /* Apagar arquivos do diretorio caso ele ja exista para nova compilacao */
+        if(f.exists()){
+        	if(f.isDirectory()){
+        		File[] files = f.listFiles();
+        		for(File arq : files){
+        			arq.delete();
+        		}
+        	}
+        }
+        
+        f.mkdir();
+        String out = f.getCanonicalPath()+"/erro.txt";
+        String outGerador = f.getCanonicalPath()+"/geradoPython.py";
+	
+		
+        
 		String path = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/teste1";
-		String out = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaSintatico/teste1.txt";
-		String outGerador = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaGerador/saida1.py";
+		//String out = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaSintatico/teste1.txt";
+		//String outGerador = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaGerador/saida1.py";
 		
 		/* Saida para erro Lexico ou Sintatico */
 		SaidaParser sp = new SaidaParser();
@@ -67,7 +92,7 @@ public class Principal {
         	//geracao de codigo 
         	SaidaGerador sg = new SaidaGerador();
         	
-        	GeradorDeCodigo gdc = new GeradorDeCodigo(sg,pilha);
+        	GeradorDeCodigo gdc = new GeradorDeCodigo(sg,pilha,f.getCanonicalPath());
         	gdc.visitInicio(arvore);
         	  
             PrintWriter pw = new PrintWriter(outGerador);
@@ -84,6 +109,7 @@ public class Principal {
      		  pw.println(sp.toString());
      		  pw.close();
         }
+    
         
         
         

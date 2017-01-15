@@ -192,9 +192,9 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				sp.println("Erro: variavel " + id + " não é do tipo graph", "semantico");
 			}
 			/* grafo de mesmo nome ja criado */
-			else if(comando==2 && this.grafos_criados.contains(id)){
+			else if(this.grafos_criados.contains(id)){
 				sp.println("Erro: grafo " + id + " já criado", "semantico");
-			}else if(comando==2){
+			}else{
 				this.grafos_criados.add(id);
 			}
 			
@@ -371,6 +371,11 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				else if(!this.pilhaTabs.getTipo(path).equals("string")){
 					sp.println("Erro: caminho de arquivo " + path + " não é tipo string", "semantico");
 					
+				}/* grafo de mesmo nome ja criado */
+				else if(this.grafos_criados.contains(ctx.id_gf.getText())){
+					sp.println("Erro: grafo " + ctx.id_gf.getText() + " já criado", "semantico");
+				}else{
+					this.grafos_criados.add(ctx.id_gf.getText());
 				}
 				
 			}

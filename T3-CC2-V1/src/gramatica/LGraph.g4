@@ -36,6 +36,10 @@ WS  :   ( ' '
         ) {skip();}
 	;
 
+COMENTARIO : 
+		('/*'  .*?  '*/') {skip();} 
+	;
+
 inicio : 
 	programa
 	;
@@ -85,7 +89,7 @@ caminho :
 	;	
 
 cmd :	salvar_opcional'create' 'graph' id_grafo=IDENT '(' parametros_create ')'
-	| salvar_opcional 'read' 'graph' IDENT arquivo_grafo
+	| salvar_opcional 'read' 'graph' id_gf = IDENT arquivo_grafo
 	| 'update' 'graph' id_grafo_up=IDENT 'with' '(' parametros_update ')'
 	| salvar_opcional 'find' metrica 'of' objeto_metrica
 	| 'plot' 'graph' id_plot=IDENT

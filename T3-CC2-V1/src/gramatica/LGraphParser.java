@@ -22,7 +22,7 @@ public class LGraphParser extends Parser {
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
 		T__31=32, FINAL=33, INICIO=34, IDENT=35, NUM_INT=36, NUM_REAL=37, STRING=38, 
-		WS=39;
+		WS=39, COMENTARIO=40;
 	public static final int
 		RULE_inicio = 0, RULE_programa = 1, RULE_corpo = 2, RULE_declaracoes = 3, 
 		RULE_variavel = 4, RULE_comandos = 5, RULE_objeto_metrica = 6, RULE_salvar_opcional = 7, 
@@ -50,7 +50,7 @@ public class LGraphParser extends Parser {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, "FINAL", "INICIO", 
-		"IDENT", "NUM_INT", "NUM_REAL", "STRING", "WS"
+		"IDENT", "NUM_INT", "NUM_REAL", "STRING", "WS", "COMENTARIO"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -736,6 +736,7 @@ public class LGraphParser extends Parser {
 
 	public static class CmdContext extends ParserRuleContext {
 		public Token id_grafo;
+		public Token id_gf;
 		public Token id_grafo_up;
 		public Token id_plot;
 		public Token id;
@@ -827,7 +828,7 @@ public class LGraphParser extends Parser {
 				setState(115);
 				match(T__5);
 				setState(116);
-				match(IDENT);
+				((CmdContext)_localctx).id_gf = match(IDENT);
 				setState(117);
 				arquivo_grafo();
 				}
@@ -1745,7 +1746,7 @@ public class LGraphParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3)\u00fe\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3*\u00fe\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+

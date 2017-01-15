@@ -1,5 +1,6 @@
 begin
 
+	/* isto e um comentario */
 	data var_1,var2,var3,var1 : int,
              a, b, c,j : float,
 	     grafo2,grafo1,grafo3,grafo4 :  graph,
@@ -12,13 +13,15 @@ begin
 	g = ["g","w",7]
 	aresta2 = [("g","w",0)]
 	
-	read graph grafo1 from file path
-	create graph grafo2 (type = "multi", nodes = nos, edges = aresta)
+	
+	/*create graph grafo2 (type = "multi", nodes = nos, edges = aresta)*/
 	create graph grafo1 (type = "multi", nodes = nos, edges=aresta)
 	create graph grafo3 (type = "multi", nodes = nos, edges=aresta)
+	read graph grafo2 from file "/home/wilton/teste.paj"
 	update graph grafo1 with (nodes= g, edges = aresta2)
 	save find degree of graph grafo1
 	save find degree of vertex "t" in graph grafo1
+	plot graph grafo2
 	plot graph grafo1
 		
 	

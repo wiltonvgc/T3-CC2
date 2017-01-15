@@ -36,11 +36,13 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	SaidaGerador sp;
 	TabelaDeSimbolos t;
 	PilhaDeTabelas pilha;
+	String path; //caminho diretorio de saida para arquivos
 	
-	public GeradorDeCodigo(SaidaGerador s,PilhaDeTabelas p){
+	public GeradorDeCodigo(SaidaGerador s,PilhaDeTabelas p,String path){
 		this.sp = s;
 		this.pilha = p;
 		this.t = pilha.topo();
+		this.path = path;
 	}
 	
 	@Override
@@ -220,12 +222,26 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			sp.println("nx.draw(" + id_grafo+ ")");
 			//sp.println("nx.draw_networkx_edges(" + id_grafo+ ",pos,node_size=50)");
 			sp.println("plt.title(\""+ id_grafo + "\", size=16)\n");
-			sp.println("plt.savefig(\""+ id_grafo +"\")\n");
+			sp.println("plt.savefig(\""+ this.path+"/"+id_grafo +"\")\n");
 			sp.println("plt.close()\n");
 		}
 		
 		/* Geracao de leitura de grafo a partir de arquivo */
 		if(comando==1){
+			String id_grafo = ctx.id_gf.getText();
+			
+			String path = visitArquivo_grafo(ctx.arquivo_grafo());
+			
+			if(!path.contains("\"")){
+				//IDENT STRING
+				path = "\"" + path + "\"";
+			}
+			
+			/* Formato paj */
+			if(path.contains("paj")){
+				sp.println("#Leitura de grafo a partir de arquivo GML\n");
+				sp.println(id_grafo + " = nx.read_pajek(" + path + ")\n");
+			}
 			
 		}
 		
@@ -291,8 +307,16 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 
 	@Override
 	public String visitArquivo_grafo(Arquivo_grafoContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitArquivo_grafo(ctx);
+		String caminho = null;
+		
+		if(ctx.STRING()!=null){
+			caminho = ctx.STRING().getText();
+		}else if(ctx.IDENT()!=null){
+			caminho = ctx.IDENT().getText();
+		}
+		
+		
+		return caminho;
 	}
 
 	@Override
