@@ -43,10 +43,10 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	PilhaDeTabelas pilhaTabs;
 	SaidaParser sp;
 	
-	public AnalisadorSemantico(TabelaDeSimbolos t,SaidaParser sp){
+	public AnalisadorSemantico(TabelaDeSimbolos t,SaidaParser sp,PilhaDeTabelas p){
 		this.tab = t;
 		this.sp = sp;
-		this.pilhaTabs = new PilhaDeTabelas();
+		this.pilhaTabs = p;
 		this.pilhaTabs.empilhar(this.tab);
 	}
 
@@ -264,7 +264,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				}
 				
 			}else if(t=="real"){
-				if(!tipo_var_atr.equals(t)){
+				if(!tipo_var_atr.equals("float")){
 					sp.println("Erro: incompatibilidade de tipo em atribuicao de " + var_atribuicao, "semantico");
 				}
 				

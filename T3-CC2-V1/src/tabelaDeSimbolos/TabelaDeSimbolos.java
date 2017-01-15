@@ -26,6 +26,14 @@ public class TabelaDeSimbolos {
         }
     }
     
+    public ArrayList<String> getSimbolos(){
+    	ArrayList<String> nomes = new ArrayList<String>();
+    	for(EntradaTabelaDeSimbolos etds : simbolos){
+    		nomes.add(etds.getNome());
+    	}
+    	return nomes;
+    }
+    
     public String getNome(){
     	return this.escopo;
     	

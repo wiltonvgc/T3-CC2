@@ -1,5 +1,9 @@
 package main;
 
+import java.util.List;
+
+import org.antlr.v4.runtime.tree.ParseTree;
+
 import gramatica.LGraphBaseVisitor;
 import gramatica.LGraphParser.Arquivo_grafoContext;
 import gramatica.LGraphParser.AtribuicaoContext;
@@ -23,13 +27,19 @@ import gramatica.LGraphParser.Tipos_tupla_opContext;
 import gramatica.LGraphParser.TuplaContext;
 import gramatica.LGraphParser.Valor_parametroContext;
 import gramatica.LGraphParser.VariavelContext;
+import tabelaDeSimbolos.PilhaDeTabelas;
+import tabelaDeSimbolos.TabelaDeSimbolos;
 
 public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 
 	SaidaGerador sp;
+	TabelaDeSimbolos t;
+	PilhaDeTabelas pilha;
 	
-	public GeradorDeCodigo(SaidaGerador s){
+	public GeradorDeCodigo(SaidaGerador s,PilhaDeTabelas p){
 		this.sp = s;
+		this.pilha = p;
+		this.t = pilha.topo();
 	}
 	
 	@Override
@@ -39,14 +49,33 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		sp.println("#!/usr/bin/env python\n\n");
 		sp.println("#Geraçao de codigo LGraph\n\n");
 		sp.println("import networkx as nx\n");
+		visitPrograma(ctx.programa());
 		
 		return null;
 	}
 
 	@Override
 	public String visitPrograma(ProgramaContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitPrograma(ctx);
+		/* Declaracao de variaveis a partir da tabela de simbolos */
+		/* Edges e Nodes e Graphs */
+		
+		sp.println("#Declaracao de edges e nodes e grafos\n");
+		for(String var : this.t.getSimbolos()){
+			if(pilha.getTipo(var).equals("edges") ||pilha.getTipo(var).equals("nodes") ){
+				sp.println(var + " = " + "[]\n");
+			}else if(pilha.getTipo(var).equals("graph")){
+				sp.println(var + " = nx.Graph()\n");
+			}
+		}
+		
+		/* Comandos */
+		
+		if(ctx.corpo()!=null && ctx.corpo().comandos()!=null)
+			visitComandos(ctx.corpo().comandos());
+		
+		
+		
+		return null;
 	}
 
 	@Override
@@ -69,9 +98,89 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 
 	@Override
 	public String visitComandos(ComandosContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitComandos(ctx);
+		
+		/* Visita cada um dos comandos */
+		for(CmdContext c : ctx.cmds){
+			visitCmd(c);
+		}
+		
+		return null;
 	}
+	
+	@Override
+	public String visitCmd(CmdContext ctx) {
+		
+		int comando=0; // 1 - leitura, 2 - create, 3 - update, 4 - find, 5 - atribuicao, 6 - plot
+		
+		/* QUAL COMANDO E */
+		List<ParseTree> filhos = ctx.children;
+		
+		if(filhos!=null){
+			for(ParseTree p : filhos){
+				if(p.getText().equals("read")){
+					comando = 1;
+					break;
+				}else if(p.getText().equals("create")){
+					comando = 2;
+					break;
+				}else if(p.getText().equals("update")){
+					comando = 3;
+					break;
+				}else if(p.getText().equals("find")){
+					comando = 4;
+					break;
+				}else if(p.getText().equals("=")){
+					comando = 5;
+					break;
+				}else if(p.getText().equals("plot")){
+					comando = 6;
+				}
+			}
+			
+		}// FIM QUAL COMANDO E
+	
+		/* Geracao de codigo para ATRIBUICAO */
+		if(comando==5){
+			
+			String atribuido = visitAtribuicao(ctx.atribuicao());
+			
+			if(atribuido!=null){
+				String var = ctx.IDENT().getText();
+				
+				sp.println(var + " = " + atribuido);
+				
+				
+			}
+		}//fim atribuicao
+		
+		
+		
+		return null;
+	}
+	
+	@Override
+	public String visitAtribuicao(AtribuicaoContext ctx) {
+		
+		
+		String atribuido = null;
+		
+		/* Se for aresta */
+		if(ctx.edges()!=null){
+			atribuido = ctx.edges().getText();
+		}else if(ctx.nodes()!=null){
+			atribuido = ctx.nodes().getText();
+		}else if(ctx.NUM_INT()!=null){
+			atribuido = ctx.NUM_INT().getText();
+		}else if(ctx.NUM_REAL()!=null){
+			atribuido = ctx.NUM_REAL().getText();
+		}else if(ctx.STRING()!=null){
+			atribuido = ctx.STRING().getText();
+		}
+		
+		
+		return atribuido;
+	}
+
 
 	@Override
 	public String visitObjeto_metrica(Objeto_metricaContext ctx) {
@@ -97,11 +206,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		return super.visitMetrica(ctx);
 	}
 
-	@Override
-	public String visitCmd(CmdContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitCmd(ctx);
-	}
+	
 
 	@Override
 	public String visitParametros_create(Parametros_createContext ctx) {
@@ -125,12 +230,6 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	public String visitTipo(TipoContext ctx) {
 		// TODO Auto-generated method stub
 		return super.visitTipo(ctx);
-	}
-
-	@Override
-	public String visitAtribuicao(AtribuicaoContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitAtribuicao(ctx);
 	}
 
 	@Override

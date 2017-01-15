@@ -1,1 +1,2 @@
+Erro: incompatibilidade de tipo em atribuicao de a
 Fim da compilacao

@@ -14,6 +14,7 @@ import org.antlr.v4.runtime.Token;
 import gramatica.*;
 import gramatica.LGraphParser.InicioContext;
 import gramatica.LGraphParser.ProgramaContext;
+import tabelaDeSimbolos.PilhaDeTabelas;
 import tabelaDeSimbolos.TabelaDeSimbolos;
 public class Principal {
 	
@@ -44,7 +45,7 @@ public class Principal {
        
         /* Cria tabela de Simbolos */
         TabelaDeSimbolos tab = new TabelaDeSimbolos("global");
-        
+        PilhaDeTabelas pilha = new PilhaDeTabelas();
         
 		/* Sintatico */
         CommonTokenStream tokens = new CommonTokenStream(lex); 
@@ -57,7 +58,7 @@ public class Principal {
        /* Semantico */
         InicioContext arvore = parser.inicio();
         
-        AnalisadorSemantico sem = new AnalisadorSemantico(tab,sp);
+        AnalisadorSemantico sem = new AnalisadorSemantico(tab,sp,pilha);
         sem.visitInicio(arvore);
         
        /* Geracao de codigo para Python */
@@ -66,12 +67,15 @@ public class Principal {
         	//geracao de codigo 
         	SaidaGerador sg = new SaidaGerador();
         	
-        	GeradorDeCodigo gdc = new GeradorDeCodigo(sg);
+        	GeradorDeCodigo gdc = new GeradorDeCodigo(sg,pilha);
         	gdc.visitInicio(arvore);
         	   /* Escrita arquivo erro Lexico ou Sintatico */
             PrintWriter pw = new PrintWriter(outGerador);
      		  pw.println(sg.toString());
      		  pw.close();
+     		  
+     		 Runtime run = Runtime.getRuntime();
+     		 run.exec("python " + outGerador);
         	
         }
         else{
