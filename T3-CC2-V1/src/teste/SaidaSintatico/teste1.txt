@@ -1,2 +1,2 @@
-Erro: incompatibilidade de tipo em atribuicao de a
+Erro: Variavel g já declarada anteriormente
 Fim da compilacao

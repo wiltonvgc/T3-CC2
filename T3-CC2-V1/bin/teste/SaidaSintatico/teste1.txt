@@ -1,2 +1,2 @@
-Erro: variavel grafo9 não declarada
+Erro: grafo grafo4 não criado
 Fim da compilacao

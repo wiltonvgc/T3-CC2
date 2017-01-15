@@ -73,7 +73,7 @@ salvar_opcional :
 		;
 
 arquivo_grafo :
-		'from' 'file' IDENT
+		'from' 'file' (id=IDENT | str=STRING)
 	      ;
 
 metrica : 'degree' | 'clustering'
@@ -84,11 +84,11 @@ caminho :
 	'MST' | 'CM'
 	;	
 
-cmd :	salvar_opcional 'create' 'graph' id_grafo=IDENT '(' parametros_create ')'
+cmd :	salvar_opcional'create' 'graph' id_grafo=IDENT '(' parametros_create ')'
 	| salvar_opcional 'read' 'graph' IDENT arquivo_grafo
-	| 'update' 'graph' IDENT 'with' '(' parametros_update ')'
+	| 'update' 'graph' id_grafo_up=IDENT 'with' '(' parametros_update ')'
 	| salvar_opcional 'find' metrica 'of' objeto_metrica
-	| 'plot' 'graph' IDENT
+	| 'plot' 'graph' id_plot=IDENT
 	| 'foreach' 'vertex' id=IDENT 'in' caminho 'of' id2=IDENT corpo_for 
 	| id1=IDENT '=' atribuicao
 	;
@@ -125,7 +125,7 @@ edges :
       ;
 
 tupla : 
-	'(' tipos_tupla ',' tipos_tupla ',' tipos_tupla_op ')'
+	'(' tipos_tupla ',' tipos_tupla (',' tipos_tupla_op)* ')'
 	
       ;
 
@@ -135,7 +135,7 @@ tipos_tupla :
 	   ;
 
 tipos_tupla_op :
-		NUM_INT | NUM_REAL | STRING | /* epsilon */
+		NUM_INT | NUM_REAL | STRING 
 	   ;
 
 parametros_nodes :

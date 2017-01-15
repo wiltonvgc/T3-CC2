@@ -350,11 +350,50 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			visitParametros_update(ctx.parametros_update());
 		}
 		
-		
-		
+		/* Verificacao de parametro de caminho de arquivo em READ */
+		if(comando==1){
+			
+			String path=null;//caminho do arquivo - IDENT STRING ou STRING PURA
+			if(ctx.arquivo_grafo()!=null)
+				path = visitArquivo_grafo(ctx.arquivo_grafo());
+			
+			if(path!=null && path.contains("\"")){
+				//STRING PURA
+				
+			}else{
+				//IDENT
+				/* variavel path nao declarada */
+				if(!this.tab.existeSimbolo(path)){
+					sp.println("Erro: variavel " + path + " não declarada", "semantico");
+				}
+				
+				/* verifica se path e do tipo string */
+				else if(!this.pilhaTabs.getTipo(path).equals("string")){
+					sp.println("Erro: caminho de arquivo " + path + " não é tipo string", "semantico");
+					
+				}
+				
+			}
+			
+		}
 		
 		
 		return null;
+	}
+	
+	@Override
+	public String visitArquivo_grafo(Arquivo_grafoContext ctx) {
+		
+		String caminho = null;
+		
+		if(ctx.STRING()!=null){
+			caminho = ctx.STRING().getText();
+		}else if(ctx.IDENT()!=null){
+			caminho = ctx.IDENT().getText();
+		}
+		
+		
+		return caminho;
 	}
 	
 	@Override
@@ -536,11 +575,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		return super.visitSalvar_opcional(ctx);
 	}
 
-	@Override
-	public String visitArquivo_grafo(Arquivo_grafoContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitArquivo_grafo(ctx);
-	}
+
 
 	@Override
 	public String visitMetrica(MetricaContext ctx) {

@@ -50,6 +50,11 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		sp.println("#!/usr/bin/env python\n\n");
 		sp.println("#Geraçao de codigo LGraph\n\n");
 		sp.println("import networkx as nx\n");
+		sp.println("import matplotlib.pyplot as plt\n");
+		sp.println("#Configuracoes default para plotagem de grafos\n");
+		sp.println("plt.figure(1, figsize=(12, 8))\n");
+		sp.println("plt.axis('off')\n");
+		
 		visitPrograma(ctx.programa());
 		
 		return null;
@@ -58,7 +63,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitPrograma(ProgramaContext ctx) {
 		/* Declaracao de variaveis a partir da tabela de simbolos */
-		/* Edges e Nodes e Graphs */
+		/* Edges e Nodes e Graphs e Int e Float e String*/
 	
 		for(String var : this.t.getSimbolos()){
 			if(pilha.getTipo(var).equals("edges") ||pilha.getTipo(var).equals("nodes") ){
@@ -73,6 +78,20 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				sp.println(var + " = nx.Graph()\n");
 				
 			}
+			
+			else if(pilha.getTipo(var).equals("int") || pilha.getTipo(var).equals("float")){
+
+				sp.println("#Declaracao de inteiros e floats\n");
+				sp.println(var + " = 0\n");
+			}
+			
+			else if(pilha.getTipo(var).equals("string")){
+
+				sp.println("#Declaracao de string\n");
+				sp.println(var + " = \" \"\n");
+			}
+			
+			
 		}
 		
 		/* Comandos */
@@ -173,7 +192,40 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			/* Codigo Python adicionar arestas e noos */
 			sp.println("#Adicao de nos e arestas nos grafos\n");
 			sp.println(id_grafo + ".add_nodes_from(" + p2 + ")\n");
-			sp.println(id_grafo + ".add_edges_from(" + p3 + ")\n");
+			sp.println(id_grafo + ".add_weighted_edges_from(" + p3 + ")\n");
+			
+		}
+		
+		/* Geracao de codigo para UPDATE GRAPH */
+		if(comando==3){
+			
+			/* Parametros nos e arestas */
+			String p1 = visitValor_parametro(ctx.parametros_update().v1);
+			String p2 = visitValor_parametro(ctx.parametros_update().v2);
+			
+			String id_grafo = ctx.id_grafo_up.getText();
+			
+			/* Codigo Python adicionar arestas e noos */
+			sp.println("#Atualizacao de nos e arestas nos grafos\n");
+			sp.println(id_grafo + ".add_nodes_from(" + p1 + ")\n");
+			sp.println(id_grafo + ".add_weighted_edges_from(" + p2 + ")\n");
+			
+		}
+		
+		/* Geracao de imagem de grafo PLOT */
+		if(comando==6){
+			String id_grafo = ctx.id_plot.getText();
+			sp.println("#Plotagem de grafo\n");
+			sp.println("pos=nx.fruchterman_reingold_layout("+ id_grafo + ")\n");
+			sp.println("nx.draw(" + id_grafo+ ")");
+			//sp.println("nx.draw_networkx_edges(" + id_grafo+ ",pos,node_size=50)");
+			sp.println("plt.title(\""+ id_grafo + "\", size=16)\n");
+			sp.println("plt.savefig(\""+ id_grafo +"\")\n");
+			sp.println("plt.close()\n");
+		}
+		
+		/* Geracao de leitura de grafo a partir de arquivo */
+		if(comando==1){
 			
 		}
 		
