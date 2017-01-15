@@ -42,12 +42,14 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	TabelaDeSimbolos tab;//tabela de simbolos global
 	PilhaDeTabelas pilhaTabs;
 	SaidaParser sp;
+	ArrayList<String> grafos_criados;//guarda nome dos grafos criados com CREATE
 	
 	public AnalisadorSemantico(TabelaDeSimbolos t,SaidaParser sp,PilhaDeTabelas p){
 		this.tab = t;
 		this.sp = sp;
 		this.pilhaTabs = p;
 		this.pilhaTabs.empilhar(this.tab);
+		this.grafos_criados = new ArrayList<String>();
 	}
 
 
@@ -130,7 +132,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		
 		/* percorre lista de comandos feitos */
 		for(CmdContext cmd : ctx.cmds){
-			visitCmd(cmd);
+			if(cmd!=null)
+				visitCmd(cmd);
 		}
 		
 		
@@ -141,7 +144,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitCmd(CmdContext ctx) {
 		
-		int comando=0; // 1 - leitura, 2 - create, 3 - update, 4 - find, 5 - atribuicao, 6 - plot
+		int comando=0; // 1 - leitura, 2 - create, 3 - update, 4 - find, 5 - atribuicao,7-foreach, 6 - plot
 		
 		/* QUAL COMANDO E */
 		List<ParseTree> filhos = ctx.children;
@@ -165,6 +168,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			     break;
 			}else if(p.getText().equals("plot")){
 				comando = 6;
+			}else if(p.getText().equals("foreach")){
+				comando = 7;
 			}
 			
 			
@@ -186,6 +191,12 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			else if(!this.pilhaTabs.getTipo(id).equals("graph")){
 				sp.println("Erro: variavel " + id + " não é do tipo graph", "semantico");
 			}
+			/* grafo de mesmo nome ja criado */
+			else if(comando==2 && this.grafos_criados.contains(id)){
+				sp.println("Erro: grafo " + id + " já criado", "semantico");
+			}else if(comando==2){
+				this.grafos_criados.add(id);
+			}
 			
 		}/* UPDATE ou PLOT */
 		else if(comando==3 || comando==6){
@@ -198,6 +209,10 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			/* variavel nao e tipo graph */
 			else if(!this.pilhaTabs.getTipo(id).equals("graph")){
 				sp.println("Erro: variavel " + id + " não é do tipo graph", "semantico");
+			}
+			/* verifica se grafo ja foi criado com create */
+			else if(!this.grafos_criados.contains(id)){
+				sp.println("Erro: grafo " + id + " não criado", "semantico");
 			}
 			
 		}
@@ -215,6 +230,34 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			}
 			
 		}
+		/* FOREACH */
+		else if(comando==7){
+			String id_grafo = ctx.id2.getText();
+			String id_vert = ctx.id.getText();
+			
+			/* variavel graph nao declarada */
+			if(!this.tab.existeSimbolo(id_grafo)){
+				sp.println("Erro: variavel " + id_grafo + " não declarada", "semantico");
+			}
+			/* variavel nao e tipo graph */
+			else if(!this.pilhaTabs.getTipo(id_grafo).equals("graph")){
+				sp.println("Erro: variavel " + id_grafo + " não é do tipo graph", "semantico");
+			}
+			
+			/* verifica se variavel a ser o vertice no loop ja existe */
+			
+			/* variavel id_vert ja declarada */
+			if(this.tab.existeSimbolo(id_vert)){
+				sp.println("Erro: variavel " + id_vert + " já declarada", "semantico");
+			}else{
+				//declara
+				this.tab.adicionarSimbolo(id_vert, "vertice_loop");
+			}
+
+			
+			
+			
+		}
 		
 	}
 		
@@ -226,7 +269,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			
 			String var_atribuicao=null;
 			if(ctx.IDENT()!=null)
-				var_atribuicao = ctx.IDENT().getText();//variavel que recebe o valor
+				var_atribuicao = ctx.id1.getText();//variavel que recebe o valor
 			
 			/* Verifica se var_atribuicao ja foi declarada */
 			if(!this.pilhaTabs.existeSimbolo(var_atribuicao)){
@@ -249,7 +292,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			String var_atribuicao=null;
 			
 			if(ctx.IDENT()!=null)
-				var_atribuicao = ctx.IDENT().getText();//variavel que recebe o valor
+				var_atribuicao = ctx.id1.getText();//variavel que recebe o valor
 			
 			String tipo_var_atr = this.pilhaTabs.getTipo(var_atribuicao);
 			

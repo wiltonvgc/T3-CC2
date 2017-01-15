@@ -1,21 +1,27 @@
 begin
 
-	data var_1,var2,var3 : int,
+	data var_1,var2,var3,var1 : int,
              a, b, c,j : float,
-	     grafo2,grafo1,i,grafo5,grafo3,teste,teste5 :  graph,
+	     grafo2,grafo1 :  graph,
 	     nos,g : nodes,
 	     aresta,n : edges
 
 	read graph grafo1 from file path
 	create graph grafo2 (type = "multi", nodes = nos, edges = aresta)
-	update graph grafo3 with (nodes= g, edges = aresta)
-	save find degree of graph grafo5
-	save find degree of vertex "t" in graph grafo5
+	update graph grafo1 with (nodes= g, edges = aresta)
+	save find degree of graph grafo1
+	save find degree of vertex "t" in graph grafo1
 	plot graph grafo1	
 	
+	var1 = 9	
 	aresta = [(1,"A",4.5)]
 	nos = [1,"A","U",9.8]
-	grafo2 = teste5
+	a = 3.4
+	
+	foreach vertex v in MST of grafo1
+	begin
+			
+	end
 	
 end
 

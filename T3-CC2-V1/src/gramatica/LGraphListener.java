@@ -108,6 +108,16 @@ public interface LGraphListener extends ParseTreeListener {
 	 */
 	void exitMetrica(LGraphParser.MetricaContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LGraphParser#caminho}.
+	 * @param ctx the parse tree
+	 */
+	void enterCaminho(LGraphParser.CaminhoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#caminho}.
+	 * @param ctx the parse tree
+	 */
+	void exitCaminho(LGraphParser.CaminhoContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LGraphParser#cmd}.
 	 * @param ctx the parse tree
 	 */
@@ -117,6 +127,16 @@ public interface LGraphListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCmd(LGraphParser.CmdContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#corpo_for}.
+	 * @param ctx the parse tree
+	 */
+	void enterCorpo_for(LGraphParser.Corpo_forContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#corpo_for}.
+	 * @param ctx the parse tree
+	 */
+	void exitCorpo_for(LGraphParser.Corpo_forContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LGraphParser#parametros_create}.
 	 * @param ctx the parse tree

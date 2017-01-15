@@ -56,7 +56,7 @@ public class Principal {
         
         	
        /* Semantico */
-        InicioContext arvore = parser.inicio();
+       InicioContext arvore = parser.inicio();
         
         AnalisadorSemantico sem = new AnalisadorSemantico(tab,sp,pilha);
         sem.visitInicio(arvore);
@@ -69,7 +69,7 @@ public class Principal {
         	
         	GeradorDeCodigo gdc = new GeradorDeCodigo(sg,pilha);
         	gdc.visitInicio(arvore);
-        	   /* Escrita arquivo erro Lexico ou Sintatico */
+        	  
             PrintWriter pw = new PrintWriter(outGerador);
      		  pw.println(sg.toString());
      		  pw.close();

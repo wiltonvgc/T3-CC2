@@ -136,6 +136,18 @@ public class LGraphBaseListener implements LGraphListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCaminho(LGraphParser.CaminhoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCaminho(LGraphParser.CaminhoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCmd(LGraphParser.CmdContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -143,6 +155,18 @@ public class LGraphBaseListener implements LGraphListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCmd(LGraphParser.CmdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCorpo_for(LGraphParser.Corpo_forContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCorpo_for(LGraphParser.Corpo_forContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

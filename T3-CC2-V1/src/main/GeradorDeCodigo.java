@@ -31,6 +31,7 @@ import tabelaDeSimbolos.PilhaDeTabelas;
 import tabelaDeSimbolos.TabelaDeSimbolos;
 
 public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
+	
 
 	SaidaGerador sp;
 	TabelaDeSimbolos t;
@@ -58,13 +59,19 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	public String visitPrograma(ProgramaContext ctx) {
 		/* Declaracao de variaveis a partir da tabela de simbolos */
 		/* Edges e Nodes e Graphs */
-		
-		sp.println("#Declaracao de edges e nodes e grafos\n");
+	
 		for(String var : this.t.getSimbolos()){
 			if(pilha.getTipo(var).equals("edges") ||pilha.getTipo(var).equals("nodes") ){
+				
+				sp.println("#Declaracao de edges e nodes e grafos\n");
 				sp.println(var + " = " + "[]\n");
+				
 			}else if(pilha.getTipo(var).equals("graph")){
+				
+				
+				sp.println("#Declaracao de grafos\n");
 				sp.println(var + " = nx.Graph()\n");
+				
 			}
 		}
 		
@@ -145,7 +152,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			String atribuido = visitAtribuicao(ctx.atribuicao());
 			
 			if(atribuido!=null){
-				String var = ctx.IDENT().getText();
+				String var = ctx.id1.getText();
 				
 				sp.println(var + " = " + atribuido);
 				
@@ -153,10 +160,46 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			}
 		}//fim atribuicao
 		
-		
+		/* Geracao de codigo para CREATE GRAPH */
+		if(comando==2){
+			/* Parametros : tipo, nos, arestas */
+			
+			String p1 = visitValor_parametro(ctx.parametros_create().v1);
+			String p2 = visitValor_parametro(ctx.parametros_create().v2);
+			String p3 = visitValor_parametro(ctx.parametros_create().v3);
+			
+			String id_grafo = ctx.id_grafo.getText();
+			
+			/* Codigo Python adicionar arestas e noos */
+			sp.println("#Adicao de nos e arestas nos grafos\n");
+			sp.println(id_grafo + ".add_nodes_from(" + p2 + ")\n");
+			sp.println(id_grafo + ".add_edges_from(" + p3 + ")\n");
+			
+		}
 		
 		return null;
 	}
+	
+	@Override
+	public String visitValor_parametro(Valor_parametroContext ctx) {
+		
+		
+		String valor=null;
+		
+		if(ctx.NUM_INT()!=null){
+			valor = ctx.NUM_INT().getText();
+		}else if(ctx.NUM_REAL()!=null){
+			valor = ctx.NUM_REAL().getText();
+		}else if(ctx.STRING()!=null){
+			valor = ctx.STRING().getText();
+		}else if(ctx.IDENT()!=null){
+			valor = ctx.IDENT().getText();
+		}
+		
+		
+		return valor;
+	}
+
 	
 	@Override
 	public String visitAtribuicao(AtribuicaoContext ctx) {
@@ -220,12 +263,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		return super.visitParametros_update(ctx);
 	}
 
-	@Override
-	public String visitValor_parametro(Valor_parametroContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitValor_parametro(ctx);
-	}
-
+	
 	@Override
 	public String visitTipo(TipoContext ctx) {
 		// TODO Auto-generated method stub

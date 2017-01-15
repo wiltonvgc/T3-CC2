@@ -71,11 +71,23 @@ public interface LGraphVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMetrica(LGraphParser.MetricaContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LGraphParser#caminho}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCaminho(LGraphParser.CaminhoContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LGraphParser#cmd}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitCmd(LGraphParser.CmdContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#corpo_for}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCorpo_for(LGraphParser.Corpo_forContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LGraphParser#parametros_create}.
 	 * @param ctx the parse tree

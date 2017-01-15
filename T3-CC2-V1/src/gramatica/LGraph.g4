@@ -80,13 +80,22 @@ metrica : 'degree' | 'clustering'
 
 	;
 
-cmd :	salvar_opcional 'create' 'graph' IDENT '(' parametros_create ')'
+caminho : 
+	'MST' | 'CM'
+	;	
+
+cmd :	salvar_opcional 'create' 'graph' id_grafo=IDENT '(' parametros_create ')'
 	| salvar_opcional 'read' 'graph' IDENT arquivo_grafo
 	| 'update' 'graph' IDENT 'with' '(' parametros_update ')'
 	| salvar_opcional 'find' metrica 'of' objeto_metrica
-	| 'plot' 'graph' IDENT 
-	| IDENT '=' atribuicao
+	| 'plot' 'graph' IDENT
+	| 'foreach' 'vertex' id=IDENT 'in' caminho 'of' id2=IDENT corpo_for 
+	| id1=IDENT '=' atribuicao
 	;
+
+corpo_for : 
+	   'begin' comandos 'end'
+	  ;
 
 parametros_create : 
 	    'type' '=' v1=valor_parametro ',' 'nodes' '=' v2=valor_parametro ',' 'edges' '=' 
