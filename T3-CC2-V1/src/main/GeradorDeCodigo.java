@@ -245,8 +245,114 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			
 		}
 		
+		
+		/* Geracao de codigo para encontrar metricas FIND */
+		if(comando==4){
+			String metrica = visitMetrica(ctx.metrica());
+			String obj = visitObjeto_metrica(ctx.objeto_metrica());
+			
+			
+			
+			
+			/* Metrica DEGREE */
+			if(metrica.equals("degree")){
+				
+				String vertice=null, grafo=null,aux=null;
+				
+				if(obj.contains("*")){
+					vertice = obj.substring(0,obj.indexOf("*"));
+					grafo = obj.substring(obj.indexOf("*")+1,obj.length());
+					aux = obj;
+					obj = grafo;
+				}
+
+				/* cria arquivo de metricas para grafo ou usa o que ja existe */
+				sp.println("#Criacao de arquivo metrica");
+				sp.println(obj + "Metricas = open('" + path + "/" + obj + "Metricas.txt', 'w')\n");
+				String arq = obj + "Metricas";
+				sp.println(arq+".write(\"========== MÉTRICAS DE GRAFO "+ obj  + " ==========\")");
+				
+				
+				   /* codigo Python para encontrar graus */
+					
+					/* Grau de grafo */
+					if(aux==null ){
+						sp.println("graus = nx.degree(" + obj + ")\n");
+						/* Imprimir dict graus em arquivo criado de metrica */
+						sp.println("#Impressao de graus de vertices de grafo\n");
+						sp.println(arq + ".write(\"\\n\\n*** Métrica : DEGREE ***\")");
+						sp.println("for chave in graus:");
+						sp.println("	"+ arq + ".write(\"\\nNó: \" + str(chave)  + \" Grau => \" + str(graus[chave]))");
+					}
+					/* Grau de vertice */
+					else{
+						sp.println("graus = " + grafo + ".degree(" + vertice + ")\n");
+						sp.println(arq + ".write(\"\\n\\n*** Métrica : DEGREE ***\")");
+						sp.println(arq + ".write(\"\\nNó: \" + str(" + vertice   + ")"+ "+ \" Grau => \" + str(graus))");
+					}
+					
+				
+			}//fim DEGREE
+			
+			/* Metrica: DEGREE CENTRALITY */
+			else if(metrica.equals("degree_centrality")){
+				
+				String arq = obj + "Metricas";
+				
+				/* CENTRALITY SO SE APLICA A GRAFO */
+				sp.println("centralidades = nx.degree_centrality(" + obj + ")\n");
+				/* Imprimir dict graus em arquivo criado de metrica */
+				sp.println("#Impressao de centralidade de vertices de grafo\n");
+				sp.println(arq + ".write(\"\\n\\n*** Métrica : DEGREE CENTRALITY ***\")");
+				sp.println("for chave in centralidades:");
+				sp.println("	"+ arq + ".write(\"\\nNó: \" + str(chave)  + \" Centralidade => \" + str(centralidades[chave]))");
+				
+				
+			}
+			
+			/* Metrica : average_node_connectivity */
+			else if(metrica.equals("average_node_connectivity")){
+				String arq = obj + "Metricas";
+				
+				/*  average_node_connecti SO SE APLICA A GRAFO */
+				sp.println("con = nx.average_node_connectivity(" + obj + ")\n");
+				/* Imprimir dict graus em arquivo criado de metrica */
+				sp.println("#Impressao de average_node_connectivity de vertices de grafo\n");
+				sp.println(arq + ".write(\"\\n\\n*** Métrica : AVERAGE_NODE_CONNECTIVITY ***\")");
+				sp.println(arq + ".write(\"\\nGrafo "+  obj  + " Average_node_connectivity => \" + str(con))");
+				
+			}
+			
+			
+			
+		}//FIM GERACAO DE CODIGO PARA FIND
+		
 		return null;
 	}
+	
+	@Override
+	public String visitMetrica(MetricaContext ctx) {
+		
+		return ctx.getText();
+	}
+
+	
+	@Override
+	public String visitObjeto_metrica(Objeto_metricaContext ctx) {
+	
+		String retorno=null;//caso seja metrica de grafo retorna id do grafo,senao retorna 
+		//id vertice + "*" + id grafo
+		
+		/* verifica se e metrica de grafo ou vertice */
+		if(ctx.id_graph!=null){
+			retorno = ctx.id_graph.getText();
+		}else if(ctx.id_vert!=null && ctx.v!=null){
+			retorno = ctx.v.getText() + "*" + ctx.id_vert.getText();
+		}
+		
+		return retorno;
+	}
+
 	
 	@Override
 	public String visitValor_parametro(Valor_parametroContext ctx) {
@@ -293,12 +399,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	}
 
 
-	@Override
-	public String visitObjeto_metrica(Objeto_metricaContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitObjeto_metrica(ctx);
-	}
-
+	
 	@Override
 	public String visitSalvar_opcional(Salvar_opcionalContext ctx) {
 		// TODO Auto-generated method stub
@@ -317,12 +418,6 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		
 		
 		return caminho;
-	}
-
-	@Override
-	public String visitMetrica(MetricaContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitMetrica(ctx);
 	}
 
 	

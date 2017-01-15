@@ -69,7 +69,7 @@ comandos : (cmds+=cmd)*
 	;
 
 objeto_metrica :
-		'vertex' STRING 'in' 'graph' IDENT | 'graph' IDENT
+		'vertex' v=STRING 'in' 'graph' id_vert=IDENT | 'graph' id_graph=IDENT
 		;
 
 salvar_opcional :
@@ -80,7 +80,7 @@ arquivo_grafo :
 		'from' 'file' (id=IDENT | str=STRING)
 	      ;
 
-metrica : 'degree' | 'clustering'
+metrica : 'degree' | 'degree_centrality' | 'average_node_connectivity'
 
 	;
 

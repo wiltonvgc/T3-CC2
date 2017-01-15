@@ -380,6 +380,28 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				
 			}
 			
+		}//READ
+		
+		/* PERTINENCIA DE METRICA PARA GRAFO OU VERTICE */
+		if(comando==4){
+			String metrica = visitMetrica(ctx.metrica());
+			
+			/* SE FOR GRAFO */
+			if(ctx.objeto_metrica()!=null && ctx.objeto_metrica().id_graph!=null){
+				
+			}
+			/* SE E VERTICE */
+			else if(ctx.objeto_metrica()!=null && ctx.objeto_metrica().id_vert!=null){
+				/* CENTRALITY SO SE APLICA A GRAFOS , NAO A NOS INDIVIDUAL */
+				if(metrica.equals("centrality") || metrica.equals("average_node_connectivity")){
+					sp.println("Erro: metrica " + metrica + " não se aplica a vértices individuais", "semantico");
+				}
+				
+			}
+			
+			
+			
+			
 		}
 		
 		
@@ -549,12 +571,15 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		
 		String grafo_id=null;
 		boolean vertex = false;
+		List<ParseTree> filhos = null;
 		
 		/* pega variavel graph */
-		List<ParseTree> filhos = ctx.children;
+		if(ctx!=null)
+			filhos = ctx.children;
 	
 		
 		/* Verifica se e metrica de vertex ou graph */
+	 if(filhos!=null)
 		for(ParseTree p : filhos){
 			if(p.getText().equals("vertex")){
 				vertex = true;
@@ -566,7 +591,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		if(vertex && filhos.size()>=5){
 			grafo_id = filhos.get(4).getText();
 		}else{
-			grafo_id = filhos.get(1).getText();
+			if(filhos!=null)
+				grafo_id = filhos.get(1).getText();
 			
 		}
 		
@@ -584,8 +610,9 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 
 	@Override
 	public String visitMetrica(MetricaContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitMetrica(ctx);
+		
+		
+		return ctx.getText();
 	}
 
 
