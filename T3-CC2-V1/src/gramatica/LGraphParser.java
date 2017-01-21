@@ -21,36 +21,39 @@ public class LGraphParser extends Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		T__31=32, T__32=33, FINAL=34, INICIO=35, IDENT=36, NUM_INT=37, NUM_REAL=38, 
-		STRING=39, WS=40, COMENTARIO=41;
+		T__31=32, T__32=33, T__33=34, T__34=35, FINAL=36, INICIO=37, IDENT=38, 
+		NUM_INT=39, NUM_REAL=40, STRING=41, WS=42, COMENTARIO=43;
 	public static final int
 		RULE_inicio = 0, RULE_programa = 1, RULE_corpo = 2, RULE_declaracoes = 3, 
-		RULE_variavel = 4, RULE_comandos = 5, RULE_objeto_metrica = 6, RULE_salvar_opcional = 7, 
-		RULE_arquivo_grafo = 8, RULE_metrica = 9, RULE_caminho = 10, RULE_cmd = 11, 
-		RULE_corpo_for = 12, RULE_parametros_create = 13, RULE_parametros_update = 14, 
-		RULE_valor_parametro = 15, RULE_tipo = 16, RULE_atribuicao = 17, RULE_edges = 18, 
-		RULE_tupla = 19, RULE_tipos_tupla = 20, RULE_tipos_tupla_op = 21, RULE_parametros_nodes = 22, 
-		RULE_nodes = 23;
+		RULE_variavel = 4, RULE_nodes_atributos = 5, RULE_tipo_atributo_node = 6, 
+		RULE_comandos = 7, RULE_objeto_metrica = 8, RULE_salvar_opcional = 9, 
+		RULE_arquivo_grafo = 10, RULE_metrica = 11, RULE_caminho = 12, RULE_cmd = 13, 
+		RULE_corpo_for = 14, RULE_parametros_create = 15, RULE_parametros_update = 16, 
+		RULE_valor_parametro = 17, RULE_tipo = 18, RULE_atribuicao = 19, RULE_nodes_atributos_atribuicao = 20, 
+		RULE_atributos_nodes_v = 21, RULE_edges = 22, RULE_tupla = 23, RULE_tipos_tupla = 24, 
+		RULE_tipos_tupla_op = 25, RULE_parametros_nodes = 26, RULE_nodes = 27;
 	public static final String[] ruleNames = {
-		"inicio", "programa", "corpo", "declaracoes", "variavel", "comandos", 
-		"objeto_metrica", "salvar_opcional", "arquivo_grafo", "metrica", "caminho", 
-		"cmd", "corpo_for", "parametros_create", "parametros_update", "valor_parametro", 
-		"tipo", "atribuicao", "edges", "tupla", "tipos_tupla", "tipos_tupla_op", 
+		"inicio", "programa", "corpo", "declaracoes", "variavel", "nodes_atributos", 
+		"tipo_atributo_node", "comandos", "objeto_metrica", "salvar_opcional", 
+		"arquivo_grafo", "metrica", "caminho", "cmd", "corpo_for", "parametros_create", 
+		"parametros_update", "valor_parametro", "tipo", "atribuicao", "nodes_atributos_atribuicao", 
+		"atributos_nodes_v", "edges", "tupla", "tipos_tupla", "tipos_tupla_op", 
 		"parametros_nodes", "nodes"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'data'", "','", "':'", "'vertex'", "'in'", "'graph'", "'save'", 
-		"'from'", "'file'", "'degree'", "'degree_centrality'", "'average_node_connectivity'", 
-		"'MST'", "'CM'", "'create'", "'('", "')'", "'read'", "'update'", "'with'", 
-		"'find'", "'of'", "'plot'", "'foreach'", "'='", "'type'", "'nodes'", "'edges'", 
-		"'string'", "'int'", "'float'", "'['", "']'", "'end'", "'begin'"
+		null, "'data'", "','", "':'", "'nodes'", "'('", "')'", "'float'", "'int'", 
+		"'string'", "'vertex'", "'in'", "'graph'", "'save'", "'from'", "'file'", 
+		"'degree'", "'degree_centrality'", "'average_node_connectivity'", "'edge_connectivity'", 
+		"'node_connectivity'", "'MST'", "'CM'", "'create'", "'read'", "'update'", 
+		"'with'", "'find'", "'of'", "'plot'", "'foreach'", "'='", "'type'", "'edges'", 
+		"'['", "']'", "'end'", "'begin'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, "FINAL", "INICIO", 
-		"IDENT", "NUM_INT", "NUM_REAL", "STRING", "WS", "COMENTARIO"
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		"FINAL", "INICIO", "IDENT", "NUM_INT", "NUM_REAL", "STRING", "WS", "COMENTARIO"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -130,7 +133,7 @@ public class LGraphParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
+			setState(56);
 			programa();
 			}
 		}
@@ -176,11 +179,11 @@ public class LGraphParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(50);
+			setState(58);
 			match(INICIO);
-			setState(51);
+			setState(59);
 			corpo();
-			setState(52);
+			setState(60);
 			match(FINAL);
 			}
 		}
@@ -227,9 +230,9 @@ public class LGraphParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(54);
+			setState(62);
 			declaracoes();
-			setState(55);
+			setState(63);
 			comandos();
 			}
 		}
@@ -280,24 +283,24 @@ public class LGraphParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(57);
+			setState(65);
 			match(T__0);
-			setState(58);
+			setState(66);
 			((DeclaracoesContext)_localctx).dec1 = variavel();
-			setState(63);
+			setState(71);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__1) {
 				{
 				{
-				setState(59);
+				setState(67);
 				match(T__1);
-				setState(60);
+				setState(68);
 				((DeclaracoesContext)_localctx).variavel = variavel();
 				((DeclaracoesContext)_localctx).outrasDecs.add(((DeclaracoesContext)_localctx).variavel);
 				}
 				}
-				setState(65);
+				setState(73);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -319,12 +322,16 @@ public class LGraphParser extends Parser {
 		public Token IDENT;
 		public List<Token> outrasVars = new ArrayList<Token>();
 		public TipoContext t;
+		public Nodes_atributosContext nt;
 		public List<TerminalNode> IDENT() { return getTokens(LGraphParser.IDENT); }
 		public TerminalNode IDENT(int i) {
 			return getToken(LGraphParser.IDENT, i);
 		}
 		public TipoContext tipo() {
 			return getRuleContext(TipoContext.class,0);
+		}
+		public Nodes_atributosContext nodes_atributos() {
+			return getRuleContext(Nodes_atributosContext.class,0);
 		}
 		public VariavelContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -352,29 +359,183 @@ public class LGraphParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(66);
+			setState(74);
 			((VariavelContext)_localctx).var1 = match(IDENT);
-			setState(71);
+			setState(79);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__1) {
 				{
 				{
-				setState(67);
+				setState(75);
 				match(T__1);
-				setState(68);
+				setState(76);
 				((VariavelContext)_localctx).IDENT = match(IDENT);
 				((VariavelContext)_localctx).outrasVars.add(((VariavelContext)_localctx).IDENT);
 				}
 				}
-				setState(73);
+				setState(81);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(74);
+			setState(82);
 			match(T__2);
-			setState(75);
-			((VariavelContext)_localctx).t = tipo();
+			setState(85);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			case 1:
+				{
+				setState(83);
+				((VariavelContext)_localctx).t = tipo();
+				}
+				break;
+			case 2:
+				{
+				setState(84);
+				((VariavelContext)_localctx).nt = nodes_atributos();
+				}
+				break;
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Nodes_atributosContext extends ParserRuleContext {
+		public Token at1;
+		public Tipo_atributo_nodeContext tan1;
+		public Token IDENT;
+		public List<Token> ats = new ArrayList<Token>();
+		public Tipo_atributo_nodeContext tipo_atributo_node;
+		public List<Tipo_atributo_nodeContext> tans = new ArrayList<Tipo_atributo_nodeContext>();
+		public List<TerminalNode> IDENT() { return getTokens(LGraphParser.IDENT); }
+		public TerminalNode IDENT(int i) {
+			return getToken(LGraphParser.IDENT, i);
+		}
+		public List<Tipo_atributo_nodeContext> tipo_atributo_node() {
+			return getRuleContexts(Tipo_atributo_nodeContext.class);
+		}
+		public Tipo_atributo_nodeContext tipo_atributo_node(int i) {
+			return getRuleContext(Tipo_atributo_nodeContext.class,i);
+		}
+		public Nodes_atributosContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_nodes_atributos; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LGraphListener ) ((LGraphListener)listener).enterNodes_atributos(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LGraphListener ) ((LGraphListener)listener).exitNodes_atributos(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LGraphVisitor ) return ((LGraphVisitor<? extends T>)visitor).visitNodes_atributos(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Nodes_atributosContext nodes_atributos() throws RecognitionException {
+		Nodes_atributosContext _localctx = new Nodes_atributosContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_nodes_atributos);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(87);
+			match(T__3);
+			setState(88);
+			match(T__4);
+			setState(89);
+			((Nodes_atributosContext)_localctx).at1 = match(IDENT);
+			setState(90);
+			match(T__2);
+			setState(91);
+			((Nodes_atributosContext)_localctx).tan1 = tipo_atributo_node();
+			setState(98);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==T__1) {
+				{
+				{
+				setState(92);
+				match(T__1);
+				setState(93);
+				((Nodes_atributosContext)_localctx).IDENT = match(IDENT);
+				((Nodes_atributosContext)_localctx).ats.add(((Nodes_atributosContext)_localctx).IDENT);
+				setState(94);
+				match(T__2);
+				setState(95);
+				((Nodes_atributosContext)_localctx).tipo_atributo_node = tipo_atributo_node();
+				((Nodes_atributosContext)_localctx).tans.add(((Nodes_atributosContext)_localctx).tipo_atributo_node);
+				}
+				}
+				setState(100);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(101);
+			match(T__5);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Tipo_atributo_nodeContext extends ParserRuleContext {
+		public Tipo_atributo_nodeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_tipo_atributo_node; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LGraphListener ) ((LGraphListener)listener).enterTipo_atributo_node(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LGraphListener ) ((LGraphListener)listener).exitTipo_atributo_node(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LGraphVisitor ) return ((LGraphVisitor<? extends T>)visitor).visitTipo_atributo_node(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Tipo_atributo_nodeContext tipo_atributo_node() throws RecognitionException {
+		Tipo_atributo_nodeContext _localctx = new Tipo_atributo_nodeContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_tipo_atributo_node);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(103);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__7) | (1L << T__8))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -418,23 +579,23 @@ public class LGraphParser extends Parser {
 
 	public final ComandosContext comandos() throws RecognitionException {
 		ComandosContext _localctx = new ComandosContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_comandos);
+		enterRule(_localctx, 14, RULE_comandos);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(80);
+			setState(108);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__14) | (1L << T__17) | (1L << T__18) | (1L << T__20) | (1L << T__22) | (1L << T__23) | (1L << IDENT))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__12) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__26) | (1L << T__28) | (1L << T__29) | (1L << IDENT))) != 0)) {
 				{
 				{
-				setState(77);
+				setState(105);
 				((ComandosContext)_localctx).cmd = cmd();
 				((ComandosContext)_localctx).cmds.add(((ComandosContext)_localctx).cmd);
 				}
 				}
-				setState(82);
+				setState(110);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -478,32 +639,32 @@ public class LGraphParser extends Parser {
 
 	public final Objeto_metricaContext objeto_metrica() throws RecognitionException {
 		Objeto_metricaContext _localctx = new Objeto_metricaContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_objeto_metrica);
+		enterRule(_localctx, 16, RULE_objeto_metrica);
 		try {
-			setState(90);
+			setState(118);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__3:
+			case T__9:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(83);
-				match(T__3);
-				setState(84);
+				setState(111);
+				match(T__9);
+				setState(112);
 				((Objeto_metricaContext)_localctx).v = match(STRING);
-				setState(85);
-				match(T__4);
-				setState(86);
-				match(T__5);
-				setState(87);
+				setState(113);
+				match(T__10);
+				setState(114);
+				match(T__11);
+				setState(115);
 				((Objeto_metricaContext)_localctx).id_vert = match(IDENT);
 				}
 				break;
-			case T__5:
+			case T__11:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(88);
-				match(T__5);
-				setState(89);
+				setState(116);
+				match(T__11);
+				setState(117);
 				((Objeto_metricaContext)_localctx).id_graph = match(IDENT);
 				}
 				break;
@@ -544,18 +705,18 @@ public class LGraphParser extends Parser {
 
 	public final Salvar_opcionalContext salvar_opcional() throws RecognitionException {
 		Salvar_opcionalContext _localctx = new Salvar_opcionalContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_salvar_opcional);
+		enterRule(_localctx, 18, RULE_salvar_opcional);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(93);
+			setState(121);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==T__6) {
+			if (_la==T__12) {
 				{
-				setState(92);
-				match(T__6);
+				setState(120);
+				match(T__12);
 				}
 			}
 
@@ -598,26 +759,26 @@ public class LGraphParser extends Parser {
 
 	public final Arquivo_grafoContext arquivo_grafo() throws RecognitionException {
 		Arquivo_grafoContext _localctx = new Arquivo_grafoContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_arquivo_grafo);
+		enterRule(_localctx, 20, RULE_arquivo_grafo);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(95);
-			match(T__7);
-			setState(96);
-			match(T__8);
-			setState(99);
+			setState(123);
+			match(T__13);
+			setState(124);
+			match(T__14);
+			setState(127);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IDENT:
 				{
-				setState(97);
+				setState(125);
 				((Arquivo_grafoContext)_localctx).id = match(IDENT);
 				}
 				break;
 			case STRING:
 				{
-				setState(98);
+				setState(126);
 				((Arquivo_grafoContext)_localctx).str = match(STRING);
 				}
 				break;
@@ -659,14 +820,14 @@ public class LGraphParser extends Parser {
 
 	public final MetricaContext metrica() throws RecognitionException {
 		MetricaContext _localctx = new MetricaContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_metrica);
+		enterRule(_localctx, 22, RULE_metrica);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(101);
+			setState(129);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__9) | (1L << T__10) | (1L << T__11))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -709,14 +870,14 @@ public class LGraphParser extends Parser {
 
 	public final CaminhoContext caminho() throws RecognitionException {
 		CaminhoContext _localctx = new CaminhoContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_caminho);
+		enterRule(_localctx, 24, RULE_caminho);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(103);
+			setState(131);
 			_la = _input.LA(1);
-			if ( !(_la==T__12 || _la==T__13) ) {
+			if ( !(_la==T__20 || _la==T__21) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -797,119 +958,119 @@ public class LGraphParser extends Parser {
 
 	public final CmdContext cmd() throws RecognitionException {
 		CmdContext _localctx = new CmdContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_cmd);
+		enterRule(_localctx, 26, RULE_cmd);
 		try {
-			setState(148);
+			setState(176);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(105);
+				setState(133);
 				salvar_opcional();
-				setState(106);
-				match(T__14);
-				setState(107);
-				match(T__5);
-				setState(108);
+				setState(134);
+				match(T__22);
+				setState(135);
+				match(T__11);
+				setState(136);
 				((CmdContext)_localctx).id_grafo = match(IDENT);
-				setState(109);
-				match(T__15);
-				setState(110);
+				setState(137);
+				match(T__4);
+				setState(138);
 				parametros_create();
-				setState(111);
-				match(T__16);
+				setState(139);
+				match(T__5);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(113);
+				setState(141);
 				salvar_opcional();
-				setState(114);
-				match(T__17);
-				setState(115);
-				match(T__5);
-				setState(116);
+				setState(142);
+				match(T__23);
+				setState(143);
+				match(T__11);
+				setState(144);
 				((CmdContext)_localctx).id_gf = match(IDENT);
-				setState(117);
+				setState(145);
 				arquivo_grafo();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(119);
-				match(T__18);
-				setState(120);
-				match(T__5);
-				setState(121);
+				setState(147);
+				match(T__24);
+				setState(148);
+				match(T__11);
+				setState(149);
 				((CmdContext)_localctx).id_grafo_up = match(IDENT);
-				setState(122);
-				match(T__19);
-				setState(123);
-				match(T__15);
-				setState(124);
+				setState(150);
+				match(T__25);
+				setState(151);
+				match(T__4);
+				setState(152);
 				parametros_update();
-				setState(125);
-				match(T__16);
+				setState(153);
+				match(T__5);
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(127);
+				setState(155);
 				salvar_opcional();
-				setState(128);
-				match(T__20);
-				setState(129);
+				setState(156);
+				match(T__26);
+				setState(157);
 				metrica();
-				setState(130);
-				match(T__21);
-				setState(131);
+				setState(158);
+				match(T__27);
+				setState(159);
 				objeto_metrica();
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(133);
-				match(T__22);
-				setState(134);
-				match(T__5);
-				setState(135);
+				setState(161);
+				match(T__28);
+				setState(162);
+				match(T__11);
+				setState(163);
 				((CmdContext)_localctx).id_plot = match(IDENT);
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(136);
-				match(T__23);
-				setState(137);
-				match(T__3);
-				setState(138);
+				setState(164);
+				match(T__29);
+				setState(165);
+				match(T__9);
+				setState(166);
 				((CmdContext)_localctx).id = match(IDENT);
-				setState(139);
-				match(T__4);
-				setState(140);
+				setState(167);
+				match(T__10);
+				setState(168);
 				caminho();
-				setState(141);
-				match(T__21);
-				setState(142);
+				setState(169);
+				match(T__27);
+				setState(170);
 				((CmdContext)_localctx).id2 = match(IDENT);
-				setState(143);
+				setState(171);
 				corpo_for();
 				}
 				break;
 			case 7:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(145);
+				setState(173);
 				((CmdContext)_localctx).id1 = match(IDENT);
-				setState(146);
-				match(T__24);
-				setState(147);
+				setState(174);
+				match(T__30);
+				setState(175);
 				atribuicao();
 				}
 				break;
@@ -951,15 +1112,15 @@ public class LGraphParser extends Parser {
 
 	public final Corpo_forContext corpo_for() throws RecognitionException {
 		Corpo_forContext _localctx = new Corpo_forContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_corpo_for);
+		enterRule(_localctx, 28, RULE_corpo_for);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(150);
+			setState(178);
 			match(INICIO);
-			setState(151);
+			setState(179);
 			comandos();
-			setState(152);
+			setState(180);
 			match(FINAL);
 			}
 		}
@@ -1005,31 +1166,31 @@ public class LGraphParser extends Parser {
 
 	public final Parametros_createContext parametros_create() throws RecognitionException {
 		Parametros_createContext _localctx = new Parametros_createContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_parametros_create);
+		enterRule(_localctx, 30, RULE_parametros_create);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(154);
-			match(T__25);
-			setState(155);
-			match(T__24);
-			setState(156);
+			setState(182);
+			match(T__31);
+			setState(183);
+			match(T__30);
+			setState(184);
 			((Parametros_createContext)_localctx).v1 = valor_parametro();
-			setState(157);
+			setState(185);
 			match(T__1);
-			setState(158);
-			match(T__26);
-			setState(159);
-			match(T__24);
-			setState(160);
+			setState(186);
+			match(T__3);
+			setState(187);
+			match(T__30);
+			setState(188);
 			((Parametros_createContext)_localctx).v2 = valor_parametro();
-			setState(161);
+			setState(189);
 			match(T__1);
-			setState(162);
-			match(T__27);
-			setState(163);
-			match(T__24);
-			setState(164);
+			setState(190);
+			match(T__32);
+			setState(191);
+			match(T__30);
+			setState(192);
 			((Parametros_createContext)_localctx).v3 = valor_parametro();
 			}
 		}
@@ -1074,23 +1235,23 @@ public class LGraphParser extends Parser {
 
 	public final Parametros_updateContext parametros_update() throws RecognitionException {
 		Parametros_updateContext _localctx = new Parametros_updateContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_parametros_update);
+		enterRule(_localctx, 32, RULE_parametros_update);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(166);
-			match(T__26);
-			setState(167);
-			match(T__24);
-			setState(168);
+			setState(194);
+			match(T__3);
+			setState(195);
+			match(T__30);
+			setState(196);
 			((Parametros_updateContext)_localctx).v1 = valor_parametro();
-			setState(169);
+			setState(197);
 			match(T__1);
-			setState(170);
-			match(T__27);
-			setState(171);
-			match(T__24);
-			setState(172);
+			setState(198);
+			match(T__32);
+			setState(199);
+			match(T__30);
+			setState(200);
 			((Parametros_updateContext)_localctx).v2 = valor_parametro();
 			}
 		}
@@ -1131,12 +1292,12 @@ public class LGraphParser extends Parser {
 
 	public final Valor_parametroContext valor_parametro() throws RecognitionException {
 		Valor_parametroContext _localctx = new Valor_parametroContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_valor_parametro);
+		enterRule(_localctx, 34, RULE_valor_parametro);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(174);
+			setState(202);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << IDENT) | (1L << NUM_INT) | (1L << NUM_REAL) | (1L << STRING))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1181,14 +1342,14 @@ public class LGraphParser extends Parser {
 
 	public final TipoContext tipo() throws RecognitionException {
 		TipoContext _localctx = new TipoContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_tipo);
+		enterRule(_localctx, 36, RULE_tipo);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(176);
+			setState(204);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__11) | (1L << T__32))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1220,6 +1381,9 @@ public class LGraphParser extends Parser {
 		public EdgesContext edges() {
 			return getRuleContext(EdgesContext.class,0);
 		}
+		public Nodes_atributos_atribuicaoContext nodes_atributos_atribuicao() {
+			return getRuleContext(Nodes_atributos_atribuicaoContext.class,0);
+		}
 		public AtribuicaoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1241,53 +1405,335 @@ public class LGraphParser extends Parser {
 
 	public final AtribuicaoContext atribuicao() throws RecognitionException {
 		AtribuicaoContext _localctx = new AtribuicaoContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_atribuicao);
+		enterRule(_localctx, 38, RULE_atribuicao);
 		try {
-			setState(184);
+			setState(213);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(178);
+				setState(206);
 				match(NUM_INT);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(179);
+				setState(207);
 				match(NUM_REAL);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(180);
+				setState(208);
 				match(IDENT);
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(181);
+				setState(209);
 				match(STRING);
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(182);
+				setState(210);
 				nodes();
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(183);
+				setState(211);
 				edges();
 				}
 				break;
+			case 7:
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(212);
+				nodes_atributos_atribuicao();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Nodes_atributos_atribuicaoContext extends ParserRuleContext {
+		public Token IDENT;
+		public List<Token> ats1 = new ArrayList<Token>();
+		public Token NUM_INT;
+		public List<Token> t = new ArrayList<Token>();
+		public Token NUM_REAL;
+		public Token STRING;
+		public Atributos_nodes_vContext atributos_nodes_v;
+		public List<Atributos_nodes_vContext> atrn = new ArrayList<Atributos_nodes_vContext>();
+		public List<TerminalNode> NUM_INT() { return getTokens(LGraphParser.NUM_INT); }
+		public TerminalNode NUM_INT(int i) {
+			return getToken(LGraphParser.NUM_INT, i);
+		}
+		public List<TerminalNode> NUM_REAL() { return getTokens(LGraphParser.NUM_REAL); }
+		public TerminalNode NUM_REAL(int i) {
+			return getToken(LGraphParser.NUM_REAL, i);
+		}
+		public List<TerminalNode> STRING() { return getTokens(LGraphParser.STRING); }
+		public TerminalNode STRING(int i) {
+			return getToken(LGraphParser.STRING, i);
+		}
+		public List<Atributos_nodes_vContext> atributos_nodes_v() {
+			return getRuleContexts(Atributos_nodes_vContext.class);
+		}
+		public Atributos_nodes_vContext atributos_nodes_v(int i) {
+			return getRuleContext(Atributos_nodes_vContext.class,i);
+		}
+		public List<TerminalNode> IDENT() { return getTokens(LGraphParser.IDENT); }
+		public TerminalNode IDENT(int i) {
+			return getToken(LGraphParser.IDENT, i);
+		}
+		public Nodes_atributos_atribuicaoContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_nodes_atributos_atribuicao; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LGraphListener ) ((LGraphListener)listener).enterNodes_atributos_atribuicao(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LGraphListener ) ((LGraphListener)listener).exitNodes_atributos_atribuicao(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LGraphVisitor ) return ((LGraphVisitor<? extends T>)visitor).visitNodes_atributos_atribuicao(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Nodes_atributos_atribuicaoContext nodes_atributos_atribuicao() throws RecognitionException {
+		Nodes_atributos_atribuicaoContext _localctx = new Nodes_atributos_atribuicaoContext(_ctx, getState());
+		enterRule(_localctx, 40, RULE_nodes_atributos_atribuicao);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(215);
+			match(T__33);
+			{
+			setState(216);
+			match(T__4);
+			setState(217);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUM_INT) | (1L << NUM_REAL) | (1L << STRING))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			setState(226); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(218);
+				match(T__1);
+				setState(219);
+				((Nodes_atributos_atribuicaoContext)_localctx).IDENT = match(IDENT);
+				((Nodes_atributos_atribuicaoContext)_localctx).ats1.add(((Nodes_atributos_atribuicaoContext)_localctx).IDENT);
+				setState(220);
+				match(T__30);
+				setState(224);
+				_errHandler.sync(this);
+				switch (_input.LA(1)) {
+				case NUM_INT:
+					{
+					setState(221);
+					((Nodes_atributos_atribuicaoContext)_localctx).NUM_INT = match(NUM_INT);
+					((Nodes_atributos_atribuicaoContext)_localctx).t.add(((Nodes_atributos_atribuicaoContext)_localctx).NUM_INT);
+					}
+					break;
+				case NUM_REAL:
+					{
+					setState(222);
+					((Nodes_atributos_atribuicaoContext)_localctx).NUM_REAL = match(NUM_REAL);
+					((Nodes_atributos_atribuicaoContext)_localctx).t.add(((Nodes_atributos_atribuicaoContext)_localctx).NUM_REAL);
+					}
+					break;
+				case STRING:
+					{
+					setState(223);
+					((Nodes_atributos_atribuicaoContext)_localctx).STRING = match(STRING);
+					((Nodes_atributos_atribuicaoContext)_localctx).t.add(((Nodes_atributos_atribuicaoContext)_localctx).STRING);
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				}
+				}
+				setState(228); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( _la==T__1 );
+			setState(230);
+			match(T__5);
+			}
+			setState(235);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==T__1) {
+				{
+				{
+				setState(232);
+				((Nodes_atributos_atribuicaoContext)_localctx).atributos_nodes_v = atributos_nodes_v();
+				((Nodes_atributos_atribuicaoContext)_localctx).atrn.add(((Nodes_atributos_atribuicaoContext)_localctx).atributos_nodes_v);
+				}
+				}
+				setState(237);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(238);
+			match(T__34);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Atributos_nodes_vContext extends ParserRuleContext {
+		public Token IDENT;
+		public List<Token> atsn = new ArrayList<Token>();
+		public Token NUM_INT;
+		public List<Token> t = new ArrayList<Token>();
+		public Token NUM_REAL;
+		public Token STRING;
+		public List<TerminalNode> NUM_INT() { return getTokens(LGraphParser.NUM_INT); }
+		public TerminalNode NUM_INT(int i) {
+			return getToken(LGraphParser.NUM_INT, i);
+		}
+		public List<TerminalNode> NUM_REAL() { return getTokens(LGraphParser.NUM_REAL); }
+		public TerminalNode NUM_REAL(int i) {
+			return getToken(LGraphParser.NUM_REAL, i);
+		}
+		public List<TerminalNode> STRING() { return getTokens(LGraphParser.STRING); }
+		public TerminalNode STRING(int i) {
+			return getToken(LGraphParser.STRING, i);
+		}
+		public List<TerminalNode> IDENT() { return getTokens(LGraphParser.IDENT); }
+		public TerminalNode IDENT(int i) {
+			return getToken(LGraphParser.IDENT, i);
+		}
+		public Atributos_nodes_vContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_atributos_nodes_v; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LGraphListener ) ((LGraphListener)listener).enterAtributos_nodes_v(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LGraphListener ) ((LGraphListener)listener).exitAtributos_nodes_v(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LGraphVisitor ) return ((LGraphVisitor<? extends T>)visitor).visitAtributos_nodes_v(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Atributos_nodes_vContext atributos_nodes_v() throws RecognitionException {
+		Atributos_nodes_vContext _localctx = new Atributos_nodes_vContext(_ctx, getState());
+		enterRule(_localctx, 42, RULE_atributos_nodes_v);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(240);
+			match(T__1);
+			setState(241);
+			match(T__4);
+			setState(242);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUM_INT) | (1L << NUM_REAL) | (1L << STRING))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			setState(251); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(243);
+				match(T__1);
+				setState(244);
+				((Atributos_nodes_vContext)_localctx).IDENT = match(IDENT);
+				((Atributos_nodes_vContext)_localctx).atsn.add(((Atributos_nodes_vContext)_localctx).IDENT);
+				setState(245);
+				match(T__30);
+				setState(249);
+				_errHandler.sync(this);
+				switch (_input.LA(1)) {
+				case NUM_INT:
+					{
+					setState(246);
+					((Atributos_nodes_vContext)_localctx).NUM_INT = match(NUM_INT);
+					((Atributos_nodes_vContext)_localctx).t.add(((Atributos_nodes_vContext)_localctx).NUM_INT);
+					}
+					break;
+				case NUM_REAL:
+					{
+					setState(247);
+					((Atributos_nodes_vContext)_localctx).NUM_REAL = match(NUM_REAL);
+					((Atributos_nodes_vContext)_localctx).t.add(((Atributos_nodes_vContext)_localctx).NUM_REAL);
+					}
+					break;
+				case STRING:
+					{
+					setState(248);
+					((Atributos_nodes_vContext)_localctx).STRING = match(STRING);
+					((Atributos_nodes_vContext)_localctx).t.add(((Atributos_nodes_vContext)_localctx).STRING);
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				}
+				}
+				setState(253); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( _la==T__1 );
+			setState(255);
+			match(T__5);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1329,33 +1775,33 @@ public class LGraphParser extends Parser {
 
 	public final EdgesContext edges() throws RecognitionException {
 		EdgesContext _localctx = new EdgesContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_edges);
+		enterRule(_localctx, 44, RULE_edges);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(186);
-			match(T__31);
-			setState(187);
+			setState(257);
+			match(T__33);
+			setState(258);
 			tupla();
-			setState(192);
+			setState(263);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__1) {
 				{
 				{
-				setState(188);
+				setState(259);
 				match(T__1);
-				setState(189);
+				setState(260);
 				tupla();
 				}
 				}
-				setState(194);
+				setState(265);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(195);
-			match(T__32);
+			setState(266);
+			match(T__34);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1403,37 +1849,37 @@ public class LGraphParser extends Parser {
 
 	public final TuplaContext tupla() throws RecognitionException {
 		TuplaContext _localctx = new TuplaContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_tupla);
+		enterRule(_localctx, 46, RULE_tupla);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(197);
-			match(T__15);
-			setState(198);
+			setState(268);
+			match(T__4);
+			setState(269);
 			tipos_tupla();
-			setState(199);
+			setState(270);
 			match(T__1);
-			setState(200);
+			setState(271);
 			tipos_tupla();
-			setState(205);
+			setState(276);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__1) {
 				{
 				{
-				setState(201);
+				setState(272);
 				match(T__1);
-				setState(202);
+				setState(273);
 				tipos_tupla_op();
 				}
 				}
-				setState(207);
+				setState(278);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(208);
-			match(T__16);
+			setState(279);
+			match(T__5);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1472,12 +1918,12 @@ public class LGraphParser extends Parser {
 
 	public final Tipos_tuplaContext tipos_tupla() throws RecognitionException {
 		Tipos_tuplaContext _localctx = new Tipos_tuplaContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_tipos_tupla);
+		enterRule(_localctx, 48, RULE_tipos_tupla);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(210);
+			setState(281);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUM_INT) | (1L << NUM_REAL) | (1L << STRING))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1525,12 +1971,12 @@ public class LGraphParser extends Parser {
 
 	public final Tipos_tupla_opContext tipos_tupla_op() throws RecognitionException {
 		Tipos_tupla_opContext _localctx = new Tipos_tupla_opContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_tipos_tupla_op);
+		enterRule(_localctx, 50, RULE_tipos_tupla_op);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(212);
+			setState(283);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUM_INT) | (1L << NUM_REAL) | (1L << STRING))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1584,84 +2030,84 @@ public class LGraphParser extends Parser {
 
 	public final Parametros_nodesContext parametros_nodes() throws RecognitionException {
 		Parametros_nodesContext _localctx = new Parametros_nodesContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_parametros_nodes);
+		enterRule(_localctx, 52, RULE_parametros_nodes);
 		try {
 			int _alt;
-			setState(238);
+			setState(309);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NUM_INT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(214);
+				setState(285);
 				match(NUM_INT);
-				setState(219);
+				setState(290);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(215);
+						setState(286);
 						match(T__1);
-						setState(216);
+						setState(287);
 						parametros_nodes();
 						}
 						} 
 					}
-					setState(221);
+					setState(292);
 					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+					_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
 				}
 				}
 				break;
 			case NUM_REAL:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(222);
+				setState(293);
 				match(NUM_REAL);
-				setState(227);
+				setState(298);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,18,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(223);
+						setState(294);
 						match(T__1);
-						setState(224);
+						setState(295);
 						parametros_nodes();
 						}
 						} 
 					}
-					setState(229);
+					setState(300);
 					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
+					_alt = getInterpreter().adaptivePredict(_input,18,_ctx);
 				}
 				}
 				break;
 			case STRING:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(230);
+				setState(301);
 				match(STRING);
-				setState(235);
+				setState(306);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,19,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(231);
+						setState(302);
 						match(T__1);
-						setState(232);
+						setState(303);
 						parametros_nodes();
 						}
 						} 
 					}
-					setState(237);
+					setState(308);
 					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+					_alt = getInterpreter().adaptivePredict(_input,19,_ctx);
 				}
 				}
 				break;
@@ -1708,33 +2154,33 @@ public class LGraphParser extends Parser {
 
 	public final NodesContext nodes() throws RecognitionException {
 		NodesContext _localctx = new NodesContext(_ctx, getState());
-		enterRule(_localctx, 46, RULE_nodes);
+		enterRule(_localctx, 54, RULE_nodes);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(240);
-			match(T__31);
-			setState(241);
+			setState(311);
+			match(T__33);
+			setState(312);
 			parametros_nodes();
-			setState(246);
+			setState(317);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__1) {
 				{
 				{
-				setState(242);
+				setState(313);
 				match(T__1);
-				setState(243);
+				setState(314);
 				parametros_nodes();
 				}
 				}
-				setState(248);
+				setState(319);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(249);
-			match(T__32);
+			setState(320);
+			match(T__34);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1749,85 +2195,114 @@ public class LGraphParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3+\u00fe\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3-\u0145\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
-		"\3\2\3\2\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\5\3\5\3\5\3\5\7\5@\n\5\f\5\16\5"+
-		"C\13\5\3\6\3\6\3\6\7\6H\n\6\f\6\16\6K\13\6\3\6\3\6\3\6\3\7\7\7Q\n\7\f"+
-		"\7\16\7T\13\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b]\n\b\3\t\5\t`\n\t\3\n\3"+
-		"\n\3\n\3\n\5\nf\n\n\3\13\3\13\3\f\3\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r"+
-		"\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3"+
-		"\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r"+
-		"\5\r\u0097\n\r\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
-		"\3\17\3\17\3\17\3\17\3\17\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\21"+
-		"\3\21\3\22\3\22\3\23\3\23\3\23\3\23\3\23\3\23\5\23\u00bb\n\23\3\24\3\24"+
-		"\3\24\3\24\7\24\u00c1\n\24\f\24\16\24\u00c4\13\24\3\24\3\24\3\25\3\25"+
-		"\3\25\3\25\3\25\3\25\7\25\u00ce\n\25\f\25\16\25\u00d1\13\25\3\25\3\25"+
-		"\3\26\3\26\3\27\3\27\3\30\3\30\3\30\7\30\u00dc\n\30\f\30\16\30\u00df\13"+
-		"\30\3\30\3\30\3\30\7\30\u00e4\n\30\f\30\16\30\u00e7\13\30\3\30\3\30\3"+
-		"\30\7\30\u00ec\n\30\f\30\16\30\u00ef\13\30\5\30\u00f1\n\30\3\31\3\31\3"+
-		"\31\3\31\7\31\u00f7\n\31\f\31\16\31\u00fa\13\31\3\31\3\31\3\31\2\2\32"+
-		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\2\7\3\2\f\16\3\2\17"+
-		"\20\3\2&)\4\2\b\b\35!\3\2\')\u00fe\2\62\3\2\2\2\4\64\3\2\2\2\68\3\2\2"+
-		"\2\b;\3\2\2\2\nD\3\2\2\2\fR\3\2\2\2\16\\\3\2\2\2\20_\3\2\2\2\22a\3\2\2"+
-		"\2\24g\3\2\2\2\26i\3\2\2\2\30\u0096\3\2\2\2\32\u0098\3\2\2\2\34\u009c"+
-		"\3\2\2\2\36\u00a8\3\2\2\2 \u00b0\3\2\2\2\"\u00b2\3\2\2\2$\u00ba\3\2\2"+
-		"\2&\u00bc\3\2\2\2(\u00c7\3\2\2\2*\u00d4\3\2\2\2,\u00d6\3\2\2\2.\u00f0"+
-		"\3\2\2\2\60\u00f2\3\2\2\2\62\63\5\4\3\2\63\3\3\2\2\2\64\65\7%\2\2\65\66"+
-		"\5\6\4\2\66\67\7$\2\2\67\5\3\2\2\289\5\b\5\29:\5\f\7\2:\7\3\2\2\2;<\7"+
-		"\3\2\2<A\5\n\6\2=>\7\4\2\2>@\5\n\6\2?=\3\2\2\2@C\3\2\2\2A?\3\2\2\2AB\3"+
-		"\2\2\2B\t\3\2\2\2CA\3\2\2\2DI\7&\2\2EF\7\4\2\2FH\7&\2\2GE\3\2\2\2HK\3"+
-		"\2\2\2IG\3\2\2\2IJ\3\2\2\2JL\3\2\2\2KI\3\2\2\2LM\7\5\2\2MN\5\"\22\2N\13"+
-		"\3\2\2\2OQ\5\30\r\2PO\3\2\2\2QT\3\2\2\2RP\3\2\2\2RS\3\2\2\2S\r\3\2\2\2"+
-		"TR\3\2\2\2UV\7\6\2\2VW\7)\2\2WX\7\7\2\2XY\7\b\2\2Y]\7&\2\2Z[\7\b\2\2["+
-		"]\7&\2\2\\U\3\2\2\2\\Z\3\2\2\2]\17\3\2\2\2^`\7\t\2\2_^\3\2\2\2_`\3\2\2"+
-		"\2`\21\3\2\2\2ab\7\n\2\2be\7\13\2\2cf\7&\2\2df\7)\2\2ec\3\2\2\2ed\3\2"+
-		"\2\2f\23\3\2\2\2gh\t\2\2\2h\25\3\2\2\2ij\t\3\2\2j\27\3\2\2\2kl\5\20\t"+
-		"\2lm\7\21\2\2mn\7\b\2\2no\7&\2\2op\7\22\2\2pq\5\34\17\2qr\7\23\2\2r\u0097"+
-		"\3\2\2\2st\5\20\t\2tu\7\24\2\2uv\7\b\2\2vw\7&\2\2wx\5\22\n\2x\u0097\3"+
-		"\2\2\2yz\7\25\2\2z{\7\b\2\2{|\7&\2\2|}\7\26\2\2}~\7\22\2\2~\177\5\36\20"+
-		"\2\177\u0080\7\23\2\2\u0080\u0097\3\2\2\2\u0081\u0082\5\20\t\2\u0082\u0083"+
-		"\7\27\2\2\u0083\u0084\5\24\13\2\u0084\u0085\7\30\2\2\u0085\u0086\5\16"+
-		"\b\2\u0086\u0097\3\2\2\2\u0087\u0088\7\31\2\2\u0088\u0089\7\b\2\2\u0089"+
-		"\u0097\7&\2\2\u008a\u008b\7\32\2\2\u008b\u008c\7\6\2\2\u008c\u008d\7&"+
-		"\2\2\u008d\u008e\7\7\2\2\u008e\u008f\5\26\f\2\u008f\u0090\7\30\2\2\u0090"+
-		"\u0091\7&\2\2\u0091\u0092\5\32\16\2\u0092\u0097\3\2\2\2\u0093\u0094\7"+
-		"&\2\2\u0094\u0095\7\33\2\2\u0095\u0097\5$\23\2\u0096k\3\2\2\2\u0096s\3"+
-		"\2\2\2\u0096y\3\2\2\2\u0096\u0081\3\2\2\2\u0096\u0087\3\2\2\2\u0096\u008a"+
-		"\3\2\2\2\u0096\u0093\3\2\2\2\u0097\31\3\2\2\2\u0098\u0099\7%\2\2\u0099"+
-		"\u009a\5\f\7\2\u009a\u009b\7$\2\2\u009b\33\3\2\2\2\u009c\u009d\7\34\2"+
-		"\2\u009d\u009e\7\33\2\2\u009e\u009f\5 \21\2\u009f\u00a0\7\4\2\2\u00a0"+
-		"\u00a1\7\35\2\2\u00a1\u00a2\7\33\2\2\u00a2\u00a3\5 \21\2\u00a3\u00a4\7"+
-		"\4\2\2\u00a4\u00a5\7\36\2\2\u00a5\u00a6\7\33\2\2\u00a6\u00a7\5 \21\2\u00a7"+
-		"\35\3\2\2\2\u00a8\u00a9\7\35\2\2\u00a9\u00aa\7\33\2\2\u00aa\u00ab\5 \21"+
-		"\2\u00ab\u00ac\7\4\2\2\u00ac\u00ad\7\36\2\2\u00ad\u00ae\7\33\2\2\u00ae"+
-		"\u00af\5 \21\2\u00af\37\3\2\2\2\u00b0\u00b1\t\4\2\2\u00b1!\3\2\2\2\u00b2"+
-		"\u00b3\t\5\2\2\u00b3#\3\2\2\2\u00b4\u00bb\7\'\2\2\u00b5\u00bb\7(\2\2\u00b6"+
-		"\u00bb\7&\2\2\u00b7\u00bb\7)\2\2\u00b8\u00bb\5\60\31\2\u00b9\u00bb\5&"+
-		"\24\2\u00ba\u00b4\3\2\2\2\u00ba\u00b5\3\2\2\2\u00ba\u00b6\3\2\2\2\u00ba"+
-		"\u00b7\3\2\2\2\u00ba\u00b8\3\2\2\2\u00ba\u00b9\3\2\2\2\u00bb%\3\2\2\2"+
-		"\u00bc\u00bd\7\"\2\2\u00bd\u00c2\5(\25\2\u00be\u00bf\7\4\2\2\u00bf\u00c1"+
-		"\5(\25\2\u00c0\u00be\3\2\2\2\u00c1\u00c4\3\2\2\2\u00c2\u00c0\3\2\2\2\u00c2"+
-		"\u00c3\3\2\2\2\u00c3\u00c5\3\2\2\2\u00c4\u00c2\3\2\2\2\u00c5\u00c6\7#"+
-		"\2\2\u00c6\'\3\2\2\2\u00c7\u00c8\7\22\2\2\u00c8\u00c9\5*\26\2\u00c9\u00ca"+
-		"\7\4\2\2\u00ca\u00cf\5*\26\2\u00cb\u00cc\7\4\2\2\u00cc\u00ce\5,\27\2\u00cd"+
-		"\u00cb\3\2\2\2\u00ce\u00d1\3\2\2\2\u00cf\u00cd\3\2\2\2\u00cf\u00d0\3\2"+
-		"\2\2\u00d0\u00d2\3\2\2\2\u00d1\u00cf\3\2\2\2\u00d2\u00d3\7\23\2\2\u00d3"+
-		")\3\2\2\2\u00d4\u00d5\t\6\2\2\u00d5+\3\2\2\2\u00d6\u00d7\t\6\2\2\u00d7"+
-		"-\3\2\2\2\u00d8\u00dd\7\'\2\2\u00d9\u00da\7\4\2\2\u00da\u00dc\5.\30\2"+
-		"\u00db\u00d9\3\2\2\2\u00dc\u00df\3\2\2\2\u00dd\u00db\3\2\2\2\u00dd\u00de"+
-		"\3\2\2\2\u00de\u00f1\3\2\2\2\u00df\u00dd\3\2\2\2\u00e0\u00e5\7(\2\2\u00e1"+
-		"\u00e2\7\4\2\2\u00e2\u00e4\5.\30\2\u00e3\u00e1\3\2\2\2\u00e4\u00e7\3\2"+
-		"\2\2\u00e5\u00e3\3\2\2\2\u00e5\u00e6\3\2\2\2\u00e6\u00f1\3\2\2\2\u00e7"+
-		"\u00e5\3\2\2\2\u00e8\u00ed\7)\2\2\u00e9\u00ea\7\4\2\2\u00ea\u00ec\5.\30"+
-		"\2\u00eb\u00e9\3\2\2\2\u00ec\u00ef\3\2\2\2\u00ed\u00eb\3\2\2\2\u00ed\u00ee"+
-		"\3\2\2\2\u00ee\u00f1\3\2\2\2\u00ef\u00ed\3\2\2\2\u00f0\u00d8\3\2\2\2\u00f0"+
-		"\u00e0\3\2\2\2\u00f0\u00e8\3\2\2\2\u00f1/\3\2\2\2\u00f2\u00f3\7\"\2\2"+
-		"\u00f3\u00f8\5.\30\2\u00f4\u00f5\7\4\2\2\u00f5\u00f7\5.\30\2\u00f6\u00f4"+
-		"\3\2\2\2\u00f7\u00fa\3\2\2\2\u00f8\u00f6\3\2\2\2\u00f8\u00f9\3\2\2\2\u00f9"+
-		"\u00fb\3\2\2\2\u00fa\u00f8\3\2\2\2\u00fb\u00fc\7#\2\2\u00fc\61\3\2\2\2"+
-		"\21AIR\\_e\u0096\u00ba\u00c2\u00cf\u00dd\u00e5\u00ed\u00f0\u00f8";
+		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\3\2\3\2\3\3\3\3\3\3\3\3\3\4\3"+
+		"\4\3\4\3\5\3\5\3\5\3\5\7\5H\n\5\f\5\16\5K\13\5\3\6\3\6\3\6\7\6P\n\6\f"+
+		"\6\16\6S\13\6\3\6\3\6\3\6\5\6X\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7"+
+		"\7\7c\n\7\f\7\16\7f\13\7\3\7\3\7\3\b\3\b\3\t\7\tm\n\t\f\t\16\tp\13\t\3"+
+		"\n\3\n\3\n\3\n\3\n\3\n\3\n\5\ny\n\n\3\13\5\13|\n\13\3\f\3\f\3\f\3\f\5"+
+		"\f\u0082\n\f\3\r\3\r\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
+		"\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
+		"\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
+		"\3\17\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u00b3\n\17\3\20\3\20\3\20\3\20"+
+		"\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\22\3\22"+
+		"\3\22\3\22\3\22\3\22\3\22\3\22\3\23\3\23\3\24\3\24\3\25\3\25\3\25\3\25"+
+		"\3\25\3\25\3\25\5\25\u00d8\n\25\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26"+
+		"\3\26\5\26\u00e3\n\26\6\26\u00e5\n\26\r\26\16\26\u00e6\3\26\3\26\3\26"+
+		"\7\26\u00ec\n\26\f\26\16\26\u00ef\13\26\3\26\3\26\3\27\3\27\3\27\3\27"+
+		"\3\27\3\27\3\27\3\27\3\27\5\27\u00fc\n\27\6\27\u00fe\n\27\r\27\16\27\u00ff"+
+		"\3\27\3\27\3\30\3\30\3\30\3\30\7\30\u0108\n\30\f\30\16\30\u010b\13\30"+
+		"\3\30\3\30\3\31\3\31\3\31\3\31\3\31\3\31\7\31\u0115\n\31\f\31\16\31\u0118"+
+		"\13\31\3\31\3\31\3\32\3\32\3\33\3\33\3\34\3\34\3\34\7\34\u0123\n\34\f"+
+		"\34\16\34\u0126\13\34\3\34\3\34\3\34\7\34\u012b\n\34\f\34\16\34\u012e"+
+		"\13\34\3\34\3\34\3\34\7\34\u0133\n\34\f\34\16\34\u0136\13\34\5\34\u0138"+
+		"\n\34\3\35\3\35\3\35\3\35\7\35\u013e\n\35\f\35\16\35\u0141\13\35\3\35"+
+		"\3\35\3\35\2\2\36\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62"+
+		"\64\668\2\b\3\2\t\13\3\2\22\26\3\2\27\30\3\2(+\6\2\6\6\t\13\16\16##\3"+
+		"\2)+\u014b\2:\3\2\2\2\4<\3\2\2\2\6@\3\2\2\2\bC\3\2\2\2\nL\3\2\2\2\fY\3"+
+		"\2\2\2\16i\3\2\2\2\20n\3\2\2\2\22x\3\2\2\2\24{\3\2\2\2\26}\3\2\2\2\30"+
+		"\u0083\3\2\2\2\32\u0085\3\2\2\2\34\u00b2\3\2\2\2\36\u00b4\3\2\2\2 \u00b8"+
+		"\3\2\2\2\"\u00c4\3\2\2\2$\u00cc\3\2\2\2&\u00ce\3\2\2\2(\u00d7\3\2\2\2"+
+		"*\u00d9\3\2\2\2,\u00f2\3\2\2\2.\u0103\3\2\2\2\60\u010e\3\2\2\2\62\u011b"+
+		"\3\2\2\2\64\u011d\3\2\2\2\66\u0137\3\2\2\28\u0139\3\2\2\2:;\5\4\3\2;\3"+
+		"\3\2\2\2<=\7\'\2\2=>\5\6\4\2>?\7&\2\2?\5\3\2\2\2@A\5\b\5\2AB\5\20\t\2"+
+		"B\7\3\2\2\2CD\7\3\2\2DI\5\n\6\2EF\7\4\2\2FH\5\n\6\2GE\3\2\2\2HK\3\2\2"+
+		"\2IG\3\2\2\2IJ\3\2\2\2J\t\3\2\2\2KI\3\2\2\2LQ\7(\2\2MN\7\4\2\2NP\7(\2"+
+		"\2OM\3\2\2\2PS\3\2\2\2QO\3\2\2\2QR\3\2\2\2RT\3\2\2\2SQ\3\2\2\2TW\7\5\2"+
+		"\2UX\5&\24\2VX\5\f\7\2WU\3\2\2\2WV\3\2\2\2X\13\3\2\2\2YZ\7\6\2\2Z[\7\7"+
+		"\2\2[\\\7(\2\2\\]\7\5\2\2]d\5\16\b\2^_\7\4\2\2_`\7(\2\2`a\7\5\2\2ac\5"+
+		"\16\b\2b^\3\2\2\2cf\3\2\2\2db\3\2\2\2de\3\2\2\2eg\3\2\2\2fd\3\2\2\2gh"+
+		"\7\b\2\2h\r\3\2\2\2ij\t\2\2\2j\17\3\2\2\2km\5\34\17\2lk\3\2\2\2mp\3\2"+
+		"\2\2nl\3\2\2\2no\3\2\2\2o\21\3\2\2\2pn\3\2\2\2qr\7\f\2\2rs\7+\2\2st\7"+
+		"\r\2\2tu\7\16\2\2uy\7(\2\2vw\7\16\2\2wy\7(\2\2xq\3\2\2\2xv\3\2\2\2y\23"+
+		"\3\2\2\2z|\7\17\2\2{z\3\2\2\2{|\3\2\2\2|\25\3\2\2\2}~\7\20\2\2~\u0081"+
+		"\7\21\2\2\177\u0082\7(\2\2\u0080\u0082\7+\2\2\u0081\177\3\2\2\2\u0081"+
+		"\u0080\3\2\2\2\u0082\27\3\2\2\2\u0083\u0084\t\3\2\2\u0084\31\3\2\2\2\u0085"+
+		"\u0086\t\4\2\2\u0086\33\3\2\2\2\u0087\u0088\5\24\13\2\u0088\u0089\7\31"+
+		"\2\2\u0089\u008a\7\16\2\2\u008a\u008b\7(\2\2\u008b\u008c\7\7\2\2\u008c"+
+		"\u008d\5 \21\2\u008d\u008e\7\b\2\2\u008e\u00b3\3\2\2\2\u008f\u0090\5\24"+
+		"\13\2\u0090\u0091\7\32\2\2\u0091\u0092\7\16\2\2\u0092\u0093\7(\2\2\u0093"+
+		"\u0094\5\26\f\2\u0094\u00b3\3\2\2\2\u0095\u0096\7\33\2\2\u0096\u0097\7"+
+		"\16\2\2\u0097\u0098\7(\2\2\u0098\u0099\7\34\2\2\u0099\u009a\7\7\2\2\u009a"+
+		"\u009b\5\"\22\2\u009b\u009c\7\b\2\2\u009c\u00b3\3\2\2\2\u009d\u009e\5"+
+		"\24\13\2\u009e\u009f\7\35\2\2\u009f\u00a0\5\30\r\2\u00a0\u00a1\7\36\2"+
+		"\2\u00a1\u00a2\5\22\n\2\u00a2\u00b3\3\2\2\2\u00a3\u00a4\7\37\2\2\u00a4"+
+		"\u00a5\7\16\2\2\u00a5\u00b3\7(\2\2\u00a6\u00a7\7 \2\2\u00a7\u00a8\7\f"+
+		"\2\2\u00a8\u00a9\7(\2\2\u00a9\u00aa\7\r\2\2\u00aa\u00ab\5\32\16\2\u00ab"+
+		"\u00ac\7\36\2\2\u00ac\u00ad\7(\2\2\u00ad\u00ae\5\36\20\2\u00ae\u00b3\3"+
+		"\2\2\2\u00af\u00b0\7(\2\2\u00b0\u00b1\7!\2\2\u00b1\u00b3\5(\25\2\u00b2"+
+		"\u0087\3\2\2\2\u00b2\u008f\3\2\2\2\u00b2\u0095\3\2\2\2\u00b2\u009d\3\2"+
+		"\2\2\u00b2\u00a3\3\2\2\2\u00b2\u00a6\3\2\2\2\u00b2\u00af\3\2\2\2\u00b3"+
+		"\35\3\2\2\2\u00b4\u00b5\7\'\2\2\u00b5\u00b6\5\20\t\2\u00b6\u00b7\7&\2"+
+		"\2\u00b7\37\3\2\2\2\u00b8\u00b9\7\"\2\2\u00b9\u00ba\7!\2\2\u00ba\u00bb"+
+		"\5$\23\2\u00bb\u00bc\7\4\2\2\u00bc\u00bd\7\6\2\2\u00bd\u00be\7!\2\2\u00be"+
+		"\u00bf\5$\23\2\u00bf\u00c0\7\4\2\2\u00c0\u00c1\7#\2\2\u00c1\u00c2\7!\2"+
+		"\2\u00c2\u00c3\5$\23\2\u00c3!\3\2\2\2\u00c4\u00c5\7\6\2\2\u00c5\u00c6"+
+		"\7!\2\2\u00c6\u00c7\5$\23\2\u00c7\u00c8\7\4\2\2\u00c8\u00c9\7#\2\2\u00c9"+
+		"\u00ca\7!\2\2\u00ca\u00cb\5$\23\2\u00cb#\3\2\2\2\u00cc\u00cd\t\5\2\2\u00cd"+
+		"%\3\2\2\2\u00ce\u00cf\t\6\2\2\u00cf\'\3\2\2\2\u00d0\u00d8\7)\2\2\u00d1"+
+		"\u00d8\7*\2\2\u00d2\u00d8\7(\2\2\u00d3\u00d8\7+\2\2\u00d4\u00d8\58\35"+
+		"\2\u00d5\u00d8\5.\30\2\u00d6\u00d8\5*\26\2\u00d7\u00d0\3\2\2\2\u00d7\u00d1"+
+		"\3\2\2\2\u00d7\u00d2\3\2\2\2\u00d7\u00d3\3\2\2\2\u00d7\u00d4\3\2\2\2\u00d7"+
+		"\u00d5\3\2\2\2\u00d7\u00d6\3\2\2\2\u00d8)\3\2\2\2\u00d9\u00da\7$\2\2\u00da"+
+		"\u00db\7\7\2\2\u00db\u00e4\t\7\2\2\u00dc\u00dd\7\4\2\2\u00dd\u00de\7("+
+		"\2\2\u00de\u00e2\7!\2\2\u00df\u00e3\7)\2\2\u00e0\u00e3\7*\2\2\u00e1\u00e3"+
+		"\7+\2\2\u00e2\u00df\3\2\2\2\u00e2\u00e0\3\2\2\2\u00e2\u00e1\3\2\2\2\u00e3"+
+		"\u00e5\3\2\2\2\u00e4\u00dc\3\2\2\2\u00e5\u00e6\3\2\2\2\u00e6\u00e4\3\2"+
+		"\2\2\u00e6\u00e7\3\2\2\2\u00e7\u00e8\3\2\2\2\u00e8\u00e9\7\b\2\2\u00e9"+
+		"\u00ed\3\2\2\2\u00ea\u00ec\5,\27\2\u00eb\u00ea\3\2\2\2\u00ec\u00ef\3\2"+
+		"\2\2\u00ed\u00eb\3\2\2\2\u00ed\u00ee\3\2\2\2\u00ee\u00f0\3\2\2\2\u00ef"+
+		"\u00ed\3\2\2\2\u00f0\u00f1\7%\2\2\u00f1+\3\2\2\2\u00f2\u00f3\7\4\2\2\u00f3"+
+		"\u00f4\7\7\2\2\u00f4\u00fd\t\7\2\2\u00f5\u00f6\7\4\2\2\u00f6\u00f7\7("+
+		"\2\2\u00f7\u00fb\7!\2\2\u00f8\u00fc\7)\2\2\u00f9\u00fc\7*\2\2\u00fa\u00fc"+
+		"\7+\2\2\u00fb\u00f8\3\2\2\2\u00fb\u00f9\3\2\2\2\u00fb\u00fa\3\2\2\2\u00fc"+
+		"\u00fe\3\2\2\2\u00fd\u00f5\3\2\2\2\u00fe\u00ff\3\2\2\2\u00ff\u00fd\3\2"+
+		"\2\2\u00ff\u0100\3\2\2\2\u0100\u0101\3\2\2\2\u0101\u0102\7\b\2\2\u0102"+
+		"-\3\2\2\2\u0103\u0104\7$\2\2\u0104\u0109\5\60\31\2\u0105\u0106\7\4\2\2"+
+		"\u0106\u0108\5\60\31\2\u0107\u0105\3\2\2\2\u0108\u010b\3\2\2\2\u0109\u0107"+
+		"\3\2\2\2\u0109\u010a\3\2\2\2\u010a\u010c\3\2\2\2\u010b\u0109\3\2\2\2\u010c"+
+		"\u010d\7%\2\2\u010d/\3\2\2\2\u010e\u010f\7\7\2\2\u010f\u0110\5\62\32\2"+
+		"\u0110\u0111\7\4\2\2\u0111\u0116\5\62\32\2\u0112\u0113\7\4\2\2\u0113\u0115"+
+		"\5\64\33\2\u0114\u0112\3\2\2\2\u0115\u0118\3\2\2\2\u0116\u0114\3\2\2\2"+
+		"\u0116\u0117\3\2\2\2\u0117\u0119\3\2\2\2\u0118\u0116\3\2\2\2\u0119\u011a"+
+		"\7\b\2\2\u011a\61\3\2\2\2\u011b\u011c\t\7\2\2\u011c\63\3\2\2\2\u011d\u011e"+
+		"\t\7\2\2\u011e\65\3\2\2\2\u011f\u0124\7)\2\2\u0120\u0121\7\4\2\2\u0121"+
+		"\u0123\5\66\34\2\u0122\u0120\3\2\2\2\u0123\u0126\3\2\2\2\u0124\u0122\3"+
+		"\2\2\2\u0124\u0125\3\2\2\2\u0125\u0138\3\2\2\2\u0126\u0124\3\2\2\2\u0127"+
+		"\u012c\7*\2\2\u0128\u0129\7\4\2\2\u0129\u012b\5\66\34\2\u012a\u0128\3"+
+		"\2\2\2\u012b\u012e\3\2\2\2\u012c\u012a\3\2\2\2\u012c\u012d\3\2\2\2\u012d"+
+		"\u0138\3\2\2\2\u012e\u012c\3\2\2\2\u012f\u0134\7+\2\2\u0130\u0131\7\4"+
+		"\2\2\u0131\u0133\5\66\34\2\u0132\u0130\3\2\2\2\u0133\u0136\3\2\2\2\u0134"+
+		"\u0132\3\2\2\2\u0134\u0135\3\2\2\2\u0135\u0138\3\2\2\2\u0136\u0134\3\2"+
+		"\2\2\u0137\u011f\3\2\2\2\u0137\u0127\3\2\2\2\u0137\u012f\3\2\2\2\u0138"+
+		"\67\3\2\2\2\u0139\u013a\7$\2\2\u013a\u013f\5\66\34\2\u013b\u013c\7\4\2"+
+		"\2\u013c\u013e\5\66\34\2\u013d\u013b\3\2\2\2\u013e\u0141\3\2\2\2\u013f"+
+		"\u013d\3\2\2\2\u013f\u0140\3\2\2\2\u0140\u0142\3\2\2\2\u0141\u013f\3\2"+
+		"\2\2\u0142\u0143\7%\2\2\u01439\3\2\2\2\30IQWdnx{\u0081\u00b2\u00d7\u00e2"+
+		"\u00e6\u00ed\u00fb\u00ff\u0109\u0116\u0124\u012c\u0134\u0137\u013f";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

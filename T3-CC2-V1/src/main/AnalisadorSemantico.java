@@ -1,7 +1,9 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -13,6 +15,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import gramatica.LGraphBaseVisitor;
 import gramatica.LGraphParser.Arquivo_grafoContext;
 import gramatica.LGraphParser.AtribuicaoContext;
+import gramatica.LGraphParser.Atributos_nodes_vContext;
 import gramatica.LGraphParser.CmdContext;
 import gramatica.LGraphParser.ComandosContext;
 import gramatica.LGraphParser.CorpoContext;
@@ -21,6 +24,8 @@ import gramatica.LGraphParser.EdgesContext;
 import gramatica.LGraphParser.InicioContext;
 import gramatica.LGraphParser.MetricaContext;
 import gramatica.LGraphParser.NodesContext;
+import gramatica.LGraphParser.Nodes_atributosContext;
+import gramatica.LGraphParser.Nodes_atributos_atribuicaoContext;
 import gramatica.LGraphParser.Objeto_metricaContext;
 import gramatica.LGraphParser.Parametros_createContext;
 import gramatica.LGraphParser.Parametros_nodesContext;
@@ -28,6 +33,7 @@ import gramatica.LGraphParser.Parametros_updateContext;
 import gramatica.LGraphParser.ProgramaContext;
 import gramatica.LGraphParser.Salvar_opcionalContext;
 import gramatica.LGraphParser.TipoContext;
+import gramatica.LGraphParser.Tipo_atributo_nodeContext;
 import gramatica.LGraphParser.Tipos_tuplaContext;
 import gramatica.LGraphParser.Tipos_tupla_opContext;
 import gramatica.LGraphParser.TuplaContext;
@@ -43,6 +49,9 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	PilhaDeTabelas pilhaTabs;
 	SaidaParser sp;
 	ArrayList<String> grafos_criados;//guarda nome dos grafos criados com CREATE
+	ArrayList<Nodes> nodes_atributos;//guarda nodes com atributos criados
+	ArrayList<String> nodes_atributos_aux; //lista auxiliar que guarda tipos nodes com atributos
+	String var_at;
 	
 	public AnalisadorSemantico(TabelaDeSimbolos t,SaidaParser sp,PilhaDeTabelas p){
 		this.tab = t;
@@ -50,6 +59,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		this.pilhaTabs = p;
 		this.pilhaTabs.empilhar(this.tab);
 		this.grafos_criados = new ArrayList<String>();
+		this.nodes_atributos = new ArrayList<Nodes>();
+		this.nodes_atributos_aux = new ArrayList<String>();
 	}
 
 
@@ -116,16 +127,93 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitVariavel(VariavelContext ctx) {
 		
+		String retorno=null;
+		
 		/* guarda em varsDecl variaveis declaradas de MESMO tipo */
 		varsDecl.add(ctx.var1.getText());
-		for(Token var : ctx.outrasVars){
-			varsDecl.add(var.getText());
+		
+		if(ctx.nt!=null){
+			this.nodes_atributos_aux.add(ctx.var1.getText());
 		}
 		
-		/* retorna tipo */
-		return ctx.t.getText();
+		for(Token var : ctx.outrasVars){
+			varsDecl.add(var.getText());
+			
+			
+			/* se for tipo nodes COM atributos */
+			if(ctx.nt!=null){
+				this.nodes_atributos_aux.add(var.getText());
+			}
+			
+		}	
 		
+		
+		
+		
+		/* retorna tipo */
+		if(ctx.t!=null)
+			retorno = ctx.t.getText();//tipos sem atributos
+		else if(ctx.nt!=null){
+			retorno = visitNodes_atributos(ctx.nt); //tipo nodes com atributos
+		}
+		
+	
+		
+		return retorno;
 	}
+
+	@Override
+	public String visitNodes_atributos(Nodes_atributosContext ctx) {
+		
+		ArrayList<String> atributos = new ArrayList<String>();
+		ArrayList<String> tipos_atributos = new ArrayList<String>();
+		
+		/* Cria lista de atributos de no */
+		String par1 = ctx.at1.getText();//id atributo 1
+		atributos.add(par1);
+		
+	
+		
+		for(Token par : ctx.ats){
+			atributos.add(par.getText());//outros (?) atributos
+			
+		}
+		
+		/* Cria lista de tipos dos atributos de nos */
+		String tipo_at1 = visitTipo_atributo_node(ctx.tan1);
+		
+		tipos_atributos.add(tipo_at1);
+		String out_tipos;
+		
+		for(Tipo_atributo_nodeContext t : ctx.tans){
+			out_tipos = visitTipo_atributo_node(t);
+			tipos_atributos.add(out_tipos);
+		}
+		
+		
+		
+		for(String id_node : this.nodes_atributos_aux){
+			Nodes n = new Nodes(id_node);
+			n.addAtributos(atributos);
+			n.addTiposAtributos(tipos_atributos);
+			this.nodes_atributos.add(n);
+		}
+		
+		this.nodes_atributos_aux.clear();
+	
+		
+		
+		
+		return "nodes_com_atributos";
+	}
+
+
+	@Override
+	public String visitTipo_atributo_node(Tipo_atributo_nodeContext ctx) {
+	
+		return ctx.getText();
+	}
+
 
 	@Override
 	public String visitComandos(ComandosContext ctx) {
@@ -278,7 +366,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			
 			/* Verifica se variavel atribuida ja foi declarada */
 			String var = visitAtribuicao(ctx.atribuicao());
-			if(var!=null && var!="int" && var!="real" && var!="edges" && var!="nodes" && var!="string"){
+			if(var!=null && var!="int" && var!="real" && var!="edges" && var!="nodes" && var!="string" && var!="nodes_com_atributos"){
 				if(!this.pilhaTabs.existeSimbolo(var)){
 					sp.println("Erro: variavel " + var + " não declarada", "semantico");
 				}
@@ -293,6 +381,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			
 			if(ctx.IDENT()!=null)
 				var_atribuicao = ctx.id1.getText();//variavel que recebe o valor
+			
+			this.var_at = var_atribuicao;
 			
 			String tipo_var_atr = this.pilhaTabs.getTipo(var_atribuicao);
 			
@@ -328,7 +418,14 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 					sp.println("Erro: incompatibilidade de tipo em atribuicao de " + var_atribuicao, "semantico");
 				}
 				
-			}else{
+			}
+			else if(t.equals("nodes_com_atributos")){
+				if(!tipo_var_atr.equals(t)){
+					sp.println("Erro: incompatibilidade de tipo em atribuicao de " + var_atribuicao, "semantico");
+				}
+			}
+			
+			else{
 				//IDENT
 				 t = this.pilhaTabs.getTipo(t);
 				if(!tipo_var_atr.equals(t)){
@@ -393,21 +490,199 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			/* SE E VERTICE */
 			else if(ctx.objeto_metrica()!=null && ctx.objeto_metrica().id_vert!=null){
 				/* CENTRALITY SO SE APLICA A GRAFOS , NAO A NOS INDIVIDUAL */
-				if(metrica.equals("centrality") || metrica.equals("average_node_connectivity")){
+				if(metrica.equals("centrality") || metrica.equals("average_node_connectivity") || metrica.equals("edge_connectivity") || metrica.equals("node_connectivity") ){
 					sp.println("Erro: metrica " + metrica + " não se aplica a vértices individuais", "semantico");
 				}
 				
 			}
 			
-			
-			
-			
+		}
+		
+		/* Verificacao de existencia de atributos para o no atribuido caso seja NODES COM ATRIBUTOS*/
+		
+		if(comando==5){
+			if(ctx.atribuicao().nodes_atributos_atribuicao()!=null){
+				visitNodes_atributos_atribuicao(ctx.atribuicao().nodes_atributos_atribuicao());
+			}
 		}
 		
 		
 		return null;
 	}
 	
+
+	
+	@Override
+	public String visitNodes_atributos_atribuicao(Nodes_atributos_atribuicaoContext ctx) {
+		
+		Nodes no=null;
+		ArrayList<String> atributos  = new ArrayList<String> () ;
+		ArrayList<List<Token>> atributos_tokens = new ArrayList<List<Token>>();
+		
+		/* Enconta NODE da atribuicao na lista nodes_atributos auxilixar*/
+		for(Nodes n : this.nodes_atributos){
+			if(n.getNome().equals(this.var_at)){
+				
+				no = n;
+				
+				
+			}
+		}
+		
+		atributos = no.getAtributos();
+		
+		
+		
+		/* listas de ids de casa visita a regra nodes_atributos_v + 1*/
+		atributos_tokens.add(ctx.ats1);
+			
+		if(ctx.atrn!=null){
+			for(Atributos_nodes_vContext av : ctx.atrn){
+				atributos_tokens.add(av.atsn);
+			}
+		}
+		
+		
+		ArrayList<String> aux = new ArrayList<String>();
+	
+		/* verificacao SEMANTICA DE EXISTENCIA DE ATRIBUTOS NA ATRIBUICAO */
+		for(List<Token> lts : atributos_tokens){
+			
+			for(Token t : lts){
+				aux.add(t.getText());
+			}
+			
+			/* AUSENCIA DE ATRIBUTO */
+			for(String at : atributos){
+				
+					if(!aux.contains(at)){
+						sp.println("Erro: ausência de atributo(s)", "semantico");
+						break;
+					}
+					else if(atributos.size()<aux.size()){
+						sp.println("Erro: atributos inicializados porém não declarados", "semantico");
+						break;
+					}
+					else if(aux.size()!=atributos.size()){
+						sp.println("Erro: ausência de atributo(s)", "semantico");
+						break;
+					}
+			}
+			
+			/* ATRIBUTO NAO DECLARADO */
+			
+			for(String at : aux){
+				
+				if(!atributos.contains(at)){
+					sp.println("Erro: atributo " + at + " não declarado", "semantico");
+					break;
+				}
+			}
+			
+			aux.clear();
+			
+			/* REPETICAO DE ATRIBUTOS 
+			//Conta quantos itens tem de cada produto
+			Map<String, Integer> contador = new HashMap<String, Integer>();
+			for (String valor : aux) {
+			    if (!contador.containsKey(valor)) {
+			        contador.put(valor, 0);
+			    }
+			    contador.put(valor, contador.get(valor)+1);
+			}
+			
+			//Exibe os que tiverem mais de 1.
+			for (Map.Entry<String, Integer> item : contador.entrySet()) {
+			    if (item.getValue() >= 2) {
+			       sp.println("Erro: atributo " + item.getKey() + " duplicado","semantico");
+			    }
+			}*/
+			
+			
+		}/* FIM   verificacao SEMANTICA DE EXISTENCIA DE ATRIBUTOS NA ATRIBUICAO */
+		
+		
+		/* VERIFICACAO SEMANTICA DE COMPATIBILIDADE DE ATRIBUICAO EM ATIBUTOS*/
+		
+		int i =0;
+		/* primeira tupla */
+		
+	
+		for(Token t : ctx.ats1){
+			
+				String tipo = no.getTipoAtributo(t.getText());
+			
+				int valor = ctx.t.get(i).getType();
+				String tipo_atr=null;
+			
+				if(valor==39){
+					tipo_atr = "int";
+				
+				}else if(valor==40){
+					tipo_atr = "float";
+				}else if(valor==41){
+					tipo_atr = "string";
+				}
+			
+				if(tipo!=null && !tipo.equals(tipo_atr)){
+					sp.println("Erro: incompatibilidade na atribuição do atributo " + t.getText(), "semantico");
+					break;
+				}
+			
+				i+=1;
+		}
+	     
+		i = 0;
+		for(Atributos_nodes_vContext at : ctx.atrn){
+			
+			for(Token t : at.atsn){
+				
+				String tipo = no.getTipoAtributo(t.getText());
+				
+				int valor = at.t.get(i).getType();
+				
+				String tipo_atr=null;
+				
+				if(valor==39){
+					tipo_atr = "int";
+				
+				}else if(valor==40){
+					tipo_atr = "float";
+				}else if(valor==41){
+					tipo_atr = "string";
+				}
+				
+
+				if(tipo!=null && !tipo.equals(tipo_atr)){
+					sp.println("Erro: incompatibilidade na atribuição do atributo " + t.getText(), "semantico");
+					break;
+				}
+			
+				i+=1;
+			
+				
+			}
+			i = 0;
+		}/*FIM VERIFICACAO SEMANTICA DE COMPATIBILIDADE DE ATRIBUICAO EM ATIBUTOS*/
+		
+		 
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+		
+		
+		return null;
+	}
+
+
 	@Override
 	public String visitArquivo_grafo(Arquivo_grafoContext ctx) {
 		
@@ -562,6 +837,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			var = "nodes";
 		else if(ctx.STRING()!=null)
 			var = "string";
+		else if(ctx.nodes_atributos_atribuicao()!=null)
+			var = "nodes_com_atributos";
 		
 		return var;
 	}

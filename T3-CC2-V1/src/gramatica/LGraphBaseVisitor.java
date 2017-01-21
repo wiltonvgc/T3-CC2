@@ -52,6 +52,20 @@ public class LGraphBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitNodes_atributos(LGraphParser.Nodes_atributosContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTipo_atributo_node(LGraphParser.Tipo_atributo_nodeContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitComandos(LGraphParser.ComandosContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -137,6 +151,20 @@ public class LGraphBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitAtribuicao(LGraphParser.AtribuicaoContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitNodes_atributos_atribuicao(LGraphParser.Nodes_atributos_atribuicaoContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAtributos_nodes_v(LGraphParser.Atributos_nodes_vContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

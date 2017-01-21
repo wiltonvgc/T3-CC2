@@ -76,6 +76,30 @@ public class LGraphBaseListener implements LGraphListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNodes_atributos(LGraphParser.Nodes_atributosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNodes_atributos(LGraphParser.Nodes_atributosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTipo_atributo_node(LGraphParser.Tipo_atributo_nodeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTipo_atributo_node(LGraphParser.Tipo_atributo_nodeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterComandos(LGraphParser.ComandosContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -227,6 +251,30 @@ public class LGraphBaseListener implements LGraphListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAtribuicao(LGraphParser.AtribuicaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNodes_atributos_atribuicao(LGraphParser.Nodes_atributos_atribuicaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNodes_atributos_atribuicao(LGraphParser.Nodes_atributos_atribuicaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAtributos_nodes_v(LGraphParser.Atributos_nodes_vContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAtributos_nodes_v(LGraphParser.Atributos_nodes_vContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

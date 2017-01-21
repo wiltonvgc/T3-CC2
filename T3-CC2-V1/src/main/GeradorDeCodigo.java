@@ -286,7 +286,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 					}
 					/* Grau de vertice */
 					else{
-						sp.println("graus = " + grafo + ".degree(" + vertice + ")\n");
+						sp.println("ngraus = " + grafo + ".degree(" + vertice + ")\n");
 						sp.println(arq + ".write(\"\\n\\n*** Métrica : DEGREE ***\")");
 						sp.println(arq + ".write(\"\\nNó: \" + str(" + vertice   + ")"+ "+ \" Grau => \" + str(graus))");
 					}
@@ -322,6 +322,37 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				sp.println(arq + ".write(\"\\nGrafo "+  obj  + " Average_node_connectivity => \" + str(con))");
 				
 			}
+			
+			/* Metrica : edge_connectivity */
+			else if(metrica.equals("edge_connectivity")){
+				String arq = obj + "Metricas";
+				
+				/*  edge_connecti SO SE APLICA A GRAFO */
+				sp.println("con = nx.edge_connectivity(" + obj + ")\n");
+				/* Imprimir dict graus em arquivo criado de metrica */
+				sp.println("#Impressao de edge_connectivity de grafo\n");
+				sp.println(arq + ".write(\"\\n\\n*** Métrica : EDGE_CONNECTIVITY ***\")");
+				sp.println(arq + ".write(\"\\nGrafo "+  obj  + " Edge_connectivity => \" + str(con))");
+				
+			}
+			
+			/* Metrica : node_connectivity */
+			else if(metrica.equals("node_connectivity")){
+				String arq = obj + "Metricas";
+				
+				/*  node_connecti SO SE APLICA A GRAFO */
+				sp.println("con = nx.node_connectivity(" + obj + ")\n");
+				/* Imprimir dict graus em arquivo criado de metrica */
+				sp.println("#Impressao de node_connectivity de grafo\n");
+				sp.println(arq + ".write(\"\\n\\n*** Métrica : NODE_CONNECTIVITY ***\")");
+				sp.println(arq + ".write(\"\\nGrafo "+  obj  + " Node_connectivity => \" + str(con))");
+				
+			}
+			
+			
+		
+			
+			
 			
 			
 			

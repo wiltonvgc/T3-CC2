@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
+import org.omg.SendingContext.RunTime;
 
 import gramatica.*;
 import gramatica.LGraphParser.InicioContext;
@@ -53,7 +54,7 @@ public class Principal {
 	
 		
         
-		String path = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/teste1";
+		String path = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/teste2";
 		//String out = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaSintatico/teste1.txt";
 		//String outGerador = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaGerador/saida1.py";
 		
@@ -101,7 +102,7 @@ public class Principal {
      		  
      		 Runtime run = Runtime.getRuntime();
      		 run.exec("python " + outGerador);
-        	
+     		
         }
         else{
         	/* Escrita arquivo erro Lexico ou Sintatico */

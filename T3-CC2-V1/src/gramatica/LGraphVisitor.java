@@ -41,6 +41,18 @@ public interface LGraphVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariavel(LGraphParser.VariavelContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LGraphParser#nodes_atributos}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNodes_atributos(LGraphParser.Nodes_atributosContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#tipo_atributo_node}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTipo_atributo_node(LGraphParser.Tipo_atributo_nodeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LGraphParser#comandos}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -118,6 +130,18 @@ public interface LGraphVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAtribuicao(LGraphParser.AtribuicaoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#nodes_atributos_atribuicao}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNodes_atributos_atribuicao(LGraphParser.Nodes_atributos_atribuicaoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#atributos_nodes_v}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtributos_nodes_v(LGraphParser.Atributos_nodes_vContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LGraphParser#edges}.
 	 * @param ctx the parse tree

@@ -58,6 +58,26 @@ public interface LGraphListener extends ParseTreeListener {
 	 */
 	void exitVariavel(LGraphParser.VariavelContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LGraphParser#nodes_atributos}.
+	 * @param ctx the parse tree
+	 */
+	void enterNodes_atributos(LGraphParser.Nodes_atributosContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#nodes_atributos}.
+	 * @param ctx the parse tree
+	 */
+	void exitNodes_atributos(LGraphParser.Nodes_atributosContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#tipo_atributo_node}.
+	 * @param ctx the parse tree
+	 */
+	void enterTipo_atributo_node(LGraphParser.Tipo_atributo_nodeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#tipo_atributo_node}.
+	 * @param ctx the parse tree
+	 */
+	void exitTipo_atributo_node(LGraphParser.Tipo_atributo_nodeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LGraphParser#comandos}.
 	 * @param ctx the parse tree
 	 */
@@ -187,6 +207,26 @@ public interface LGraphListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAtribuicao(LGraphParser.AtribuicaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#nodes_atributos_atribuicao}.
+	 * @param ctx the parse tree
+	 */
+	void enterNodes_atributos_atribuicao(LGraphParser.Nodes_atributos_atribuicaoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#nodes_atributos_atribuicao}.
+	 * @param ctx the parse tree
+	 */
+	void exitNodes_atributos_atribuicao(LGraphParser.Nodes_atributos_atribuicaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#atributos_nodes_v}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtributos_nodes_v(LGraphParser.Atributos_nodes_vContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#atributos_nodes_v}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtributos_nodes_v(LGraphParser.Atributos_nodes_vContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LGraphParser#edges}.
 	 * @param ctx the parse tree

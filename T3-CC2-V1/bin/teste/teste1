@@ -4,13 +4,15 @@ begin
 	data var_1,var2,var3,var1 : int,
              a, b, c,j : float,
 	     grafo2,grafo1,grafo3,grafo4 :  graph,
-	     nos,g,nos3: nodes,
+	     nos: nodes(cor:string, peso:int),
 	     aresta,aresta2,arestas3,n : edges,
-	     path: string
+	     path: string,
+            nostipo4,nos21 : nodes (peso:int, cor: string) 
+	     
+
+	nos = [("A",cor=12,peso=0,custo="alto"), (1, cor=89, peso=3)]
 
 	aresta = [(1,"A",0),("U",1,0)]
-	nos = [1,"A","U","t"]
-	g = ["g","w",7]
 	aresta2 = [("g","w",0)]
 
 	/*nos3 = ["a","b",1,2,3,8]*/
@@ -25,23 +27,21 @@ begin
 	save find degree of graph grafo1 
 	/*save find degree of graph grafo2*/
 	save find degree of graph grafo2
-	save find degree of vertex "t" in graph grafo1
 	save find degree_centrality of graph grafo1
 	save find degree_centrality of graph grafo2
 	/*save find closeness_centrality of graph grafo1*/
-	save find average_node_connectivity of graph grafo2
+	/*save find average_node_connectivity of graph grafo1*/
+	save find edge_connectivity of graph grafo1
+
 	/*save find degree_centrality of graph grafo3*/
 	plot graph grafo2
 	plot graph grafo1
 		
 	
-	var1 = 9	
-	a = 3.4
 	
-	foreach vertex v in MST of grafo1
-	begin
-			
-	end
+	a = 3.8
+	
+
 	
 end
 

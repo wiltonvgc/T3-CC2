@@ -59,11 +59,17 @@ declaracoes :
 	    ;
 
 variavel : 
-	   var1=IDENT (',' outrasVars+=IDENT)* ':' t=tipo
+	   var1=IDENT (',' outrasVars+=IDENT)* ':' (t=tipo | nt=nodes_atributos)
 	   ;
 
+nodes_atributos : 
+                'nodes' '(' at1=IDENT ':' tan1=tipo_atributo_node (',' ats+=IDENT ':' tans+=tipo_atributo_node)* ')'
+		;
 
 
+tipo_atributo_node : 
+	       		'float' | 'int' | 'string'
+		;
 
 comandos : (cmds+=cmd)*
 	;
@@ -80,7 +86,7 @@ arquivo_grafo :
 		'from' 'file' (id=IDENT | str=STRING)
 	      ;
 
-metrica : 'degree' | 'degree_centrality' | 'average_node_connectivity'
+metrica : 'degree' | 'degree_centrality' | 'average_node_connectivity' | 'edge_connectivity' | 'node_connectivity'  
 
 	;
 
@@ -121,8 +127,17 @@ tipo:
        ;
 
 atribuicao :
-		NUM_INT | NUM_REAL | IDENT | STRING | nodes | edges 
+		NUM_INT | NUM_REAL | IDENT | STRING | nodes | edges | nodes_atributos_atribuicao
 	  ;
+
+nodes_atributos_atribuicao :
+	'[' ('(' (NUM_INT | NUM_REAL | STRING)  (',' ats1+=IDENT '=' (t+=NUM_INT | t+=NUM_REAL | t+=STRING) )+ ')' ) (atrn+=atributos_nodes_v)* ']'
+
+	;
+
+atributos_nodes_v : 
+		',' '(' (NUM_INT | NUM_REAL | STRING)  (',' atsn+=IDENT '=' (t+=NUM_INT | t+=NUM_REAL | t+=STRING) )+ ')' 
+		;
 
 edges :
 	'[' tupla (',' tupla)* ']'
