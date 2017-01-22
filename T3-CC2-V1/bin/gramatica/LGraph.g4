@@ -99,13 +99,48 @@ cmd :	salvar_opcional'create' 'graph' id_grafo=IDENT '(' parametros_create ')'
 	| 'update' 'graph' id_grafo_up=IDENT 'with' '(' parametros_update ')'
 	| salvar_opcional 'find' metrica 'of' objeto_metrica
 	| 'plot' 'graph' id_plot=IDENT
-	| 'foreach' 'vertex' id=IDENT 'in' caminho 'of' id2=IDENT corpo_for 
+	| 'foreach' 'vertex' id=IDENT 'in' g_id=IDENT cf=corpo_for
 	| id1=IDENT '=' atribuicao
 	;
 
 corpo_for : 
-	   'begin' comandos 'end'
+	   'begin' comandos_for 'end'
+	   ;
+
+comandos_for :
+		('if' '(' ctx_if+=expressao_if ')' cif+=corpo_if ('else' corpo_else)? | 'print''('(STRING | IDENT)')')* 
+	     ;
+
+corpo_if :
+	  'begin' comandos_for 'end' | 
 	  ;
+
+corpo_else:
+          comandos_for
+          ;
+
+
+
+expressao_if :
+		exp_relacional | exp_igualdade
+	     ;
+
+exp_relacional :
+		(op1_int=NUM_INT | op1_real=NUM_REAL | (op1_v=IDENT '.' at1=IDENT) | op1_id=IDENT) op=op_relacional (op2_int=NUM_INT | op2_real=NUM_REAL | op2_v=IDENT '.' at2=IDENT | op2_id=IDENT)
+		;
+
+op_relacional : 
+		'<' | '>' | '<=' | '>='
+	      ;
+
+exp_igualdade :
+		(op1_int=NUM_INT | op1_real=NUM_REAL | op1_v=IDENT '.' at1=IDENT | op1_id=IDENT | op1_s=STRING) op=op_igualdade (op2_int=NUM_INT | op2_real=NUM_REAL | op2_id=IDENT | op2_s=STRING | op2_v=IDENT '.' at2=IDENT)
+	       ;
+
+op_igualdade :
+		'==' | '!='
+	     ;
+
 
 parametros_create : 
 	    'type' '=' v1=valor_parametro ',' 'nodes' '=' v2=valor_parametro ',' 'edges' '=' 

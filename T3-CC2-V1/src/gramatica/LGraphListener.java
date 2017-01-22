@@ -158,6 +158,86 @@ public interface LGraphListener extends ParseTreeListener {
 	 */
 	void exitCorpo_for(LGraphParser.Corpo_forContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LGraphParser#comandos_for}.
+	 * @param ctx the parse tree
+	 */
+	void enterComandos_for(LGraphParser.Comandos_forContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#comandos_for}.
+	 * @param ctx the parse tree
+	 */
+	void exitComandos_for(LGraphParser.Comandos_forContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#corpo_if}.
+	 * @param ctx the parse tree
+	 */
+	void enterCorpo_if(LGraphParser.Corpo_ifContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#corpo_if}.
+	 * @param ctx the parse tree
+	 */
+	void exitCorpo_if(LGraphParser.Corpo_ifContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#corpo_else}.
+	 * @param ctx the parse tree
+	 */
+	void enterCorpo_else(LGraphParser.Corpo_elseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#corpo_else}.
+	 * @param ctx the parse tree
+	 */
+	void exitCorpo_else(LGraphParser.Corpo_elseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#expressao_if}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressao_if(LGraphParser.Expressao_ifContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#expressao_if}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressao_if(LGraphParser.Expressao_ifContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#exp_relacional}.
+	 * @param ctx the parse tree
+	 */
+	void enterExp_relacional(LGraphParser.Exp_relacionalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#exp_relacional}.
+	 * @param ctx the parse tree
+	 */
+	void exitExp_relacional(LGraphParser.Exp_relacionalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#op_relacional}.
+	 * @param ctx the parse tree
+	 */
+	void enterOp_relacional(LGraphParser.Op_relacionalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#op_relacional}.
+	 * @param ctx the parse tree
+	 */
+	void exitOp_relacional(LGraphParser.Op_relacionalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#exp_igualdade}.
+	 * @param ctx the parse tree
+	 */
+	void enterExp_igualdade(LGraphParser.Exp_igualdadeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#exp_igualdade}.
+	 * @param ctx the parse tree
+	 */
+	void exitExp_igualdade(LGraphParser.Exp_igualdadeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#op_igualdade}.
+	 * @param ctx the parse tree
+	 */
+	void enterOp_igualdade(LGraphParser.Op_igualdadeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#op_igualdade}.
+	 * @param ctx the parse tree
+	 */
+	void exitOp_igualdade(LGraphParser.Op_igualdadeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LGraphParser#parametros_create}.
 	 * @param ctx the parse tree
 	 */

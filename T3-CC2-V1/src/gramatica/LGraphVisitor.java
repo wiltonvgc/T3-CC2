@@ -101,6 +101,54 @@ public interface LGraphVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCorpo_for(LGraphParser.Corpo_forContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LGraphParser#comandos_for}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComandos_for(LGraphParser.Comandos_forContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#corpo_if}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCorpo_if(LGraphParser.Corpo_ifContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#corpo_else}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCorpo_else(LGraphParser.Corpo_elseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#expressao_if}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressao_if(LGraphParser.Expressao_ifContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#exp_relacional}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExp_relacional(LGraphParser.Exp_relacionalContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#op_relacional}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOp_relacional(LGraphParser.Op_relacionalContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#exp_igualdade}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExp_igualdade(LGraphParser.Exp_igualdadeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#op_igualdade}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOp_igualdade(LGraphParser.Op_igualdadeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LGraphParser#parametros_create}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

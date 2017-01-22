@@ -27,6 +27,23 @@ arestas = []
 
 grafo1 = nx.Graph()
 
-nos1 = []
+#Declaracao de inteiros e floats
+
+i = 0
+
+#Declaracao de string
+
+s = " "
+
+nos2 = []
+
 #Insercao de atributos de nodes em grafo
+grafo1.add_node("G", valor = 1)
+grafo1.add_node("G", cor = "blue")
+grafo1.add_node("G", peso = 3)
+
+#Insercao de atributos de nodes em grafo
+grafo1.add_node("G", valor = 1)
+grafo1.add_node("G", cor = "blue")
+grafo1.add_node("G", peso = 3)
 

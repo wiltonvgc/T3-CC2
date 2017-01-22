@@ -216,41 +216,41 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				SetNodes s=null;
 				/* Acha estrutura do nodes*/
 				for(SetNodes nodes : this.set_nodes){
-					if(nodes.getNome().equals(this.atribuicao_aux)){
+					if(nodes.getNome().equals(p2)){
 						s = nodes;
 						break;
 					}
 					
 				}//fim for
 				
-				sp.println("#Insercao de atributos de nodes em grafo");
-				
+				sp.println("\n#Insercao de atributos de nodes em grafo");
+			
+			if(s!=null){
 				/* Lista de ids do nodes */
 				ArrayList<String> ids_nodes = s.getIds();
 				ArrayList<String> atributos_nodes = s.getAtributos();
 				ArrayList<String> valores_atributos = s.getValoresAtributos();
-				String aux;
+				String aux=null;
+				int i=0;
 				
-				for(String at : atributos_nodes){
+				
+				
+				for(String id : ids_nodes){
+					aux = id_grafo + ".add_node(" + id;
 					
+						String at = atributos_nodes.get(i);
+						String v = valores_atributos.get(i);
+						aux  = aux + ", " + at + " = " + v;
+						i+=1;
+						
+						aux = aux + ")";
 					
+					sp.println(aux);
 					
-					for(String id : ids_nodes){
-
-						aux = id_grafo + ".add_node(" + id;
-						String v = valores_atributos.get(ids_nodes.indexOf(id));
-						aux = aux + " ," + at + " = " + v ;
-					}
-					
-			
-					System.out.println(aux + ")");
 				}
-				
-				
-				
-				
-				
-			}
+			
+			}//fim s!=null
+		}//fim else
 			
 			
 		}
@@ -264,12 +264,61 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			
 			String id_grafo = ctx.id_grafo_up.getText();
 			
-			/* Codigo Python adicionar arestas e noos */
-			sp.println("#Atualizacao de nos e arestas nos grafos\n");
-			sp.println(id_grafo + ".add_nodes_from(" + p1 + ")\n");
-			sp.println(id_grafo + ".add_weighted_edges_from(" + p2 + ")\n");
 			
-		}
+			if(this.pilha.getTipo(p1).equals("nodes")){
+				/* Codigo Python adicionar arestas e noos */
+				sp.println("#Atualizacao de nos e arestas nos grafos\n");
+				sp.println(id_grafo + ".add_nodes_from(" + p1 + ")\n");
+				sp.println(id_grafo + ".add_weighted_edges_from(" + p2 + ")\n");
+			
+			}/* NOS COM ATRIBUTOS */
+			
+			else{
+				SetNodes s=null;
+				/* Acha estrutura do nodes*/
+				for(SetNodes nodes : this.set_nodes){
+					if(nodes.getNome().equals(p1)){
+						s = nodes;
+						break;
+					}
+					
+				}//fim for
+				
+				sp.println("\n#Insercao de atributos de nodes em grafo");
+				
+				/* Lista de ids do nodes */
+				
+			if(s!=null){
+				ArrayList<String> ids_nodes = s.getIds();
+				ArrayList<String> atributos_nodes = s.getAtributos();
+				ArrayList<String> valores_atributos = s.getValoresAtributos();
+				String aux=null;
+				int i=0;
+				
+				
+				
+				for(String id : ids_nodes){
+					aux = id_grafo + ".add_node(" + id;
+					
+						String at = atributos_nodes.get(i);
+						String v = valores_atributos.get(i);
+						aux  = aux + ", " + at + " = " + v;
+						i+=1;
+						
+						aux = aux + ")";
+					
+					sp.println(aux);
+					
+				}
+				
+			}//fim s != null
+				
+			}//fim else
+			
+		}//FIM UPDATE
+		
+		
+		
 		
 		/* Geracao de imagem de grafo PLOT */
 		if(comando==6){
