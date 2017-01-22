@@ -1,11 +1,14 @@
 begin
 	data nos:nodes,
-	     nos1:nodes(valor:int, cor:string,peso:int)
+	     nos1:nodes(valor:int, cor:string,peso:int),
+	     arestas:edges,
+	     grafo1:graph
 
-	nos1 =  [(1,valor=3,peso=2,cor="red"), ("A",peso=1,cor="S",valor=1), ("K",cor="R",peso=2,valor=2),("L",cor="R",peso=1,valor=2)]
-	/*nos = [(1,valor=2,cor="A")]*/
+	nos1 =  [(1,valor=1,peso=2,cor="red"), ("A",peso=1,cor="S",valor=1), ("K",cor="R",peso=2,valor=2),("L",cor="R",peso=1,valor=2)]
+	/*nos1 = [(1,valor=2,cor="A",peso=1)]*/
 
-
+	create graph grafo1 (type="multi",nodes=nos1,edges=arestas)
+	
 
 
 end

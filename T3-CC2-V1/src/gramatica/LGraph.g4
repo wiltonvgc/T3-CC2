@@ -131,12 +131,12 @@ atribuicao :
 	  ;
 
 nodes_atributos_atribuicao :
-	'[' ('(' (NUM_INT | NUM_REAL | STRING)  (',' ats1+=IDENT '=' (t+=NUM_INT | t+=NUM_REAL | t+=STRING) )+ ')' ) (atrn+=atributos_nodes_v)* ']'
+	'[' ('(' (id=NUM_INT | id=NUM_REAL | id=STRING)  (',' ats1+=IDENT '=' (t+=NUM_INT | t+=NUM_REAL | t+=STRING) )+ ')' ) (atrn+=atributos_nodes_v)* ']'
 
 	;
 
 atributos_nodes_v : 
-		',' '(' (NUM_INT | NUM_REAL | STRING)  (',' atsn+=IDENT '=' (t+=NUM_INT | t+=NUM_REAL | t+=STRING) )+ ')' 
+		',' '(' (id=NUM_INT | id=NUM_REAL | id=STRING)  (',' atsn+=IDENT '=' (t+=NUM_INT | t+=NUM_REAL | t+=STRING) )+ ')' 
 		;
 
 edges :

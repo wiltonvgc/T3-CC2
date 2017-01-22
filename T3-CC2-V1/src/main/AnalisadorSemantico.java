@@ -518,6 +518,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		Nodes no=null;
 		ArrayList<String> atributos  = new ArrayList<String> () ;
 		ArrayList<List<Token>> atributos_tokens = new ArrayList<List<Token>>();
+		boolean erro=false; //ocorreu erro?
+		
 		
 		/* Enconta NODE da atribuicao na lista nodes_atributos auxilixar*/
 		for(Nodes n : this.nodes_atributos){
@@ -557,14 +559,17 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				
 					if(!aux.contains(at)){
 						sp.println("Erro: ausência de atributo(s)", "semantico");
+						erro = true;
 						break;
 					}
 					else if(atributos.size()<aux.size()){
 						sp.println("Erro: atributos inicializados porém não declarados", "semantico");
+						erro = true;
 						break;
 					}
 					else if(aux.size()!=atributos.size()){
 						sp.println("Erro: ausência de atributo(s)", "semantico");
+						erro = true;
 						break;
 					}
 			}
@@ -575,6 +580,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				
 				if(!atributos.contains(at)){
 					sp.println("Erro: atributo " + at + " não declarado", "semantico");
+					erro = true;
 					break;
 				}
 			}
@@ -626,6 +632,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			
 				if(tipo!=null && !tipo.equals(tipo_atr)){
 					sp.println("Erro: incompatibilidade na atribuição do atributo " + t.getText(), "semantico");
+					erro = true;
 					break;
 				}
 			
@@ -655,6 +662,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 
 				if(tipo!=null && !tipo.equals(tipo_atr)){
 					sp.println("Erro: incompatibilidade na atribuição do atributo " + t.getText(), "semantico");
+					erro = true;
 					break;
 				}
 			
@@ -663,10 +671,76 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				
 			}
 			i = 0;
+		
 		}/*FIM VERIFICACAO SEMANTICA DE COMPATIBILIDADE DE ATRIBUICAO EM ATIBUTOS*/
 		
-		 
+		/* SE NAO OCORREU NENHUM ERRO SEMANTICO INSERE ID_NODE + ATRIBUTO NA TABELA DE SIMBOLOS */
+		
+		
+		if(!erro){
+			String id_nodes = this.var_at;
+		
+			ArrayList<String> ats = no.getAtributos(); //atributos do tipo de id_nodes
 			
+		    
+			
+			/* Primeira tupla */
+			for(String at : ats){
+				
+				String id_at = ctx.id.getText();
+				
+				if(id_at.contains("\"")){
+					id_at = id_at.substring(1,id_at.length()-1);
+				}
+				
+				 id_at = id_at + "." + at;
+				
+				
+				if(!this.pilhaTabs.existeSimbolo(id_at)){
+					String tipo = no.getTipoAtributo(at);
+					this.tab.adicionarSimbolo(id_at, tipo);
+				
+				}else{
+					sp.println("Erro: identificador " + id_at + " já declarado", "semantico");
+					break;
+				}
+				
+			}
+			
+			
+			List<Atributos_nodes_vContext> outros_ids = ctx.atrn;
+			
+			for(Atributos_nodes_vContext c : outros_ids){
+				
+				/* Outras tuplas */
+				for(String at : ats){
+					
+					String id_at = c.id.getText();
+					
+					if(id_at.contains("\"")){
+						id_at = id_at.substring(1,id_at.length()-1);
+					}
+					
+					 id_at = id_at + "." + at;
+					
+					if(!this.pilhaTabs.existeSimbolo(id_at)){
+						String tipo = no.getTipoAtributo(at);
+						this.tab.adicionarSimbolo(id_at, tipo);
+					
+						
+					}else{
+						sp.println("Erro: identificador " + id_at + " já declarado", "semantico");
+						break;
+					}
+					
+				}
+				
+			}
+			
+			
+			
+		}//FIM NAO OCORREU ERRO
+	
 			
 			
 			
@@ -701,6 +775,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitParametros_create(Parametros_createContext ctx) {
 		
+	
+		
 		/* Pega tipo parametro 1 */
 		String tipo1 = visitValor_parametro(ctx.v1);
 		
@@ -708,6 +784,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		/* Pega tipo parametro 2 */
 		String tipo2 = visitValor_parametro(ctx.v2);
 		
+	
 		
 		/* Pega tipo parametro 3 */
 		String tipo3 = visitValor_parametro(ctx.v3);
@@ -720,6 +797,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		if(!tipo2.equals("int") && !tipo2.equals("real") && !tipo2.equals("string")){
 			//E IDENT
 			tipo2= this.pilhaTabs.getTipo(tipo2);
+			
 		}
 		
 		if(!tipo3.equals("int") && !tipo3.equals("real") && !tipo3.equals("string")){
@@ -733,8 +811,9 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			sp.println("Erro: incompatibilidade de tipo em parametro type de create","semantico");		
 		}
 		/* NODES */
-		if(!tipo2.equals("nodes")){
+		if(!tipo2.equals("nodes") && !tipo2.equals("nodes_com_atributos")){
 			sp.println("Erro: incompatibilidade de tipo em parametro nodes de create","semantico");		
+			
 		}
 		/* EDGES */
 		if(!tipo3.equals("edges")){

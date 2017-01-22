@@ -19,4 +19,14 @@ plt.axis('off')
 
 nos = []
 
+#Declaracao de edges e nodes e grafos
+
+arestas = []
+
+#Declaracao de grafos
+
+grafo1 = nx.Graph()
+
+nos1 = []
+#Insercao de atributos de nodes em grafo
 

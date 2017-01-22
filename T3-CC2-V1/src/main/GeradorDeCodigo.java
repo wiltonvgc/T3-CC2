@@ -1,12 +1,15 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import gramatica.LGraphBaseVisitor;
 import gramatica.LGraphParser.Arquivo_grafoContext;
 import gramatica.LGraphParser.AtribuicaoContext;
+import gramatica.LGraphParser.Atributos_nodes_vContext;
 import gramatica.LGraphParser.CmdContext;
 import gramatica.LGraphParser.ComandosContext;
 import gramatica.LGraphParser.CorpoContext;
@@ -15,6 +18,7 @@ import gramatica.LGraphParser.EdgesContext;
 import gramatica.LGraphParser.InicioContext;
 import gramatica.LGraphParser.MetricaContext;
 import gramatica.LGraphParser.NodesContext;
+import gramatica.LGraphParser.Nodes_atributos_atribuicaoContext;
 import gramatica.LGraphParser.Objeto_metricaContext;
 import gramatica.LGraphParser.Parametros_createContext;
 import gramatica.LGraphParser.Parametros_nodesContext;
@@ -37,12 +41,15 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	TabelaDeSimbolos t;
 	PilhaDeTabelas pilha;
 	String path; //caminho diretorio de saida para arquivos
+	String atribuicao_aux;
+	ArrayList<SetNodes> set_nodes;
 	
 	public GeradorDeCodigo(SaidaGerador s,PilhaDeTabelas p,String path){
 		this.sp = s;
 		this.pilha = p;
 		this.t = pilha.topo();
 		this.path = path;
+		this.set_nodes = new ArrayList<SetNodes>();
 	}
 	
 	@Override
@@ -81,13 +88,13 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				
 			}
 			
-			else if(pilha.getTipo(var).equals("int") || pilha.getTipo(var).equals("float")){
+			else if((pilha.getTipo(var).equals("int") || pilha.getTipo(var).equals("float") ) && !var.contains(".")){
 
 				sp.println("#Declaracao de inteiros e floats\n");
 				sp.println(var + " = 0\n");
 			}
 			
-			else if(pilha.getTipo(var).equals("string")){
+			else if(pilha.getTipo(var).equals("string") && !var.contains(".")){
 
 				sp.println("#Declaracao de string\n");
 				sp.println(var + " = \" \"\n");
@@ -169,6 +176,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	
 		/* Geracao de codigo para ATRIBUICAO */
 		if(comando==5){
+			this.atribuicao_aux = ctx.id1.getText();
 			
 			String atribuido = visitAtribuicao(ctx.atribuicao());
 			
@@ -178,6 +186,10 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				sp.println(var + " = " + atribuido);
 				
 				
+			}else{
+				if(this.pilha.getTipo(this.atribuicao_aux).equals("nodes_com_atributos")){
+					sp.println(this.atribuicao_aux + " = " + "[]");
+				}
 			}
 		}//fim atribuicao
 		
@@ -191,10 +203,55 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			
 			String id_grafo = ctx.id_grafo.getText();
 			
-			/* Codigo Python adicionar arestas e noos */
-			sp.println("#Adicao de nos e arestas nos grafos\n");
-			sp.println(id_grafo + ".add_nodes_from(" + p2 + ")\n");
-			sp.println(id_grafo + ".add_weighted_edges_from(" + p3 + ")\n");
+			/* NOS SEM ATRIBUTOS */
+			if(this.pilha.getTipo(p2).equals("nodes")){
+				/* Codigo Python adicionar arestas e noos */
+				sp.println("#Adicao de nos e arestas nos grafos\n");
+				sp.println(id_grafo + ".add_nodes_from(" + p2 + ")\n");
+				sp.println(id_grafo + ".add_weighted_edges_from(" + p3 + ")\n");
+			
+			}
+			/* NOS COM ATRIBUTOS */
+			else{
+				SetNodes s=null;
+				/* Acha estrutura do nodes*/
+				for(SetNodes nodes : this.set_nodes){
+					if(nodes.getNome().equals(this.atribuicao_aux)){
+						s = nodes;
+						break;
+					}
+					
+				}//fim for
+				
+				sp.println("#Insercao de atributos de nodes em grafo");
+				
+				/* Lista de ids do nodes */
+				ArrayList<String> ids_nodes = s.getIds();
+				ArrayList<String> atributos_nodes = s.getAtributos();
+				ArrayList<String> valores_atributos = s.getValoresAtributos();
+				String aux;
+				
+				for(String at : atributos_nodes){
+					
+					
+					
+					for(String id : ids_nodes){
+
+						aux = id_grafo + ".add_node(" + id;
+						String v = valores_atributos.get(ids_nodes.indexOf(id));
+						aux = aux + " ," + at + " = " + v ;
+					}
+					
+			
+					System.out.println(aux + ")");
+				}
+				
+				
+				
+				
+				
+			}
+			
 			
 		}
 		
@@ -423,14 +480,64 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			atribuido = ctx.NUM_REAL().getText();
 		}else if(ctx.STRING()!=null){
 			atribuido = ctx.STRING().getText();
+		}else if(ctx.nodes_atributos_atribuicao()!=null){
+			atribuido = visitNodes_atributos_atribuicao(ctx.nodes_atributos_atribuicao());
+			
+			
+			
 		}
 		
 		
 		return atribuido;
 	}
+	
+	
 
 
 	
+	@Override
+	public String visitNodes_atributos_atribuicao(Nodes_atributos_atribuicaoContext ctx) {
+		
+		/* Cria estrura com nome de nodes e seus ids + parametros com valores */
+		
+		SetNodes s = new SetNodes(this.atribuicao_aux);
+		
+		/* Primeira tupla */
+		String id = ctx.id.getText();
+		int i=0;
+		
+		/* Percorre atributos e valores da primeira tupla */
+		for(Token at : ctx.ats1){
+			String v = ctx.t.get(i).getText();
+			s.add(id, at.getText(), v);
+			//System.out.println(id + " " + at.getText() + " " + v);
+			i+=1;
+			
+		}
+		
+		
+		/* Percorre outras tuplas */
+		for(Atributos_nodes_vContext c : ctx.atrn){
+			i = 0;
+			id = c.id.getText();
+			
+
+			/* Percorre atributos e valores da primeira tupla */
+			for(Token at : c.atsn){
+				String v = c.t.get(i).getText();
+				s.add(id, at.getText(), v);
+				//System.out.println(id + " " + at.getText() + " " + v);
+				i+=1;
+				
+			}
+			
+			
+		}
+		this.set_nodes.add(s);
+		
+		return null;
+	}
+
 	@Override
 	public String visitSalvar_opcional(Salvar_opcionalContext ctx) {
 		// TODO Auto-generated method stub

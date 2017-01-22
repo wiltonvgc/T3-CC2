@@ -25,6 +25,10 @@ public class Nodes {
 			this.tipos_parametros.add(t);
 	}
 	
+	public ArrayList<String> getTiposAtributos(){
+		return this.tipos_parametros;
+	}
+	
 	public ArrayList<String> getAtributos(){
 		return this.parametros;
 	}
