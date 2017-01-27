@@ -113,6 +113,12 @@ public interface LGraphVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCorpo_if(LGraphParser.Corpo_ifContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LGraphParser#imprimir}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImprimir(LGraphParser.ImprimirContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LGraphParser#corpo_else}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

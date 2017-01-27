@@ -12,9 +12,17 @@ import gramatica.LGraphParser.AtribuicaoContext;
 import gramatica.LGraphParser.Atributos_nodes_vContext;
 import gramatica.LGraphParser.CmdContext;
 import gramatica.LGraphParser.ComandosContext;
+import gramatica.LGraphParser.Comandos_forContext;
 import gramatica.LGraphParser.CorpoContext;
+import gramatica.LGraphParser.Corpo_elseContext;
+import gramatica.LGraphParser.Corpo_forContext;
+import gramatica.LGraphParser.Corpo_ifContext;
 import gramatica.LGraphParser.DeclaracoesContext;
 import gramatica.LGraphParser.EdgesContext;
+import gramatica.LGraphParser.Exp_igualdadeContext;
+import gramatica.LGraphParser.Exp_relacionalContext;
+import gramatica.LGraphParser.Expressao_ifContext;
+import gramatica.LGraphParser.ImprimirContext;
 import gramatica.LGraphParser.InicioContext;
 import gramatica.LGraphParser.MetricaContext;
 import gramatica.LGraphParser.NodesContext;
@@ -43,6 +51,8 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	String path; //caminho diretorio de saida para arquivos
 	String atribuicao_aux;
 	ArrayList<SetNodes> set_nodes;
+	String aux1_for,aux2_for;
+	boolean ident=false; //aux para definir identacao
 	
 	public GeradorDeCodigo(SaidaGerador s,PilhaDeTabelas p,String path){
 		this.sp = s;
@@ -74,6 +84,11 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		/* Declaracao de variaveis a partir da tabela de simbolos */
 		/* Edges e Nodes e Graphs e Int e Float e String*/
 	
+		/* cria arquivo de saida para PRINTS */
+		sp.println("#Criacao de aarquivo print");
+		sp.println("arq_print = open('"+ this.path + "/print.txt','w')\n");
+			
+		
 		for(String var : this.t.getSimbolos()){
 			if(pilha.getTipo(var).equals("edges") ||pilha.getTipo(var).equals("nodes") ){
 				
@@ -145,7 +160,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitCmd(CmdContext ctx) {
 		
-		int comando=0; // 1 - leitura, 2 - create, 3 - update, 4 - find, 5 - atribuicao, 6 - plot
+		int comando=0; // 1 - leitura, 2 - create, 3 - update, 4 - find, 5 - atribuicao, 6 - plot, 7 - FOREACH, 8 - print
 		
 		/* QUAL COMANDO E */
 		List<ParseTree> filhos = ctx.children;
@@ -169,6 +184,11 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 					break;
 				}else if(p.getText().equals("plot")){
 					comando = 6;
+				}
+				else if(p.getText().equals("foreach")){
+					comando = 7;
+				}else if(ctx.imprimir()!=null){
+					comando = 8;
 				}
 			}
 			
@@ -464,9 +484,262 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			
 		}//FIM GERACAO DE CODIGO PARA FIND
 		
+		/* GERACAO DE CODIGO PARA FOREACH */
+		if(comando==7){
+			
+	
+			String vertice=null,grafo=null;
+			
+			if(ctx.id!=null){
+				vertice = ctx.id.getText();
+				grafo = ctx.g_id.getText();
+				this.aux1_for = vertice;
+				this.aux2_for = grafo;
+			}
+			
+			/* Geracao de for v in graph: */
+			if(vertice!=null && grafo!=null){
+				sp.println("#Laco FOREACH");
+				sp.println("for " + vertice + " in " + grafo + ".nodes()"  + ":");
+				
+			}
+			
+			
+			if(ctx.corpo_for()!=null){
+				visitCorpo_for(ctx.corpo_for());
+			}
+			
+		}//fim FOREACH
+		
+		
+		/* PRINT */
+		if(comando==8){
+			
+			if(ctx.imprimir()!=null){
+				this.ident=true;
+			}
+			
+			visitImprimir(ctx.imprimir());
+		}
+		
+		
 		return null;
 	}
 	
+	
+	
+	
+	@Override
+	public String visitCorpo_for(Corpo_forContext ctx) {
+	
+		if(ctx.comandos_for()!=null){
+			visitComandos_for(ctx.comandos_for());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public String visitComandos_for(Comandos_forContext ctx) {
+		
+		String comando=null;
+		int i=0;
+		
+		/* Gera codigo IF e ELSE caso existam */
+		for(Expressao_ifContext c : ctx.ctx_if){
+			comando = "	if(";
+			
+			if(c.exp_relacional()!=null){
+			
+				String exp = visitExp_relacional(c.exp_relacional());
+				comando = comando + exp + "):";
+				sp.println(comando);
+			}else if(c.exp_igualdade()!=null){
+				String exp = visitExp_igualdade(c.exp_igualdade());
+				comando = comando + exp + "):";
+				sp.println(comando);
+			}
+			
+			visitCorpo_if(ctx.cif.get(i));
+			i = i+1;
+			
+			
+		}//fim for IF ELSE
+		i=0;
+		
+	
+		
+		return null;
+	}
+
+	@Override
+	public String visitCorpo_if(Corpo_ifContext ctx) {
+		
+		/* Gera codigo para prints */
+		for(ImprimirContext i : ctx.imp){
+			visitImprimir(i);
+		}
+		
+		/* Corpo else */
+		if(ctx.celse!=null){
+			visitCorpo_else(ctx.celse);
+		}
+		
+		
+		return null;
+	}
+	
+	
+
+	@Override
+	public String visitImprimir(ImprimirContext ctx) {
+		
+		/* Com IDENT */
+		if(!this.ident){
+			if(ctx.STRING()!=null){
+				sp.println("		arq_print.write(\"\\n\")");
+				sp.println("		arq_print.write(" +ctx.STRING().getText() + ")");
+			}else if(ctx.IDENT()!=null){
+				String tipo = this.pilha.getTipo(ctx.IDENT().getText());
+			
+				if(tipo!=null && !tipo.equals("graph") && !tipo.equals("nodes") && !tipo.equals("nodes_com_atributos")){
+					/* imprimi VARS INTS, FLOATS,STRINGS */
+					sp.println("		arq_print.write(\"\\n\")");
+					sp.println("		arq_print.write(" + ctx.IDENT().getText() + ")");
+				}
+			}
+		}//fim ident
+		
+		/* SEM IDENT */
+		else{
+			if(ctx.STRING()!=null){
+				sp.println("arq_print.write(\"\\n\")");
+				sp.println("arq_print.write(" +ctx.STRING().getText() + ")");
+			}else if(ctx.IDENT()!=null){
+				String tipo = this.pilha.getTipo(ctx.IDENT().getText());
+			
+				if(tipo!=null && !tipo.equals("graph") && !tipo.equals("nodes") && !tipo.equals("nodes_com_atributos")){
+					/* imprimi VARS INTS, FLOATS,STRINGS */
+					sp.println("arq_print.write(\"\\n\")");
+					sp.println("arq_print.write(" + ctx.IDENT().getText() + ")");
+				}
+			}
+		}//fim ident
+		this.ident = false;
+		
+		return null;
+	}
+
+	@Override
+	public String visitCorpo_else(Corpo_elseContext ctx) {
+		
+		/* PRINTS */
+		sp.println("	else:");
+		for(ImprimirContext i : ctx.imp){
+			visitImprimir(i);
+		}
+		
+		return null;
+	}
+
+	@Override
+	public String visitExpressao_if(Expressao_ifContext ctx) {
+		// TODO Auto-generated method stub
+		return super.visitExpressao_if(ctx);
+	}
+	
+	
+
+	@Override
+	public String visitExp_relacional(Exp_relacionalContext ctx) {
+		
+		String exp=null;
+		
+		
+		/* Busca do operando 1 */
+		if(ctx.op1_id!=null){
+			//IDENT VARIAVEL
+			exp = ctx.op1_id.getText();
+		}
+		else if(ctx.op1_int!=null){
+			exp = ctx.op1_int.getText();
+		}
+		else if(ctx.op1_real!=null){
+			exp = ctx.op1_real.getText();
+		}
+		else if(ctx.at1!=null){
+			exp = this.aux2_for+".node"+"["+this.aux1_for+"]["+ctx.at1.getText()+"]";
+		}
+		
+		
+		exp = exp + ctx.op_relacional().getText();
+
+		/* Busca do operando 2 */
+		if(ctx.op2_id!=null){
+			//IDENT VARIAVEL
+			exp = exp + ctx.op2_id.getText();
+		}
+		else if(ctx.op2_int!=null){
+			exp = exp + ctx.op2_int.getText();
+		}
+		else if(ctx.op2_real!=null){
+			exp = exp + ctx.op2_real.getText();
+		}
+		else if(ctx.at2!=null){
+			exp = exp + this.aux2_for+".node"+"["+this.aux1_for+"]['"+ctx.at2.getText()+"']";
+		}
+		
+		
+		return exp;
+	}
+
+	@Override
+	public String visitExp_igualdade(Exp_igualdadeContext ctx) {
+		String exp=null;
+		
+		
+		/* Busca do operando 1 */
+		if(ctx.op1_id!=null){
+			//IDENT VARIAVEL
+			exp = ctx.op1_id.getText();
+		}
+		else if(ctx.op1_int!=null){
+			exp = ctx.op1_int.getText();
+		}
+		else if(ctx.op1_real!=null){
+			exp = ctx.op1_real.getText();
+		}
+		else if(ctx.at1!=null){
+			exp = this.aux2_for+".node"+"["+this.aux1_for+"]["+ctx.at1.getText()+"]";
+		}else if(ctx.op1_s!=null){
+			exp = ctx.op1_s.getText();
+		}
+		
+		
+		exp = exp + ctx.op_igualdade().getText();
+
+		/* Busca do operando 2 */
+		if(ctx.op2_id!=null){
+			//IDENT VARIAVEL
+			exp = exp + ctx.op2_id.getText();
+		}
+		else if(ctx.op2_int!=null){
+			exp = exp + ctx.op2_int.getText();
+		}
+		else if(ctx.op2_real!=null){
+			exp = exp + ctx.op2_real.getText();
+		}
+		else if(ctx.at2!=null){
+			exp = exp + this.aux2_for+".node"+"["+this.aux1_for+"]['"+ctx.at2.getText()+"']";
+		}else if(ctx.op2_s!=null){
+			exp = exp + ctx.op2_s.getText();
+		}
+		
+		
+		return exp;
+		
+	}
+
 	@Override
 	public String visitMetrica(MetricaContext ctx) {
 		

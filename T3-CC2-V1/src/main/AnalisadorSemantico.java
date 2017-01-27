@@ -29,6 +29,7 @@ import gramatica.LGraphParser.EdgesContext;
 import gramatica.LGraphParser.Exp_igualdadeContext;
 import gramatica.LGraphParser.Exp_relacionalContext;
 import gramatica.LGraphParser.Expressao_ifContext;
+import gramatica.LGraphParser.ImprimirContext;
 import gramatica.LGraphParser.InicioContext;
 import gramatica.LGraphParser.MetricaContext;
 import gramatica.LGraphParser.NodesContext;
@@ -244,7 +245,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitCmd(CmdContext ctx) {
 		
-		int comando=0; // 1 - leitura, 2 - create, 3 - update, 4 - find, 5 - atribuicao,7-foreach, 6 - plot
+		int comando=0; // 1 - leitura, 2 - create, 3 - update, 4 - find, 5 - atribuicao,7-foreach, 6 - plot, 8 - print
 		
 		/* QUAL COMANDO E */
 		List<ParseTree> filhos = ctx.children;
@@ -270,6 +271,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				comando = 6;
 			}else if(p.getText().equals("foreach")){
 				comando = 7;
+			}else if(ctx.imprimir()!=null){
+				comando = 8;
 			}
 			
 			
@@ -527,6 +530,11 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		}
 		
 		
+		/* PRINT */
+		if(comando==8){
+			visitImprimir(ctx.imprimir());
+		}
+		
 		return null;
 	}
 	
@@ -547,20 +555,20 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitComandos_for(Comandos_forContext ctx) {
 		
-		System.out.println("for");
+		/* Percorre corpo(s) de IF*/
 		for(Expressao_ifContext c : ctx.ctx_if){
 			if(c.exp_relacional()!=null){
 				visitExp_relacional(c.exp_relacional());
-				
 				
 			}else if(c.exp_igualdade()!=null){
 				visitExp_igualdade(c.exp_igualdade());
 			}
 		}
 		
+		
 		for(Corpo_ifContext c : ctx.cif){
 			if(c!=null)
-				visitCorpo_if(ctx.corpo_if);
+				visitCorpo_if(c);
 		}
 		
 		
@@ -572,18 +580,63 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitCorpo_if(Corpo_ifContext ctx) {
 		
-		System.out.println("if");
-		if(ctx.comandos_for()!=null)
-			visitComandos_for(ctx.comandos_for());
+		/* comando PRINT */
+		for(ImprimirContext print : ctx.imp){
+			if(print!=null){
+				visitImprimir(print);
+			}
+		}
+		
+		if(ctx.celse!=null){
+			visitCorpo_else(ctx.celse);
+		}
+	
 		return null;
 	}
-
+	
+	
 
 	@Override
 	public String visitCorpo_else(Corpo_elseContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitCorpo_else(ctx);
+		
+		/* comando PRINT */
+		for(ImprimirContext print : ctx.imp){
+			if(print!=null){
+				visitImprimir(print);
+			}
+		}
+	
+		return null;
+		
 	}
+
+	
+	
+
+	@Override
+	public String visitImprimir(ImprimirContext ctx) {
+		
+		/* verifica se IDENT ja foi declarado */
+		if(ctx.IDENT()!=null){
+			
+			String tipo = this.pilhaTabs.getTipo(ctx.IDENT().getText());
+			
+			
+			
+			if(!this.tab.existeSimbolo(ctx.IDENT().getText())){
+				sp.println("Erro: variável " + ctx.IDENT().getText() + " não declarada!", "semantico");
+			}else if(tipo!=null && (tipo.equals("graph") || tipo.equals("nodes") || tipo.equals("nodes_com_atributos") )){
+				sp.println("Erro: não é possível imprimir tipo graph, nodes e nodes com atributos", "semantico");
+			}
+			
+			
+			
+		}
+		
+		
+		return null;
+	}
+
 
 
 	@Override
@@ -658,12 +711,14 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			}
 			
 			String tipo_atributo = null;
+		if(grafo!=null){	
 			for(String at : grafo.getAtributos()){
 				if(at.equals(atributo)){
 					tipo_atributo = grafo.getTiposAtributos().get(grafo.getAtributos().indexOf(at));
 					break;
 				}
 			}
+		}//fim if
 			
 			/* atributo nao existente */
 			if(tipo_atributo==null){
@@ -678,9 +733,9 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		if((tipo1!=null && tipo2!=null ) && (tipo1.equals("string") || tipo2.equals("string"))){
 			sp.println("Erro: tipo string não permitido em expressão relacional", "semantico");
 		}else if(tipo1.equals("graph" )|| tipo1.equals("edges") || tipo1.equals("nodes") || tipo1.equals("nodes_com_atributos")){
-		    sp.println("Erro: tipo graph, edges e nodes não permitidos em expressão relacional", "semantico");
-		}else if(tipo2.equals("graph" )|| tipo2.equals("edges") || tipo2.equals("nodes")||  tipo2.equals("nodes_com_atributos")){
-		    sp.println("Erro: tipo graph, edges e nodes não permitidos em expressão relacional", "semantico");
+		    sp.println("Erro: Expressão relacional inválida!", "semantico");
+		}else if(tipo2!=null && (tipo2.equals("graph" )|| tipo2.equals("edges") || tipo2.equals("nodes")||  tipo2.equals("nodes_com_atributos"))){
+		    sp.println("Erro: Expressão relacional inválida! ", "semantico");
 		}
 		
 		return null;
@@ -908,9 +963,15 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	
 		for(Token t : ctx.ats1){
 			
-				String tipo = no.getTipoAtributo(t.getText());
+			String tipo=null;
+			int valor=0;
 			
-				int valor = ctx.t.get(i).getType();
+			if(no!=null){
+				tipo = no.getTipoAtributo(t.getText());
+			
+			
+				valor = ctx.t.get(i).getType();
+			}
 				String tipo_atr=null;
 			
 				if(valor==49){

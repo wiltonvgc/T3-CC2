@@ -220,6 +220,18 @@ public class LGraphBaseListener implements LGraphListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterImprimir(LGraphParser.ImprimirContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImprimir(LGraphParser.ImprimirContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCorpo_else(LGraphParser.Corpo_elseContext ctx) { }
 	/**
 	 * {@inheritDoc}

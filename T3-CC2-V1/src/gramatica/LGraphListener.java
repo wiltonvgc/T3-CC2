@@ -178,6 +178,16 @@ public interface LGraphListener extends ParseTreeListener {
 	 */
 	void exitCorpo_if(LGraphParser.Corpo_ifContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LGraphParser#imprimir}.
+	 * @param ctx the parse tree
+	 */
+	void enterImprimir(LGraphParser.ImprimirContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#imprimir}.
+	 * @param ctx the parse tree
+	 */
+	void exitImprimir(LGraphParser.ImprimirContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LGraphParser#corpo_else}.
 	 * @param ctx the parse tree
 	 */

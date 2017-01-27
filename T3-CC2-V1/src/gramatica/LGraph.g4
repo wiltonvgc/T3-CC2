@@ -101,6 +101,7 @@ cmd :	salvar_opcional'create' 'graph' id_grafo=IDENT '(' parametros_create ')'
 	| 'plot' 'graph' id_plot=IDENT
 	| 'foreach' 'vertex' id=IDENT 'in' g_id=IDENT cf=corpo_for
 	| id1=IDENT '=' atribuicao
+	| imprimir
 	;
 
 corpo_for : 
@@ -108,15 +109,20 @@ corpo_for :
 	   ;
 
 comandos_for :
-		('if' '(' ctx_if+=expressao_if ')' cif+=corpo_if ('else' corpo_else)? | 'print''('(STRING | IDENT)')')* 
+		('if' '(' ctx_if+=expressao_if ')' cif+=corpo_if)*  
 	     ;
 
 corpo_if :
-	  'begin' comandos_for 'end' | 
+	  'begin'  imp+=imprimir* 'end' ('else' celse=corpo_else)?
+	  ;
+
+imprimir : 
+	'print''('(STRING | IDENT)')'
+
 	  ;
 
 corpo_else:
-          comandos_for
+           'begin'  imp+=imprimir* 'end'
           ;
 
 

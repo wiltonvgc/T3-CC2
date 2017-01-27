@@ -2,7 +2,7 @@ begin
 	data nos:nodes,
 	     nos1,nos2:nodes(valor:int, cor:string,peso:int),
 	     arestas:edges,
-	     grafo1:graph,
+	     grafo1,grafo2:graph,
 	     i:int,
 	     s:string
 
@@ -11,21 +11,27 @@ begin
 	nos2 = [("G",valor=1,cor="blue",peso=3)]
 	create graph grafo1 (type="multi",nodes=nos2,edges=arestas)
 	update graph grafo1 with  (nodes=nos2, edges=arestas)
+	create graph grafo2 (type="multi",nodes=nos,edges=arestas)
+	s = "wilton"
 	
-
 	foreach vertex v in grafo1
 	begin
-		if(1 <= 1)
+		if(4 <= v.peso)
 		begin
-			if(1 <= s)
-			begin
-
-			end
+			print("ola")
+		end
+		else
+		begin
+			print(s)
 		end
 
-		if("ol" == "ola")
+		if("ola" == "ol")
 		begin
-				
+			print("meio")
+		end
+		else
+		begin
+			print(s)
 		end
 	end
 
