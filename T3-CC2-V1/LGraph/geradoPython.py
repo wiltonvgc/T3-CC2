@@ -66,13 +66,13 @@ arq_print.write("\n")
 arq_print.write("este e o segundo print")
 #Laco FOREACH
 for v in grafo1.nodes():
-	if(4<=grafo1.node[v]['peso']):
+	if(4<=grafo1.node[v]['peso'] and 4<=7 or "o"=="o"):
 		arq_print.write("\n")
 		arq_print.write("ola")
 	else:
 		arq_print.write("\n")
 		arq_print.write(s)
-	if("ola"=="ol"):
+	if("ola"=="ol" and 1==grafo1.node[v]['peso']):
 		arq_print.write("\n")
 		arq_print.write("meio")
 	else:

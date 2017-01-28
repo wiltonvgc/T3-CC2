@@ -19,16 +19,17 @@ begin
 
 	foreach vertex v in grafo1
 	begin
-		if(4 <= v.peso)
+		if(4 <= v.peso AND 4<=7 OR "o"=="o")
 		begin
 			print("ola")
+			maior = v.peso
 		end
 		else
 		begin
 			print(s)
 		end
 
-		if("ola" == "ol")
+		if("ola" == "ol" AND 1==v.peso)
 		begin
 			print("meio")
 		end

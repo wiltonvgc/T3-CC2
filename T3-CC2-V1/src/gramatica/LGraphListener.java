@@ -178,6 +178,26 @@ public interface LGraphListener extends ParseTreeListener {
 	 */
 	void exitCorpo_if(LGraphParser.Corpo_ifContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LGraphParser#comandos_if}.
+	 * @param ctx the parse tree
+	 */
+	void enterComandos_if(LGraphParser.Comandos_ifContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#comandos_if}.
+	 * @param ctx the parse tree
+	 */
+	void exitComandos_if(LGraphParser.Comandos_ifContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#atribuicao_for}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtribuicao_for(LGraphParser.Atribuicao_forContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#atribuicao_for}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtribuicao_for(LGraphParser.Atribuicao_forContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LGraphParser#imprimir}.
 	 * @param ctx the parse tree
 	 */
@@ -217,6 +237,26 @@ public interface LGraphListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExp_relacional(LGraphParser.Exp_relacionalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#mais_exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterMais_exp(LGraphParser.Mais_expContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#mais_exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitMais_exp(LGraphParser.Mais_expContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LGraphParser#op_logico}.
+	 * @param ctx the parse tree
+	 */
+	void enterOp_logico(LGraphParser.Op_logicoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LGraphParser#op_logico}.
+	 * @param ctx the parse tree
+	 */
+	void exitOp_logico(LGraphParser.Op_logicoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LGraphParser#op_relacional}.
 	 * @param ctx the parse tree

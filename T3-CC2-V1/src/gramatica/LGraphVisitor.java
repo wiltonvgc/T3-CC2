@@ -113,6 +113,18 @@ public interface LGraphVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCorpo_if(LGraphParser.Corpo_ifContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LGraphParser#comandos_if}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComandos_if(LGraphParser.Comandos_ifContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#atribuicao_for}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtribuicao_for(LGraphParser.Atribuicao_forContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LGraphParser#imprimir}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -136,6 +148,18 @@ public interface LGraphVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExp_relacional(LGraphParser.Exp_relacionalContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#mais_exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMais_exp(LGraphParser.Mais_expContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LGraphParser#op_logico}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOp_logico(LGraphParser.Op_logicoContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LGraphParser#op_relacional}.
 	 * @param ctx the parse tree

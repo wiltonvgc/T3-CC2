@@ -16,10 +16,12 @@ import org.omg.IOP.TAG_RMI_CUSTOM_MAX_STREAM_FORMAT;
 import gramatica.LGraphBaseVisitor;
 import gramatica.LGraphParser.Arquivo_grafoContext;
 import gramatica.LGraphParser.AtribuicaoContext;
+import gramatica.LGraphParser.Atribuicao_forContext;
 import gramatica.LGraphParser.Atributos_nodes_vContext;
 import gramatica.LGraphParser.CmdContext;
 import gramatica.LGraphParser.ComandosContext;
 import gramatica.LGraphParser.Comandos_forContext;
+import gramatica.LGraphParser.Comandos_ifContext;
 import gramatica.LGraphParser.CorpoContext;
 import gramatica.LGraphParser.Corpo_elseContext;
 import gramatica.LGraphParser.Corpo_forContext;
@@ -31,6 +33,7 @@ import gramatica.LGraphParser.Exp_relacionalContext;
 import gramatica.LGraphParser.Expressao_ifContext;
 import gramatica.LGraphParser.ImprimirContext;
 import gramatica.LGraphParser.InicioContext;
+import gramatica.LGraphParser.Mais_expContext;
 import gramatica.LGraphParser.MetricaContext;
 import gramatica.LGraphParser.NodesContext;
 import gramatica.LGraphParser.Nodes_atributosContext;
@@ -560,6 +563,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			if(c.exp_relacional()!=null){
 				visitExp_relacional(c.exp_relacional());
 				
+				
 			}else if(c.exp_igualdade()!=null){
 				visitExp_igualdade(c.exp_igualdade());
 			}
@@ -571,6 +575,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				visitCorpo_if(c);
 		}
 		
+		/* ATRIBUICOES*/
+		
 		
 		
 		return null;
@@ -580,10 +586,24 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitCorpo_if(Corpo_ifContext ctx) {
 		
-		/* comando PRINT */
-		for(ImprimirContext print : ctx.imp){
-			if(print!=null){
-				visitImprimir(print);
+		/* comando PRINT e ATRUICAO*/
+		for(Comandos_ifContext com : ctx.coms){
+			if(com.imprimir()!=null){
+				visitImprimir(com.imprimir());
+			}
+			//atribuicao
+			else if(com.atribuicao_for()!=null){
+				String id = com.at.getText();
+				
+				/* verifica se variavel de atribuicao foi declarada */
+				if(!this.tab.existeSimbolo(id)){
+					sp.println("Erro: variável " + id + " não declarada","semantico");
+				}
+				
+				
+				
+				
+			
 			}
 		}
 		
@@ -594,7 +614,44 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		return null;
 	}
 	
+
 	
+
+	@Override
+	public String visitAtribuicao_for(Atribuicao_forContext ctx) {
+		
+		/* Retorna nome variavel atribuida se existe, senao retorna tipo */
+		
+		String var = null;
+		
+		/* CASO SEJA IDENT */
+		if(ctx.id!=null){
+			var = ctx.id.getText();
+			/* verifica se variavel de atribuicao foi declarada */
+			if(!this.tab.existeSimbolo(ctx.id.getText())){
+				sp.println("Erro: variável " + ctx.id.getText() + " não declarada","semantico");
+			}
+		}
+		else if(ctx.NUM_INT()!=null)
+			var = "int";
+		else if(ctx.NUM_REAL()!=null)
+			var = "real";
+		else if(ctx.edges()!=null)
+			var = "edges";
+		else if(ctx.nodes()!=null)
+			var = "nodes";
+		else if(ctx.STRING()!=null)
+			var = "string";
+		else if(ctx.nodes_atributos_atribuicao()!=null)
+			var = "nodes_com_atributos";
+		else if(ctx.id1!=null && ctx.id2!=null){
+			var = ctx.id1.getText() + "." + ctx.id2.getText();
+		}
+		return var;
+		
+	
+	}
+
 
 	@Override
 	public String visitCorpo_else(Corpo_elseContext ctx) {
@@ -738,6 +795,18 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		    sp.println("Erro: Expressão relacional inválida! ", "semantico");
 		}
 		
+		
+		/* MAIS EXPRESSOES */
+		for(Mais_expContext m : ctx.mais){
+			
+			if(m.exp_relacional()!=null){
+				visitExp_relacional(m.exp_relacional());
+			}else if(m.exp_igualdade()!=null){
+				visitExp_igualdade(m.exp_igualdade());
+			}
+			
+		}//fim MAIS EXPRESSOES
+		
 		return null;
 	}
 
@@ -846,6 +915,18 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		}else if(tipo2.equals("graph" )|| tipo2.equals("edges") || tipo2.equals("nodes") ||  tipo2.equals("nodes_com_atributos")){
 		    sp.println("Erro: tipo graph, edges e nodes não permitidos em expressão de igualdade", "semantico");
 		}
+		
+		/* MAIS EXPRESSOES */
+		for(Mais_expContext m : ctx.mais){
+			
+			if(m.exp_relacional()!=null){
+				visitExp_relacional(m.exp_relacional());
+			}else if(m.exp_igualdade()!=null){
+				visitExp_igualdade(m.exp_igualdade());
+			}
+			
+		}//fim MAIS EXPRESSOES
+		
 		
 		return null;
 	}
@@ -974,12 +1055,12 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			}
 				String tipo_atr=null;
 			
-				if(valor==49){
+				if(valor==51){
 					tipo_atr = "int";
 				
-				}else if(valor==50){
+				}else if(valor==52){
 					tipo_atr = "float";
-				}else if(valor==51){
+				}else if(valor==53){
 					tipo_atr = "string";
 				}
 			
@@ -1004,13 +1085,20 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				
 				String tipo_atr=null;
 				
-				if(valor==39){
-					tipo_atr = "int";
+			
 				
-				}else if(valor==40){
+				
+				if(valor==51){
+					tipo_atr = "int";
+					
+				}else if(valor==52){
 					tipo_atr = "float";
-				}else if(valor==41){
+					
+					
+				}else if(valor==53){
 					tipo_atr = "string";
+					
+					
 				}
 				
 

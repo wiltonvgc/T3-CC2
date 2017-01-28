@@ -13,6 +13,7 @@ import gramatica.LGraphParser.Atributos_nodes_vContext;
 import gramatica.LGraphParser.CmdContext;
 import gramatica.LGraphParser.ComandosContext;
 import gramatica.LGraphParser.Comandos_forContext;
+import gramatica.LGraphParser.Comandos_ifContext;
 import gramatica.LGraphParser.CorpoContext;
 import gramatica.LGraphParser.Corpo_elseContext;
 import gramatica.LGraphParser.Corpo_forContext;
@@ -24,6 +25,7 @@ import gramatica.LGraphParser.Exp_relacionalContext;
 import gramatica.LGraphParser.Expressao_ifContext;
 import gramatica.LGraphParser.ImprimirContext;
 import gramatica.LGraphParser.InicioContext;
+import gramatica.LGraphParser.Mais_expContext;
 import gramatica.LGraphParser.MetricaContext;
 import gramatica.LGraphParser.NodesContext;
 import gramatica.LGraphParser.Nodes_atributos_atribuicaoContext;
@@ -552,8 +554,10 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			if(c.exp_relacional()!=null){
 			
 				String exp = visitExp_relacional(c.exp_relacional());
-				comando = comando + exp + "):";
+				comando = comando + exp;
+				comando = comando +  "):";
 				sp.println(comando);
+			
 			}else if(c.exp_igualdade()!=null){
 				String exp = visitExp_igualdade(c.exp_igualdade());
 				comando = comando + exp + "):";
@@ -576,8 +580,10 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	public String visitCorpo_if(Corpo_ifContext ctx) {
 		
 		/* Gera codigo para prints */
-		for(ImprimirContext i : ctx.imp){
-			visitImprimir(i);
+		for(Comandos_ifContext com : ctx.coms){
+			if(com.imprimir()!=null){
+				visitImprimir(com.imprimir());
+			}
 		}
 		
 		/* Corpo else */
@@ -689,6 +695,33 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			exp = exp + this.aux2_for+".node"+"["+this.aux1_for+"]['"+ctx.at2.getText()+"']";
 		}
 		
+		/* MAIS EXPRESSOES */
+		for(Mais_expContext m : ctx.mais){
+			if(m.exp_relacional()!=null){
+				String op_logico = m.op_logico().getText();
+				if(op_logico.equals("AND")){
+					op_logico = "and";
+				}else if(op_logico.equals("OR")){
+					op_logico = "or";
+				}
+				
+				exp = exp + " " + op_logico + " ";
+				exp = exp + visitExp_relacional(m.exp_relacional());
+			
+			}else if(m.exp_igualdade()!=null){
+				String op_logico = m.op_logico().getText();
+				if(op_logico.equals("AND")){
+					op_logico = "and";
+				}else if(op_logico.equals("OR")){
+					op_logico = "or";
+				}
+				
+				exp = exp + " " + op_logico + " ";
+				exp = exp + visitExp_igualdade(m.exp_igualdade());
+			}
+			
+		}//fim MAIS EXPRESSOES
+		
 		
 		return exp;
 	}
@@ -734,6 +767,33 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		}else if(ctx.op2_s!=null){
 			exp = exp + ctx.op2_s.getText();
 		}
+		
+		/* MAIS EXPRESSOES */
+		for(Mais_expContext m : ctx.mais){
+			if(m.exp_relacional()!=null){
+				String op_logico = m.op_logico().getText();
+				if(op_logico.equals("AND")){
+					op_logico = "and";
+				}else if(op_logico.equals("OR")){
+					op_logico = "or";
+				}
+				
+				exp = exp + " " + op_logico + " ";
+				exp = exp + visitExp_relacional(m.exp_relacional());
+			
+			}else if(m.exp_igualdade()!=null){
+				String op_logico = m.op_logico().getText();
+				if(op_logico.equals("AND")){
+					op_logico = "and";
+				}else if(op_logico.equals("OR")){
+					op_logico = "or";
+				}
+				
+				exp = exp + " " + op_logico + " ";
+				exp = exp + visitExp_igualdade(m.exp_igualdade());
+			}
+			
+		}//fim MAIS EXPRESSOES
 		
 		
 		return exp;

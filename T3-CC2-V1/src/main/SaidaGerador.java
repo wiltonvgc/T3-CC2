@@ -16,6 +16,11 @@ public class SaidaGerador {
         conteudo.append("\n");
     }
     
+    public void print(String texto) {
+        if(!modificado) modificado = true;
+        conteudo.append(texto);
+    }
+    
     public boolean isModificado() {
         return modificado;
     }

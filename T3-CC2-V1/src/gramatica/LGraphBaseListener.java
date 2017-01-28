@@ -220,6 +220,30 @@ public class LGraphBaseListener implements LGraphListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterComandos_if(LGraphParser.Comandos_ifContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitComandos_if(LGraphParser.Comandos_ifContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAtribuicao_for(LGraphParser.Atribuicao_forContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAtribuicao_for(LGraphParser.Atribuicao_forContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterImprimir(LGraphParser.ImprimirContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -263,6 +287,30 @@ public class LGraphBaseListener implements LGraphListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExp_relacional(LGraphParser.Exp_relacionalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMais_exp(LGraphParser.Mais_expContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMais_exp(LGraphParser.Mais_expContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOp_logico(LGraphParser.Op_logicoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOp_logico(LGraphParser.Op_logicoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

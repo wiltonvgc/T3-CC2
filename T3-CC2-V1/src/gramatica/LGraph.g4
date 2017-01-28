@@ -110,10 +110,19 @@ corpo_for :
 
 comandos_for :
 		('if' '(' ctx_if+=expressao_if ')' cif+=corpo_if)*  
+		
 	     ;
 
 corpo_if :
-	  'begin'  imp+=imprimir* 'end' ('else' celse=corpo_else)?
+	  'begin'  coms+=comandos_if* 'end' ('else' celse=corpo_else)?
+	  ;
+
+comandos_if : 
+		imprimir | at=IDENT '=' atribuicao_for
+	   ;
+
+atribuicao_for :
+		NUM_INT | NUM_REAL | id=IDENT | STRING | nodes | edges | nodes_atributos_atribuicao | id1=IDENT '.' id2=IDENT
 	  ;
 
 imprimir : 
@@ -132,15 +141,24 @@ expressao_if :
 	     ;
 
 exp_relacional :
-		(op1_int=NUM_INT | op1_real=NUM_REAL | (op1_v=IDENT '.' at1=IDENT) | op1_id=IDENT) op=op_relacional (op2_int=NUM_INT | op2_real=NUM_REAL | op2_v=IDENT '.' at2=IDENT | op2_id=IDENT)
+		(op1_int=NUM_INT | op1_real=NUM_REAL | (op1_v=IDENT '.' at1=IDENT) | op1_id=IDENT) op=op_relacional (op2_int=NUM_INT | op2_real=NUM_REAL | op2_v=IDENT '.' at2=IDENT | op2_id=IDENT) (mais+=mais_exp)*
 		;
+
+
+mais_exp :
+		op_logico (exp_relacional | exp_igualdade)
+	 ;
+
+op_logico : 
+	  'AND' | 'OR'
+	;
 
 op_relacional : 
 		'<' | '>' | '<=' | '>='
 	      ;
 
 exp_igualdade :
-		(op1_int=NUM_INT | op1_real=NUM_REAL | op1_v=IDENT '.' at1=IDENT | op1_id=IDENT | op1_s=STRING) op=op_igualdade (op2_int=NUM_INT | op2_real=NUM_REAL | op2_id=IDENT | op2_s=STRING | op2_v=IDENT '.' at2=IDENT)
+		(op1_int=NUM_INT | op1_real=NUM_REAL | op1_v=IDENT '.' at1=IDENT | op1_id=IDENT | op1_s=STRING) op=op_igualdade (op2_int=NUM_INT | op2_real=NUM_REAL | op2_id=IDENT | op2_s=STRING | op2_v=IDENT '.' at2=IDENT) (mais+=mais_exp)*
 	       ;
 
 op_igualdade :
