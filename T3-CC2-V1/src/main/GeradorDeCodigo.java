@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import gramatica.LGraphBaseVisitor;
 import gramatica.LGraphParser.Arquivo_grafoContext;
 import gramatica.LGraphParser.AtribuicaoContext;
+import gramatica.LGraphParser.Atribuicao_forContext;
 import gramatica.LGraphParser.Atributos_nodes_vContext;
 import gramatica.LGraphParser.CmdContext;
 import gramatica.LGraphParser.ComandosContext;
@@ -583,7 +584,25 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		for(Comandos_ifContext com : ctx.coms){
 			if(com.imprimir()!=null){
 				visitImprimir(com.imprimir());
-			}
+			}//fim imprimir
+			
+			if(com.atribuicao_for()!=null){
+				
+				String id =null,atribuido=null;
+				
+				if(com.at!=null)
+					id = com.at.getText();
+				
+				atribuido = visitAtribuicao_for(com.atribuicao_for());
+				
+				if(atribuido!=null){
+					sp.println("		" + id + " = " + atribuido);
+					
+				}
+				
+				
+				
+			}//fim atribuicao
 		}
 		
 		/* Corpo else */
@@ -596,6 +615,32 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	}
 	
 	
+
+	@Override
+	public String visitAtribuicao_for(Atribuicao_forContext ctx) {
+		
+		String atribuido = null;
+		
+		if(ctx.NUM_INT()!=null){
+			atribuido = ctx.NUM_INT().getText();
+		}else if(ctx.NUM_REAL()!=null){
+				atribuido = ctx.NUM_REAL().getText();
+		}else if(ctx.STRING()!=null){
+			atribuido = ctx.STRING().getText();
+		}else if(ctx.id!=null){
+			atribuido = ctx.id.getText();
+		}else if(ctx.nodes()!=null){
+			atribuido = ctx.nodes().getText();
+		}else if(ctx.edges()!=null){
+			atribuido = ctx.edges().getText();
+		}else if(ctx.nodes_atributos_atribuicao()!=null){
+			atribuido = ctx.nodes_atributos_atribuicao().getText();
+     	}else if(ctx.id1!=null && ctx.id2!=null){
+     		atribuido = this.aux2_for + ".node[" + ctx.id1.getText() + "]['" + ctx.id2.getText() + "']";
+     	}
+		
+		return atribuido;
+	}
 
 	@Override
 	public String visitImprimir(ImprimirContext ctx) {
@@ -611,7 +656,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				if(tipo!=null && !tipo.equals("graph") && !tipo.equals("nodes") && !tipo.equals("nodes_com_atributos")){
 					/* imprimi VARS INTS, FLOATS,STRINGS */
 					sp.println("		arq_print.write(\"\\n\")");
-					sp.println("		arq_print.write(" + ctx.IDENT().getText() + ")");
+					sp.println("		arq_print.write(str(" + ctx.IDENT().getText() + "))");
 				}
 			}
 		}//fim ident

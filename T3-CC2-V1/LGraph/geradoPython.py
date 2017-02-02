@@ -38,6 +38,10 @@ grafo2 = nx.Graph()
 
 i = 0
 
+#Declaracao de inteiros e floats
+
+maior = 0
+
 #Declaracao de string
 
 s = " "
@@ -64,14 +68,19 @@ grafo2.add_weighted_edges_from(arestas)
 s = "wilton"
 arq_print.write("\n")
 arq_print.write("este e o segundo print")
+maior = 123
 #Laco FOREACH
 for v in grafo1.nodes():
-	if(4<=grafo1.node[v]['peso'] and 4<=7 or "o"=="o"):
+	if(4>=grafo1.node[v]['peso'] and 4<=7 or "o"=="o"):
 		arq_print.write("\n")
-		arq_print.write("ola")
+		arq_print.write("OK")
+		maior = grafo1.node[v]['peso']
+		maior = 5
+		arq_print.write("\n")
+		arq_print.write(str(maior))
 	else:
 		arq_print.write("\n")
-		arq_print.write(s)
+		arq_print.write(str(s))
 	if("ola"=="ol" and 1==grafo1.node[v]['peso']):
 		arq_print.write("\n")
 		arq_print.write("meio")

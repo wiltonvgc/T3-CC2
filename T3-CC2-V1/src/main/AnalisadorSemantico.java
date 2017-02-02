@@ -600,11 +600,18 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 					sp.println("Erro: variável " + id + " não declarada","semantico");
 				}
 				
+				/* compatibilidade de tipo em atribuicao */
+	            /* tipo de variavel de atribuicao */
+				String tipo_at = this.pilhaTabs.getTipo(id);
 				
-				
-				
+				String tipo_at1 = visitAtribuicao_for(com.atribuicao_for());
 			
-			}
+			    if(!tipo_at.equals(tipo_at1)){
+				   sp.println("Erro: incompatibilidade de atribuicao em " + id ,"semantico");
+			    }
+				
+				
+			}//fim verificacao atribuicao
 		}
 		
 		if(ctx.celse!=null){
@@ -645,8 +652,26 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		else if(ctx.nodes_atributos_atribuicao()!=null)
 			var = "nodes_com_atributos";
 		else if(ctx.id1!=null && ctx.id2!=null){
-			var = ctx.id1.getText() + "." + ctx.id2.getText();
-		}
+			String atributo = ctx.id2.getText();
+			Grafo grafo=null;
+			
+			for(Grafo g : this.grafos){
+				if(g.getNome().equals(this.grafo_for)){
+					grafo = g;
+					break;
+				}
+			}
+			
+			
+			for(String at : grafo.getAtributos()){
+				if(at.equals(atributo)){
+					var = grafo.getTiposAtributos().get(grafo.getAtributos().indexOf(at));
+					break;
+				}
+			}
+			
+		}//fim no com atributo
+		
 		return var;
 		
 	

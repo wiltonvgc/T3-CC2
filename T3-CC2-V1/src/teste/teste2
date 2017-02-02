@@ -3,7 +3,7 @@ begin
 	     nos1,nos2:nodes(valor:int, cor:string,peso:int),
 	     arestas:edges,
 	     grafo1,grafo2:graph,
-	     i:int,
+	     i,maior:int,
 	     s:string
 
 	print("este e o primeiro print")
@@ -17,12 +17,16 @@ begin
 	s = "wilton"
 	print("este e o segundo print")	
 
+	maior = 123
+
 	foreach vertex v in grafo1
 	begin
-		if(4 <= v.peso AND 4<=7 OR "o"=="o")
+		if(4 >= v.peso AND 4<=7 OR "o"=="o")
 		begin
-			print("ola")
+			print("OK")
 			maior = v.peso
+			maior = 5
+			print(maior)
 		end
 		else
 		begin

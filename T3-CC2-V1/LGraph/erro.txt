@@ -1,2 +1,0 @@
-Erro: variável maiornão declarada
-Fim da compilacao
