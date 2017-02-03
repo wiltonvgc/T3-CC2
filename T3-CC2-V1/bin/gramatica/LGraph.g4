@@ -94,10 +94,10 @@ caminho :
 	'MST' | 'CM'
 	;	
 
-cmd :	salvar_opcional'create' 'graph' id_grafo=IDENT '(' parametros_create ')'
-	| salvar_opcional 'read' 'graph' id_gf = IDENT arquivo_grafo
+cmd :	'create' 'graph' id_grafo=IDENT '(' parametros_create ')'
+	| 'read' 'graph' id_gf = IDENT arquivo_grafo
 	| 'update' 'graph' id_grafo_up=IDENT 'with' '(' parametros_update ')'
-	| salvar_opcional 'find' metrica 'of' objeto_metrica
+	| 'find' metrica 'of' objeto_metrica
 	| 'plot' 'graph' id_plot=IDENT
 	| 'foreach' 'vertex' id=IDENT 'in' g_id=IDENT cf=corpo_for
 	| id1=IDENT '=' atribuicao
@@ -203,7 +203,7 @@ edges :
       ;
 
 tupla : 
-	'(' tipos_tupla ',' tipos_tupla (',' tipos_tupla_op)* ')'
+	'(' tipos_tupla ',' tipos_tupla ',' tipos_tupla_op ')'
 	
       ;
 
@@ -213,7 +213,7 @@ tipos_tupla :
 	   ;
 
 tipos_tupla_op :
-		NUM_INT | NUM_REAL | STRING 
+		NUM_INT 
 	   ;
 
 parametros_nodes :

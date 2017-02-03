@@ -306,7 +306,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 					
 				}//fim for
 				
-				sp.println("\n#Insercao de atributos de nodes em grafo");
+				sp.println("\n#Insercao de atributos de nodes em grafo por UPDATE");
 				
 				/* Lista de ids do nodes */
 				

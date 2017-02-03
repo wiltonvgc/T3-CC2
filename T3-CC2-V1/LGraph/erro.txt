@@ -1,0 +1,5 @@
+Erro: grafo grafo1 já criado
+Erro: atributo peso não existente no grafo grafo1
+Erro: atributo peso não existente no grafo grafo1
+Erro: incompatibilidade de atribuicao em maior
+Fim da compilacao

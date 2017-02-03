@@ -289,7 +289,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		if(comando==2 || comando==1){
 			this.grafo_create = ctx.id_grafo.getText();
 			
-			String id = filhos.get(3).getText();
+			String id = this.grafo_create;
 			
 			/* variavel graph nao declarada */
 			if(!this.tab.existeSimbolo(id)){
