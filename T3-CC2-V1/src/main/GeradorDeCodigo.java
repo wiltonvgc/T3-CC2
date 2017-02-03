@@ -220,7 +220,6 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		if(comando==2){
 			/* Parametros : tipo, nos, arestas */
 			
-			String p1 = visitValor_parametro(ctx.parametros_create().v1);
 			String p2 = visitValor_parametro(ctx.parametros_create().v2);
 			String p3 = visitValor_parametro(ctx.parametros_create().v3);
 			

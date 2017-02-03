@@ -49,16 +49,13 @@ s = " "
 arq_print.write("\n")
 arq_print.write("este e o primeiro print")
 nos2 = []
+nos = ["A","B",1,2]
+#Adicao de nos e arestas nos grafos
 
-#Insercao de atributos de nodes em grafo
-grafo1.add_node("G", valor = 1)
-grafo1.add_node("G", cor = "blue")
-grafo1.add_node("G", peso = 3)
+grafo1.add_nodes_from(nos)
 
-#Insercao de atributos de nodes em grafo
-grafo1.add_node("G", valor = 1)
-grafo1.add_node("G", cor = "blue")
-grafo1.add_node("G", peso = 3)
+grafo1.add_weighted_edges_from(arestas)
+
 #Adicao de nos e arestas nos grafos
 
 grafo2.add_nodes_from(nos)
@@ -75,7 +72,7 @@ for v in grafo1.nodes():
 		arq_print.write("\n")
 		arq_print.write("OK")
 		maior = grafo1.node[v]['peso']
-		maior = 5
+		maior = -5
 		arq_print.write("\n")
 		arq_print.write(str(maior))
 	else:

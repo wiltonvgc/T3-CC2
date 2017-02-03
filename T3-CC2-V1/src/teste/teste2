@@ -11,9 +11,10 @@ begin
 	/*nos1 =  [(1,valor=1,peso=2,cor="red"), ("A",peso=1,cor="S",valor=1), ("K",cor="R",peso=2,valor=2),("L",cor="R",peso=1,valor=2)]*/
 	/*nos1 = [(1,valor=2,cor="A",peso=1)]*/
 	nos2 = [("G",valor=1,cor="blue",peso=3)]
-	create graph grafo1 (type="multi",nodes=nos2,edges=arestas)
-	update graph grafo1 with  (nodes=nos2, edges=arestas)
-	create graph grafo2 (type="multi",nodes=nos,edges=arestas)
+	nos = ["A", "B", 1, 2]
+	create graph grafo1 (nodes=nos,edges=arestas)
+	/*update graph grafo1 with (nodes=nos2, edges=arestas)*/
+	create graph grafo2 (nodes=nos,edges=arestas)
 	s = "wilton"
 	print("este e o segundo print")	
 
@@ -25,7 +26,7 @@ begin
 		begin
 			print("OK")
 			maior = v.peso
-			maior = 5
+			maior = -5
 			print(maior)
 		end
 		else

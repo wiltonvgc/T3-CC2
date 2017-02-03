@@ -356,6 +356,11 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				sp.println("Erro: variavel " + id_grafo + " não é do tipo graph", "semantico");
 			}
 			
+			/* verifica se grafo ja foi criado */
+			if(!this.grafos_criados.contains(id_grafo)){
+				sp.println("Erro: " + id_grafo + " não inicializado", "semantico");
+			}
+			
 			/* verifica se variavel a ser o vertice no loop ja existe */
 			
 			/* variavel id_vert ja declarada */
@@ -366,7 +371,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				this.tab.adicionarSimbolo(id_vert, "vertice_loop");
 			}
 			
-			if(ctx.corpo_for()!=null){
+			if(ctx.corpo_for()!=null && this.grafo_create.contains(id_grafo)){
 				visitCorpo_for(ctx.corpo_for());
 			}
 			
@@ -662,15 +667,17 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				}
 			}
 			
-			
-			for(String at : grafo.getAtributos()){
-				if(at.equals(atributo)){
-					var = grafo.getTiposAtributos().get(grafo.getAtributos().indexOf(at));
-					break;
+			if(grafo!=null){	
+				for(String at : grafo.getAtributos()){
+					if(at.equals(atributo)){
+						var = grafo.getTiposAtributos().get(grafo.getAtributos().indexOf(at));
+						break;
+					}
 				}
 			}
 			
 		}//fim no com atributo
+	  
 		
 		return var;
 		
@@ -914,13 +921,14 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			}
 			
 			String tipo_atributo = null;
-			for(String at : grafo.getAtributos()){
-				if(at.equals(atributo)){
-					tipo_atributo = grafo.getTiposAtributos().get(grafo.getAtributos().indexOf(at));
-					break;
+			if(grafo!=null){
+				for(String at : grafo.getAtributos()){
+					if(at.equals(atributo)){
+						tipo_atributo = grafo.getTiposAtributos().get(grafo.getAtributos().indexOf(at));
+						break;
+					}
 				}
 			}
-			
 			/* atributo nao existente */
 			if(tipo_atributo==null){
 				sp.println("Erro: atributo " + atributo + " não existente no grafo " + this.grafo_for, "semantico");
@@ -931,13 +939,13 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		}//fim else if
 		
 		
-		if((tipo1.equals("int") || tipo1.equals("float")) && tipo2.equals("string")){
+		if(tipo1!=null && tipo2!=null && (tipo1.equals("int") || tipo1.equals("float")) && tipo2.equals("string")){
 				sp.println("Erro: tipo string não permitido em expressão igualdade", "semantico");
-		}else if((tipo2.equals("int") || tipo2.equals("float")) && tipo1.equals("string")){
+		}else if(tipo1!=null && tipo2!=null && (tipo2.equals("int") || tipo2.equals("float")) && tipo1.equals("string")){
 				sp.println("Erro: tipo string não permitido em expressão igualdade", "semantico");
-		}else if(tipo1.equals("graph" )|| tipo1.equals("edges") || tipo1.equals("nodes") ||  tipo1.equals("nodes_com_atributos")){
+		}else if(tipo1!=null && tipo2!=null && (tipo1.equals("graph" )|| tipo1.equals("edges") || tipo1.equals("nodes") ||  tipo1.equals("nodes_com_atributos"))){
 			    sp.println("Erro: tipo graph, edges e nodes não permitidos em expressão de igualdade", "semantico");
-		}else if(tipo2.equals("graph" )|| tipo2.equals("edges") || tipo2.equals("nodes") ||  tipo2.equals("nodes_com_atributos")){
+		}else if(tipo2!=null && (tipo2.equals("graph" )|| tipo2.equals("edges") || tipo2.equals("nodes") ||  tipo2.equals("nodes_com_atributos"))){
 		    sp.println("Erro: tipo graph, edges e nodes não permitidos em expressão de igualdade", "semantico");
 		}
 		
@@ -1040,23 +1048,6 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			
 			aux.clear();
 			
-			/* REPETICAO DE ATRIBUTOS 
-			//Conta quantos itens tem de cada produto
-			Map<String, Integer> contador = new HashMap<String, Integer>();
-			for (String valor : aux) {
-			    if (!contador.containsKey(valor)) {
-			        contador.put(valor, 0);
-			    }
-			    contador.put(valor, contador.get(valor)+1);
-			}
-			
-			//Exibe os que tiverem mais de 1.
-			for (Map.Entry<String, Integer> item : contador.entrySet()) {
-			    if (item.getValue() >= 2) {
-			       sp.println("Erro: atributo " + item.getKey() + " duplicado","semantico");
-			    }
-			}*/
-			
 			
 		}/* FIM   verificacao SEMANTICA DE EXISTENCIA DE ATRIBUTOS NA ATRIBUICAO */
 		
@@ -1080,12 +1071,12 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			}
 				String tipo_atr=null;
 			
-				if(valor==51){
+				if(valor==50){
 					tipo_atr = "int";
 				
-				}else if(valor==52){
+				}else if(valor==51){
 					tipo_atr = "float";
-				}else if(valor==53){
+				}else if(valor==52){
 					tipo_atr = "string";
 				}
 			
@@ -1113,14 +1104,14 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			
 				
 				
-				if(valor==51){
+				if(valor==50){
 					tipo_atr = "int";
 					
-				}else if(valor==52){
+				}else if(valor==51){
 					tipo_atr = "float";
 					
 					
-				}else if(valor==53){
+				}else if(valor==52){
 					tipo_atr = "string";
 					
 					
@@ -1231,10 +1222,6 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitParametros_create(Parametros_createContext ctx) {
 		
-	
-		
-		/* Pega tipo parametro 1 */
-		String tipo1 = visitValor_parametro(ctx.v1);
 		
 		
 		/* Pega tipo parametro 2 */
@@ -1245,27 +1232,18 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		/* Pega tipo parametro 3 */
 		String tipo3 = visitValor_parametro(ctx.v3);
 		
-		if(!tipo1.equals("int") && !tipo1.equals("real") && !tipo1.equals("string")){
-			//E IDENT
-			tipo1= this.pilhaTabs.getTipo(tipo1);
-		}
-		
-		if(!tipo2.equals("int") && !tipo2.equals("real") && !tipo2.equals("string")){
+		if(tipo2!=null && !tipo2.equals("int") && !tipo2.equals("real") && !tipo2.equals("string")){
 			//E IDENT
 			tipo2= this.pilhaTabs.getTipo(tipo2);
 			
 		}
 		
-		if(!tipo3.equals("int") && !tipo3.equals("real") && !tipo3.equals("string")){
+		if(tipo3!=null && !tipo3.equals("int") && !tipo3.equals("real") && !tipo3.equals("string")){
 			//E IDENT
 			tipo3= this.pilhaTabs.getTipo(tipo3);
 		}
 		
 		/* Verifica compatibilidade entre parametros */
-		/* TYPE */
-		if(!tipo1.equals("string")){
-			sp.println("Erro: incompatibilidade de tipo em parametro type de create","semantico");		
-		}
 		/* NODES */
 		if(!tipo2.equals("nodes") && !tipo2.equals("nodes_com_atributos")){
 			sp.println("Erro: incompatibilidade de tipo em parametro nodes de create","semantico");		
@@ -1281,16 +1259,6 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		tipos_grafos.add("multi");
 		tipos_grafos.add("digraph");
 		
-		if(ctx.v1.STRING()!=null){
-			
-			for(String tipo : tipos_grafos){
-				if(ctx.v1.STRING().getText().equals("\"" + tipo + "\"")){
-					break;
-				}
-				sp.println("Erro: " + ctx.v1.STRING().getText() + " não é um tipo de grafo válido", "semantico");
-				
-			}
-		}
 		
 		
 		/* Cria estrtura de dados de grafo com atributos e seus tipos caso seja um grafo com nodes com atributos */

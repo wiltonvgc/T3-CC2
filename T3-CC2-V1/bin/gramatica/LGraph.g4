@@ -17,11 +17,11 @@ IDENT :
 	;
 
 NUM_INT : 
-	( '0'..'9')+
+	('+' |'-')?( '0'..'9')+
 
 	;
 NUM_REAL : 
-	('0'..'9')+('.'('0'..'9')+)?
+	('+' | '-')?('0'..'9')+('.'('0'..'9')+)?
 	;
 
 STRING : 
@@ -167,7 +167,7 @@ op_igualdade :
 
 
 parametros_create : 
-	    'type' '=' v1=valor_parametro ',' 'nodes' '=' v2=valor_parametro ',' 'edges' '=' 
+	    'nodes' '=' v2=valor_parametro ',' 'edges' '=' 
 		v3=valor_parametro
 	   ;
 	
