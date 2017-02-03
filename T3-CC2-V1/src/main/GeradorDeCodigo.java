@@ -379,7 +379,8 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			String metrica = visitMetrica(ctx.metrica());
 			String obj = visitObjeto_metrica(ctx.objeto_metrica());
 			
-			
+			sp.println("#Criacao de arquivo metrica");
+			sp.println(obj + "Metricas = open('" + path + "/" + obj + "Metricas.txt', 'w')\n");
 			
 			
 			/* Metrica DEGREE */
@@ -396,7 +397,6 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 
 				/* cria arquivo de metricas para grafo ou usa o que ja existe */
 				sp.println("#Criacao de arquivo metrica");
-				sp.println(obj + "Metricas = open('" + path + "/" + obj + "Metricas.txt', 'w')\n");
 				String arq = obj + "Metricas";
 				sp.println(arq+".write(\"========== MÉTRICAS DE GRAFO "+ obj  + " ==========\")");
 				

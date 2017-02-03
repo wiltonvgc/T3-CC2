@@ -22,7 +22,6 @@ begin
 	/*create graph grafo2 (type = "multi", nodes = nos, edges = aresta)*/
 	create graph grafo1 (type = "multi", nodes = nos, edges=aresta)
 	create graph grafo3 (type = "multi", nodes = nos3, edges=arestas3)
-	read graph grafo2 from file "/home/wilton/teste.paj"
 	update graph grafo1 with (nodes= g, edges = aresta2)
 	save find degree of graph grafo1 
 	/*save find degree of graph grafo2*/

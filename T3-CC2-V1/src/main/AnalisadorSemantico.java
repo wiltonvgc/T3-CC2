@@ -65,7 +65,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	ArrayList<String> grafos_criados;//guarda nome dos grafos criados com CREATE
 	ArrayList<Nodes> nodes_atributos;//guarda nodes com atributos criados
 	ArrayList<String> nodes_atributos_aux; //lista auxiliar que guarda tipos nodes com atributos
-	String var_at,grafo_for,grafo_create;
+	String var_at,grafo_for,grafo_create,grafo_update;
 	ArrayList<Grafo> grafos;
 	
 	public AnalisadorSemantico(TabelaDeSimbolos t,SaidaParser sp,PilhaDeTabelas p){
@@ -287,9 +287,16 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		
 		/* CREATE ou READ */
 		if(comando==2 || comando==1){
-			this.grafo_create = ctx.id_grafo.getText();
 			
-			String id = this.grafo_create;
+			String id=null;
+			
+			if(ctx.id_grafo!=null){
+				this.grafo_create = ctx.id_grafo.getText();
+				id = this.grafo_create;
+		     }else if(ctx.id_gf!=null){
+		    	 id = ctx.id_gf.getText();
+		     }
+			
 			
 			/* variavel graph nao declarada */
 			if(!this.tab.existeSimbolo(id)){
@@ -309,6 +316,10 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		}/* UPDATE ou PLOT */
 		else if(comando==3 || comando==6){
 			String id = filhos.get(2).getText();
+			
+			if(comando==3)
+				this.grafo_update = ctx.id_grafo_up.getText();
+			
 			
 			/* variavel graph nao declarada */
 			if(!this.tab.existeSimbolo(id)){
@@ -371,8 +382,15 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 				this.tab.adicionarSimbolo(id_vert, "vertice_loop");
 			}
 			
-			if(ctx.corpo_for()!=null && this.grafo_create.contains(id_grafo)){
-				visitCorpo_for(ctx.corpo_for());
+			if(ctx.corpo_for()!=null){
+				
+				if(!this.grafos_criados.contains(id_grafo)){
+					sp.println("Erro: grafo " + id_grafo + " não inicializado", "semantico");
+				}else{
+					visitCorpo_for(ctx.corpo_for());
+				}
+				
+				
 			}
 			
 			
@@ -475,7 +493,10 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 
 		/* SEMANTICO : VERIFICAO DE COMPATIBILIDADE DE PARAMETROS EM UPDATE */
 		if(comando==3){
-			visitParametros_update(ctx.parametros_update());
+			String r = visitParametros_update(ctx.parametros_update());
+			if(r!=null){
+				
+			}
 		}
 		
 		/* Verificacao de parametro de caminho de arquivo em READ */
@@ -567,7 +588,6 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		for(Expressao_ifContext c : ctx.ctx_if){
 			if(c.exp_relacional()!=null){
 				visitExp_relacional(c.exp_relacional());
-				
 				
 			}else if(c.exp_igualdade()!=null){
 				visitExp_igualdade(c.exp_igualdade());
@@ -760,6 +780,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 					break;
 				}
 			}
+			
 			
 			String tipo_atributo = null;
 			for(String at : grafo.getAtributos()){
@@ -1288,7 +1309,8 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 	@Override
 	public String visitParametros_update(Parametros_updateContext ctx) {
 		
-
+		String grafo_atributo = null;
+		
 		/* Pega tipo parametro 1 */
 		String tipo1 = visitValor_parametro(ctx.v1);
 		
@@ -1316,7 +1338,28 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			sp.println("Erro: incompatibilidade de tipo em parametro edges de update","semantico");		
 		}
 		
-		return null;
+		/* Se nos tem atributos */
+
+		/* Cria estrtura de dados de grafo com atributos e seus tipos caso seja um grafo com nodes com atributos */
+		if(tipo1.equals("nodes_com_atributos")){
+			Nodes no=null;
+			
+			for(Nodes n : this.nodes_atributos){
+				if(n.getNome().equals(ctx.v1.getText())){
+					no = n;
+					break;
+				}//fim if
+			}//fim for
+			
+			Grafo g = new Grafo(this.grafo_update);
+			g.addAtributos(no.getAtributos());
+			g.addTiposAtributos(no.getTiposAtributos());
+			this.grafos.add(g);
+			
+			
+		}//fim if
+		
+		return grafo_atributo;
 	}
 	
 	@Override
