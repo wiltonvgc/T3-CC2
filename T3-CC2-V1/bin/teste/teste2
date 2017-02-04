@@ -4,6 +4,7 @@ begin
 	     arestas:edges,
 	     grafo1,grafo2:graph,
 	     i,maior:int,
+	     f:float,
 	     s:string
 
 	print("este e o primeiro print")
@@ -12,15 +13,19 @@ begin
 	/*nos1 = [(1,valor=2,cor="A",peso=1)]*/
 	nos2 = [("G",valor=1,cor="blue",peso=3)]
 	nos = ["A", "B", 1, 2]
+	/*read graph grafo2 from file "/home/wilton/SmaGri.paj"*/
 	arestas = [("A","B",-1), (1, "B",-1)]
 	create graph grafo1 (nodes=nos,edges=arestas)
-	create graph grafo2 (nodes=nos,edges=arestas)
+	/*create graph grafo2 (nodes=nos,edges=arestas)*/
 	update graph grafo1 with (nodes=nos2, edges = arestas)
+	/*update graph grafo2 with (nodes=nos2, edges = arestas)*/
+	find node_connectivity of graph grafo1
 	s = "wilton"
 	print("este e o segundo print")	
-	plot graph grafo1
+	/*plot graph grafo2*/
 
 	maior = 123
+	f = 1.3
 
 	foreach vertex v in grafo1
 	begin

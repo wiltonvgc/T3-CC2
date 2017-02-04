@@ -247,13 +247,13 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				
 				sp.println("\n#Insercao de atributos de nodes em grafo");
 			
-			if(s!=null){
-				/* Lista de ids do nodes */
-				ArrayList<String> ids_nodes = s.getIds();
-				ArrayList<String> atributos_nodes = s.getAtributos();
-				ArrayList<String> valores_atributos = s.getValoresAtributos();
-				String aux=null;
-				int i=0;
+				if(s!=null){
+					/* Lista de ids do nodes */
+					ArrayList<String> ids_nodes = s.getIds();
+					ArrayList<String> atributos_nodes = s.getAtributos();
+					ArrayList<String> valores_atributos = s.getValoresAtributos();
+					String aux=null;
+					int i=0;
 				
 				
 				
@@ -272,6 +272,9 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				}
 			
 			}//fim s!=null
+				
+			/* arestas */
+		    sp.println(id_grafo + ".add_weighted_edges_from(" + p3 + ")\n");
 		}//fim else
 			
 			
@@ -479,9 +482,6 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			
 			
 		
-			
-			
-			
 			
 			
 		}//FIM GERACAO DE CODIGO PARA FIND
