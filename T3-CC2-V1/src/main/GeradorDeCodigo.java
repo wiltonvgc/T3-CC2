@@ -55,7 +55,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 	String atribuicao_aux;
 	ArrayList<SetNodes> set_nodes;
 	String aux1_for,aux2_for;
-	boolean ident=false; //aux para definir identacao
+	boolean ident=false,arq_metrica=false; //aux para definir identacao
 	
 	public GeradorDeCodigo(SaidaGerador s,PilhaDeTabelas p,String path){
 		this.sp = s;
@@ -381,13 +381,20 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		if(comando==4){
 			String metrica = visitMetrica(ctx.metrica());
 			String obj = visitObjeto_metrica(ctx.objeto_metrica());
+		
 			
-			sp.println("#Criacao de arquivo metrica");
-			sp.println(obj + "Metricas = open('" + path + "/" + obj + "Metricas.txt', 'w')\n");
+			if(!this.arq_metrica && !metrica.equals("degree")){
+				sp.println("#Criacao de arquivo metrica");
+				sp.println(obj + "Metricas = open('" + path + "/" + obj + "Metricas.txt', 'w')\n");
+				
+				this.arq_metrica = true;
+			}
+			
 			
 			
 			/* Metrica DEGREE */
 			if(metrica.equals("degree")){
+
 				
 				String vertice=null, grafo=null,aux=null;
 				
@@ -397,14 +404,13 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 					aux = obj;
 					obj = grafo;
 				}
-
-				/* cria arquivo de metricas para grafo ou usa o que ja existe */
-				sp.println("#Criacao de arquivo metrica");
-				String arq = obj + "Metricas";
-				sp.println(arq+".write(\"========== MÉTRICAS DE GRAFO "+ obj  + " ==========\")");
 				
-				
-				   /* codigo Python para encontrar graus */
+					/* cria arquivo de metricas para grafo ou usa o que ja existe */
+					String arq = obj + "Metricas";
+					sp.println("#Criacao de arquivo metrica");
+					sp.println(obj + "Metricas = open('" + path + "/" + obj + "Metricas.txt', 'w')\n");
+					
+					/* codigo Python para encontrar graus */
 					
 					/* Grau de grafo */
 					if(aux==null ){
@@ -419,7 +425,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 					else{
 						sp.println("ngraus = " + grafo + ".degree(" + vertice + ")\n");
 						sp.println(arq + ".write(\"\\n\\n*** Métrica : DEGREE ***\")");
-						sp.println(arq + ".write(\"\\nNó: \" + str(" + vertice   + ")"+ "+ \" Grau => \" + str(graus))");
+						sp.println(arq + ".write(\"\\nNó: \" + str(" + vertice   + ")"+ "+ \" Grau => \" + str(ngraus))");
 					}
 					
 				
@@ -480,8 +486,6 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				
 			}
 			
-			
-		
 			
 			
 		}//FIM GERACAO DE CODIGO PARA FIND
@@ -671,7 +675,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 				if(tipo!=null && !tipo.equals("graph") && !tipo.equals("nodes") && !tipo.equals("nodes_com_atributos")){
 					/* imprimi VARS INTS, FLOATS,STRINGS */
 					sp.println("arq_print.write(\"\\n\")");
-					sp.println("arq_print.write(" + ctx.IDENT().getText() + ")");
+					sp.println("arq_print.write(str(" + ctx.IDENT().getText() + "))");
 				}
 			}
 		}//fim ident
@@ -718,7 +722,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			exp = ctx.op1_real.getText();
 		}
 		else if(ctx.at1!=null){
-			exp = this.aux2_for+".node"+"["+this.aux1_for+"]["+ctx.at1.getText()+"]";
+			exp = this.aux2_for+".node"+"["+this.aux1_for+"]['"+ctx.at1.getText()+"']";
 		}
 		
 		
@@ -787,7 +791,7 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 			exp = ctx.op1_real.getText();
 		}
 		else if(ctx.at1!=null){
-			exp = this.aux2_for+".node"+"["+this.aux1_for+"]["+ctx.at1.getText()+"]";
+			exp = this.aux2_for+".node"+"["+this.aux1_for+"]['"+ctx.at1.getText()+"']";
 		}else if(ctx.op1_s!=null){
 			exp = ctx.op1_s.getText();
 		}
@@ -909,8 +913,8 @@ public class GeradorDeCodigo extends LGraphBaseVisitor<String> {
 		}else if(ctx.nodes_atributos_atribuicao()!=null){
 			atribuido = visitNodes_atributos_atribuicao(ctx.nodes_atributos_atribuicao());
 			
-			
-			
+		}else if(ctx.IDENT()!=null){
+			atribuido = ctx.IDENT().getText();
 		}
 		
 		

@@ -783,10 +783,12 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 			
 			
 			String tipo_atributo = null;
-			for(String at : grafo.getAtributos()){
-				if(at.equals(atributo)){
-					tipo_atributo = grafo.getTiposAtributos().get(grafo.getAtributos().indexOf(at));
-					break;
+			if(grafo!=null){
+				for(String at : grafo.getAtributos()){
+					if(at.equals(atributo)){
+						tipo_atributo = grafo.getTiposAtributos().get(grafo.getAtributos().indexOf(at));
+						break;
+					}
 				}
 			}
 			
@@ -842,7 +844,7 @@ public class AnalisadorSemantico extends LGraphBaseVisitor<String> {
 		
 		if((tipo1!=null && tipo2!=null ) && (tipo1.equals("string") || tipo2.equals("string"))){
 			sp.println("Erro: tipo string não permitido em expressão relacional", "semantico");
-		}else if(tipo1.equals("graph" )|| tipo1.equals("edges") || tipo1.equals("nodes") || tipo1.equals("nodes_com_atributos")){
+		}else if(tipo1!=null && (tipo1.equals("graph" )|| tipo1.equals("edges") || tipo1.equals("nodes") || tipo1.equals("nodes_com_atributos"))){
 		    sp.println("Erro: Expressão relacional inválida!", "semantico");
 		}else if(tipo2!=null && (tipo2.equals("graph" )|| tipo2.equals("edges") || tipo2.equals("nodes")||  tipo2.equals("nodes_com_atributos"))){
 		    sp.println("Erro: Expressão relacional inválida! ", "semantico");

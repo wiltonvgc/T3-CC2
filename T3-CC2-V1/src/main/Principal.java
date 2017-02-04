@@ -54,7 +54,7 @@ public class Principal {
 	
 		
         
-		//String path = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/teste2";
+		//String path = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/teste6.lgraph";
 		//String out = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaSintatico/teste1.txt";
 		//String outGerador = "/home/wilton/Projetos-Eclipse/T3-CC2-V1/src/teste/SaidaGerador/saida1.py";
 		
