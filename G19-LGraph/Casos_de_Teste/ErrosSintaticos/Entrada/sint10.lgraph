@@ -1,0 +1,10 @@
+begin
+	
+	data grafo:graph
+
+	read graph grafo from "/home/fulano/teste.paj"/* Erro: ausencia de palavra chave file */
+
+
+
+
+end

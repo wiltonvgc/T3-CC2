@@ -1,0 +1,11 @@
+begin
+
+	/* Erro lexico: identificador de variavel deve comecar apenas com letras */
+	1var : int
+	
+
+
+
+
+
+end

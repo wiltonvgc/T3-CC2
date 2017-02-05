@@ -1,0 +1,8 @@
+begin
+	data grafo: graph, nos:nodes, arestas:edges
+
+	nos = ["A","B","C","D","E","F"]
+	arestas = [("A","B",0), ("C","F",1), ("D","E",8), ("A","F",0)]
+	create graph grafo (nodes = nos, edges = arestas)
+	find degree of vertex "A" in graph grafo
+end

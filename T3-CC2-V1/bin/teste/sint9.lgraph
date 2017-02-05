@@ -1,0 +1,12 @@
+begin
+	data grafo:graph, nos:nodes, arestas:edges
+	
+	nos = ["A",1,2,3,4,"B","F"]
+	arestas = [("A",2,0), ("B","F",9), (1,2,0)]
+
+	create graph grafo (nodes=nos, edges=arestas)
+	nos = ["W","K"]
+	update graph grafo with (nodes:nos,edges=arestas)
+		
+	
+end

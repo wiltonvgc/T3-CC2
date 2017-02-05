@@ -1,0 +1,2 @@
+Erro: incompatibilidade na atribuição do atributo peso
+Fim da compilacao

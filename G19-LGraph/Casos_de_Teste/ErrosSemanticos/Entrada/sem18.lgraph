@@ -1,0 +1,31 @@
+begin
+	data nos:nodes, nos1:nodes(peso:int,cor:string), arestas:edges, grafo:graph, str:string
+
+	str = "cc2"
+	nos1 = [("X",peso=1,cor="azul"), ("Y",peso=9,cor="roxo")]
+	arestas = [("X","Y",0)]
+
+	/* Cria grafo sem nos com atributos */
+	create graph grafo (nodes=nos1,edges=arestas)
+
+	foreach vertex v in grafo
+	begin
+		/* Erro: incompatibilidade entre comparacao de string com inteiro v.peso */
+		if(v.peso >= str)
+		begin
+
+		end
+		/* Erro: incompatibilidade de comparacao entre inteiro e string v.cor */
+		if(1 == v.cor)
+		begin
+			
+		end
+		/* Erro: nao existe atributo next em nenhum vertice de grafo */
+		if(v.next == 1)
+		begin
+
+		end
+
+
+	end
+end

@@ -1,0 +1,15 @@
+begin
+	data grafo:graph, nos,nos1:nodes, arestas:edges, s:string
+	
+	nos1 = nos
+	create graph grafo (nodes=nos, edges=arestas)
+	foreach vertex v in grafo
+	begin
+		/* Erros: tipo graph, nodes, edges e string nao permitidos em expressao relacional */
+		if(grafo >= 1 AND 4 <= nos OR arestas >= nos OR 1 >= s)
+		begin
+
+		end
+
+	end
+end

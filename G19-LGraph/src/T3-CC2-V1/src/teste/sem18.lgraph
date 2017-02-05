@@ -1,0 +1,23 @@
+begin
+	data nos:nodes, nos1:nodes(peso:int), arestas:edges, grafo:graph
+
+	nos = ["A","B","C",1,2,3,4,"F"]
+	nos1 = [("X",peso=1), ("Y",peso=9)]
+	arestas = [("X","Y",0)]
+
+	/* Cria grafo sem nos com atributos */
+	create graph grafo (nodes=nos1,edges=arestas)
+
+	/* Insere dois vertices com atributos peso e cor */	
+	/*update graph grafo with (nodes=nos,edges=arestas)*/
+	
+	foreach vertex v in grafo
+	begin
+		if(v.peso >= 1)
+		begin
+			print("peso maior que 1")
+		end
+
+
+	end
+end

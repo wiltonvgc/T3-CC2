@@ -1,0 +1,3 @@
+Erro: variavel maior não declarada
+Erro: incompatibilidade de tipo em atribuicao de maior
+Fim da compilacao

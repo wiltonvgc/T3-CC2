@@ -1,0 +1,2 @@
+Erro: Variavel var já declarada anteriormente
+Fim da compilacao

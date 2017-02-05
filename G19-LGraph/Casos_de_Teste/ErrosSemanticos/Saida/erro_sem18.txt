@@ -1,0 +1,4 @@
+Erro: tipo string não permitido em expressão relacional
+Erro: comparação invalida entre números e string
+Erro: atributo next não existente no grafo grafo
+Fim da compilacao

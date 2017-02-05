@@ -1,0 +1,4 @@
+
+
+*** Métrica : DEGREE ***
+Nó: A Grau => 2

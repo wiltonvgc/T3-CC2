@@ -1,0 +1,21 @@
+begin
+	data grafo:graph, nos,nos1:nodes, arestas:edges, s:string
+	
+	nos1 = nos
+	create graph grafo (nodes=nos, edges=arestas)
+	foreach vertex v in grafo
+	begin
+		/* Erros: tipo graph, nodes, edges e string nao permitidos em expressao igualdade */
+		if(grafo == 1 AND 4 == nos OR arestas == nos)
+		begin
+
+		end
+
+		/* Erros: comparacao invalida entre numeros e string */
+		if(1 == s OR 1.6 == "ola")
+		begin
+
+		end
+
+	end
+end

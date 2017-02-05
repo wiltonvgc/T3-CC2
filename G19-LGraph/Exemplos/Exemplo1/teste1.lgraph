@@ -1,0 +1,12 @@
+begin
+	data grafo: graph,
+	     nos : nodes,
+             arestas : edges
+	     
+	nos = ["A", "B", 1, 2, 4, 5, "C", "D", 8.9, "O", "ex", "9"]
+	arestas = [("A","B",0), ("9",5,1), ("C", 1, 0), ("ex",8.9,0), (4,2,0)]
+	create graph grafo (nodes = nos, edges = arestas)
+
+	plot graph grafo
+
+end

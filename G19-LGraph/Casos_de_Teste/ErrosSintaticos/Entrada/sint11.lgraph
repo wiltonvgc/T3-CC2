@@ -1,0 +1,7 @@
+begin
+	data grafo:graph
+
+	read graph grafo from file "/home/fulano/futebol.paj"
+	find degree  graph grafo /* Erro: ausencia de palavra chave of */	
+	
+end

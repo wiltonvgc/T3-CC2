@@ -1,0 +1,8 @@
+begin
+	data grafo : graph, nos:nodes, arestas:edges
+
+	create graph  (nodes = nos, edges = arestas)/* Erro: ausencia de identificador de grafo*/
+
+
+
+end

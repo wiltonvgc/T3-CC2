@@ -1,0 +1,5 @@
+Erro: Expressão relacional inválida!
+Erro: Expressão relacional inválida! 
+Erro: Expressão relacional inválida!
+Erro: tipo string não permitido em expressão relacional
+Fim da compilacao

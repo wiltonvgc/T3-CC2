@@ -1,0 +1,3 @@
+Erro: t não declarado
+Erro: x não declarado
+Fim da compilacao

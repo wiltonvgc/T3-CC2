@@ -1,0 +1,8 @@
+begin
+	data grafo: graph
+	    
+	read graph grafo from file "/home/wilton/Documents/CC2/T3/DataSetsPaj/futebol.paj"
+
+	plot graph grafo
+
+end

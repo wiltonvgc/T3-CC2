@@ -1,0 +1,12 @@
+begin
+	data inteiro,inteiro2:int, real:float, cadeia:string
+
+	inteiro = 2
+	real = 3.45
+	cadeia = "ola mundo"
+	inteiro2 = inteiro
+	print(inteiro)
+	print(real)
+	print(cadeia)
+	print(inteiro2)
+end

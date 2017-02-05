@@ -1,0 +1,6 @@
+begin
+	data var:int
+	print()/* Ausencia de parametro no comando print */
+	
+
+end

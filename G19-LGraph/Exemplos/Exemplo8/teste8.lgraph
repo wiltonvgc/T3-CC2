@@ -1,0 +1,21 @@
+begin
+	
+	data grafo: graph, nos:nodes(peso:float), arestas:edges, maior:float
+
+	nos = [("A",peso=1.3),("B",peso=4.5),("C",peso=6.9),("D",peso=7.5),("E",peso=1.7),("F",peso=7.9)]
+	arestas = [("A","B",0), ("C","F",1), ("D","E",8), ("A","F",0)]
+	create graph grafo (nodes = nos, edges = arestas)
+	maior = 0.0
+
+	foreach vertex v in grafo
+	begin
+		if(v.peso>=maior)
+		begin
+		    maior = v.peso
+		end
+
+	end
+	print(maior)
+end
+
+

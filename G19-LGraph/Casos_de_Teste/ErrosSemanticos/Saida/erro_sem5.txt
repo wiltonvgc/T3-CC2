@@ -1,0 +1,9 @@
+Erro: variavel nos não declarada
+Erro: variavel arestas não declarada
+Erro: incompatibilidade de tipo em parametro nodes de create
+Erro: incompatibilidade de tipo em parametro edges de create
+Erro: variavel nos1 não declarada
+Erro: variavel arestas1 não declarada
+Erro: incompatibilidade de tipo em parametro nodes de create
+Erro: incompatibilidade de tipo em parametro edges de create
+Fim da compilacao

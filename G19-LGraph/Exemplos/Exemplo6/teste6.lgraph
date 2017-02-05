@@ -1,0 +1,16 @@
+begin
+	data grafo: graph, nos:nodes(cor:string), arestas:edges
+
+	nos = [("A",cor="azul"),("B",cor="vermelho"),("C",cor="roxo"),("D",cor="amarelo"),("E",cor="cinza"),("F",cor="branco")]
+	arestas = [("A","B",0), ("C","F",1), ("D","E",8), ("A","F",0)]
+	create graph grafo (nodes = nos, edges = arestas)
+	
+	foreach vertex v in grafo
+	begin
+		if(v.cor=="azul")
+		begin
+		    print("vertice com cor azul")
+		end
+
+	end
+end

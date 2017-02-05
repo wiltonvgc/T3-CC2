@@ -1,0 +1,7 @@
+begin
+	data g:float
+
+	plot graph g /* Erro: variavel g nao e tipo graph */
+
+
+end

@@ -1,0 +1,20 @@
+begin
+	data grafo1,grafo2:graph,nos:nodes,arestas:edges, j:int
+
+	create graph grafo2 (nodes=nos, edges=arestas)
+
+	/* Erro: variavel grafo1 nao inicializado com create */
+	foreach vertex v in grafo1
+	begin
+
+
+
+	end
+	
+	/* Erro: ja existe variavel com identificador j ja declarada */
+	foreach vertex j in grafo2
+	begin
+
+
+	end
+end

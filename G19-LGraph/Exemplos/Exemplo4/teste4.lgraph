@@ -1,0 +1,7 @@
+begin
+	data grafo: graph
+	read graph grafo from file "/home/wilton/Documents/CC2/T3/DataSetsPaj/futebol.paj"
+	find degree of graph grafo
+	find edge_connectivity of graph grafo
+	
+end

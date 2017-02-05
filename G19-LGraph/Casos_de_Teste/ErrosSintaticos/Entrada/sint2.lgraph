@@ -1,0 +1,10 @@
+begin
+	/* Ausencia de : na atribuicao de tipo da variavel declarada */
+	data var:int, s string
+
+
+
+
+
+
+end

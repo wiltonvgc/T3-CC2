@@ -1,0 +1,2 @@
+Erro: grafo grafo não criado
+Fim da compilacao

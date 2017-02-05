@@ -1,0 +1,8 @@
+begin
+	data nos:nodes, arestas:edges
+
+
+	arestas = [("A","B",0), ("T",1)]/* ausencia de atributo inteiro na segunda tupla */
+
+end
+

@@ -1,0 +1,6 @@
+begin
+	data nos:nodes, arestas:edges
+
+	nos = ["A", "B" "C" /* Erro: ausencia de fecha colchetes ] */
+
+end

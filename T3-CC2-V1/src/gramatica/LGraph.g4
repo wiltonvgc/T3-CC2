@@ -55,7 +55,7 @@ corpo :
 
 
 declaracoes :
-	    'data' dec1=variavel (',' outrasDecs+=variavel)* 
+	    'data' dec1=variavel (',' outrasDecs+=variavel)* | 
 	    ;
 
 variavel : 
@@ -178,7 +178,7 @@ parametros_update :
 
 
 valor_parametro :
-		NUM_INT | NUM_REAL | IDENT | STRING 
+		IDENT 
 		;
 
 tipo:

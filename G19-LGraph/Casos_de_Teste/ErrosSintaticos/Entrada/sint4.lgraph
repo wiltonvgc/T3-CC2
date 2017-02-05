@@ -1,0 +1,10 @@
+begin
+	/* Erro: ausencia de virgula na separacao de variaveis de tipos diferentes */	
+	data var1,var2:string var3:float
+
+
+
+
+
+
+end

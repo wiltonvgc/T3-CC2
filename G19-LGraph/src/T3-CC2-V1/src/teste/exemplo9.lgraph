@@ -1,0 +1,91 @@
+begin
+	data grafo,grafo1:graph, path:string, nos,nosUP:nodes(peso:int, cor:string), arestas:edges, maior:int
+	
+	/* Caminho arquivo de .paj */
+	path = "/home/wilton/Documents/CC2/T3/G19-LGraph/DataSetsPaj/teste.paj"
+	
+	/* Leitura do grafo para var grafo */	
+	read graph grafo from file path
+
+	/* Encontrando metricas em grafo */
+	find degree of graph grafo	
+	find edge_connectivity of graph grafo
+
+	/* Percorrendo vertices de grafo e imprimindo seus ids */
+	foreach vertex v in grafo
+	begin
+		if(1==1)
+		begin
+			print(v)
+		end
+
+	end
+
+	/* Plotando grafo */
+	plot graph grafo
+
+	/* Criando grafo com atributos manualmente */
+	
+	/* Vertices */
+	nos = [("A",peso=1,cor="vermelho"), ("B",peso=9,cor="roxo"), ("C",peso=10,cor="azul"), ("D",peso=3,cor="amarelo"), ("U",peso=2,cor="rosa")]
+	
+	/* Arestas: devem conter vertices em nos */
+	arestas = [("A","B",0), ("C","D",1)]
+	
+	/* Criacao do grafo grafo1 */
+	create graph grafo1 (nodes=nos, edges=arestas)
+
+	/* Plotando grafo1 */	
+	plot graph grafo1
+	
+	/* Variavel maior auxiliar para encontrar maior peso */
+	maior = 0
+
+	/* Encontra vertice cor azul e maior peso*/
+	foreach vertex j in grafo1
+	begin
+		if(j.cor=="azul")
+		begin
+			print("Vertice com cor azul:")
+			print(j)
+		end
+		if(j.peso >= maior)
+		begin
+			maior = j.peso
+		end
+	end	
+	
+	/* Imprimir maior peso */
+	print("O maior peso é:")
+	print(maior)
+
+	/* Atualizando vertices e arestas de grafo1 */
+	nosUP = [("E",peso=90,cor="purpura"),("H",peso = 2, cor="marrom")]
+
+	arestas = [("E","A",0),("H","C",9)]
+	
+	update graph grafo1 with (nodes = nosUP, edges = arestas)
+
+	plot graph grafo1
+
+	maior = 0
+
+	/* Encontra vertice cor azul e maior peso*/
+	foreach vertex k in grafo1
+	begin
+		if(k.cor=="azul")
+		begin
+			print("Vertice com cor azul:")
+			print(k)
+		end
+		if(k.peso >= maior)
+		begin
+			maior = k.peso
+		end
+	end	
+	
+	/* Imprimir maior peso */
+	print("O maior peso apos update é:")
+	print(maior)
+
+end

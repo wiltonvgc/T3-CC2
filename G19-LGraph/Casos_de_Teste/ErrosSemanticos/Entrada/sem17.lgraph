@@ -1,0 +1,14 @@
+begin
+	data grafo:graph, nos:nodes, arestas:edges
+	create graph grafo (nodes=nos,edges=arestas)
+
+	foreach vertex v in grafo
+	begin
+		/* Erro: atributo peso nao existente em nenhum vertice de grafo */
+		if(v.peso >=1 OR 1>= v.peso OR v.peso==1 OR 4=="srt")
+		begin
+
+		end
+	end
+
+end

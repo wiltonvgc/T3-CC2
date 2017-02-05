@@ -1,0 +1,13 @@
+begin
+	data grafo:graph
+	read graph grafo from file "home/fulano/rede.paj"
+	foreach vertex v in grafo
+	begin
+		if(1>=4 /* Erro: ausencia de ) na expressao de if */
+		begin
+
+		end
+
+	end
+
+end

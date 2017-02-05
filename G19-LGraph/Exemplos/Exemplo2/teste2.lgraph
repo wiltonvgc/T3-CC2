@@ -1,0 +1,12 @@
+begin
+	data grafo: graph,
+	     nos : nodes(peso:int, filho:string),
+             arestas : edges
+	     
+	nos = [("A",peso=1,filho="aroldo"), ("C",peso=45,filho="karl"), (1,peso=3,filho="lenin"),("B",peso=4,filho="trump")]
+	arestas = [("A","B",0), ("9",5,1), ("C", 1, 0), ("ex",8.9,0), (4,2,0)]
+	create graph grafo (nodes = nos, edges = arestas)
+
+	plot graph grafo
+
+end

@@ -1,0 +1,7 @@
+begin
+	data var:int, real:float
+	maior = 9 /* Variavel nao declarada e, por consequencia, imcompatiblidade de atribuicao */
+
+
+
+end

@@ -1,0 +1,5 @@
+Erro: atributo peso não existente no grafo grafo
+Erro: atributo peso não existente no grafo grafo
+Erro: atributo peso não existente no grafo grafo
+Erro: comparação invalida entre números e string
+Fim da compilacao

@@ -1,0 +1,9 @@
+begin
+	data inteiro:int, real:float, cadeia:string
+	
+	inteiro = 3.7 /* Erro: incompatibilidade de atribuicao */
+	real = "uol"/* Erro: incompatibilidade de atribuicao */
+	cadeia = 443/* Erro: incompatibilidade de atribuicao */
+
+
+end

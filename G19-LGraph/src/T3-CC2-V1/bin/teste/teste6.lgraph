@@ -1,0 +1,16 @@
+begin
+	data grafo: graph, nos:nodes, arestas:edges
+
+	nos = ["A","B","C","D","E","F"]
+	arestas = [("A","B",0), ("C","F",1), ("D","E",8), ("A","F",0)]
+	create graph grafo (nodes = nos, edges = arestas)
+	
+	foreach vertex v in grafo
+	begin
+		if(1>0 AND 4>9)
+		begin
+			print("1 e maior que zero")
+		end
+
+	end
+end

@@ -1,0 +1,3 @@
+Erro: grafo grafo1 não inicializado com create
+Erro: variavel j já declarada
+Fim da compilacao

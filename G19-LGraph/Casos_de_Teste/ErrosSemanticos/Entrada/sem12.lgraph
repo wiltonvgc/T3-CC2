@@ -1,0 +1,18 @@
+begin
+	data grafo1,grafo2:graph,nos:nodes,arestas:edges
+
+	create graph grafo1 (nodes=nos, edges=arestas)
+
+	/* Erro: variavel nos nao e tipo graph */
+	foreach vertex v in nos
+	begin
+
+	end
+
+	/* Erro: variavel grafo3 nao declarada */
+	foreach vertex j in grafo3
+	begin
+
+
+	end
+end

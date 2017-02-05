@@ -1,0 +1,6 @@
+begin
+	data var:int, var:float /* variaveis de mesmo nome */
+	
+
+
+end

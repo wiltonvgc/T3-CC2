@@ -1,0 +1,7 @@
+begin
+	data grafo,grafo1:graph
+	create graph grafo (nodes=nos,edges=arestas)/* Erro: nos e arestas nao declaradas e incompatibilidade atribuicao */
+	create graph grafo1 (nodes=nos1,edges=arestas1)/* Erro: nos1 e arestas1 nao declaradas e imcompatibilidade atribuicao */
+
+
+end

@@ -1,0 +1,4 @@
+Erro: incompatibilidade de tipo em atribuicao de inteiro
+Erro: incompatibilidade de tipo em atribuicao de real
+Erro: incompatibilidade de tipo em atribuicao de cadeia
+Fim da compilacao

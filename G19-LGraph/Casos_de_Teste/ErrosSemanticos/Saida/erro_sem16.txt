@@ -1,0 +1,6 @@
+Erro: tipo graph, edges e nodes não permitidos em expressão de igualdade
+Erro: tipo graph, edges e nodes não permitidos em expressão de igualdade
+Erro: tipo graph, edges e nodes não permitidos em expressão de igualdade
+Erro: comparação invalida entre números e string
+Erro: comparação invalida entre números e string
+Fim da compilacao

@@ -1,0 +1,7 @@
+begin
+	data grafo:graph, nos:nodes, arestas:edges
+
+	update graph grafo with (nodes=nos, edges=arestas) /* Erro: atualizar grafo ainda na criado */
+
+
+end

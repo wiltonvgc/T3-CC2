@@ -1,0 +1,2 @@
+Erro: grafo só pode conter vértices sem atributos
+Fim da compilacao

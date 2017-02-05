@@ -1,0 +1,10 @@
+begin
+	data grafo:graph
+	read graph grafo from file "home/fulano/rede.paj"
+	foreach vertex v in grafo
+	/* ausencia de palavra-chave begin */
+
+
+	end
+
+end

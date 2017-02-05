@@ -1,0 +1,7 @@
+begin
+	data grafo:float
+
+	find degree of vertex "a" in graph grafo /* Erro: grafo nao e tipo graph */
+	find degree of vertex "a" in graph grafo1 /* Erro: grafo1 nao foi declarada */
+
+end

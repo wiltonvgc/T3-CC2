@@ -1,0 +1,12 @@
+begin
+	data grafo:graph, nos:nodes, nos1:nodes(peso:int,cor:string), arestas:edges
+
+	nos = ["A","B","Y"]
+	nos1 = [("U",peso=1,cor="verm")]
+	arestas = [("A","B",0)]
+
+	create graph grafo (nodes=nos,edges=arestas) /* cria grafo com nos sem atributos */
+	update graph grafo with (nodes=nos1,edges=arestas) /*Erro: tenta inserir nos com atributos */
+
+
+end

@@ -1,0 +1,6 @@
+/* Erro: ausencia de begin no inicio do programa */
+
+	data var:int
+	print(var)
+
+end

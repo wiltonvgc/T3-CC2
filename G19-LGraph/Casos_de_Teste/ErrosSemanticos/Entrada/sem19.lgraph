@@ -1,0 +1,11 @@
+begin
+
+	data nos:nodes(peso:int,cor:string)
+
+	nos = [("A",peso = "io", cor = "w")] /* Erro: incompatibilidade na atribuicao de peso */
+
+
+
+
+
+end

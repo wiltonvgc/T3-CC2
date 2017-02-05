@@ -1,0 +1,3 @@
+Erro: variavel grafo1 não declarada
+Erro: variavel g não é do tipo graph
+Fim da compilacao

@@ -1,0 +1,5 @@
+begin
+	data g:string, nos:nodes, arestas:edges
+	create graph grafo1 (nodes=nos, edges=arestas)/* Erro: variavel grafo1 nao declarada */
+	create graph g (nodes=nos, edges=arestas)/* Erro: variavel g nao e tipo graph */
+end

@@ -1,0 +1,2 @@
+Erro: variavel grafo9 não declarada
+Fim da compilacao

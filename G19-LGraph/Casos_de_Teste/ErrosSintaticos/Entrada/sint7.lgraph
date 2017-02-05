@@ -1,0 +1,8 @@
+begin
+	data grafo : graph, nos:nodes, arestas:edges
+
+	create gra grafo (nodes = nos, edges = arestas)/* Erro: ausencia da palavra-chave graph em create*/
+
+
+
+end

@@ -1,0 +1,9 @@
+begin
+	data grafo:int
+	find degree of graph grafo1 /* Erro: grafo1 nao declarado */
+	find degree of graph grafo /* Erro: grafo nao e tipo graph */
+	
+
+
+
+end

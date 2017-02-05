@@ -1,0 +1,16 @@
+begin
+	data nos:nodes(peso:int), arestas:edges, grafo:graph
+
+	create graph grafo (nodes=nos, edges=arestas)
+	
+	foreach vertex v in grafo
+	begin
+		/* Erro: variaveis x e t nao declaradas */
+		if(t>=1 OR 1<=x)
+		begin
+			
+		end		
+
+	end
+
+end

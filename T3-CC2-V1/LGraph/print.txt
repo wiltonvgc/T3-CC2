@@ -1,0 +1,194 @@
+
+
+Olaf Kling
+Lisa Hoffmeister
+Nina Winter
+Beate Sarikakis
+Elfriede Dabelstein
+Rolf Sattler
+Stefan Nossek
+Wilhelm Loesch
+:5
+Holger Graf Jakob Maria Grauvogel
+:1
+:2
+:3
+Onkel Franz Franz Witt
+Phil Seegers
+Olli Klatt
+Theo Klages
+Anja Herrlinger
+Ernst August Thelen
+Jo Zenker
+Zorro Franz Josef Pelsteiner
+Urzula Wienicki
+Vera Schildknecht
+Inka Fuchs
+Tante Betty Elizabeth Susan Schiller
+Gung Pahm Kien
+Kurt Sperling
+Andy Zenker
+Elena Sarikakis
+Dr. Rard Kirch
+Isolde Pavarotti
+Valerie Ecker
+Simone Fitz
+Canan Dagdelen
+Egon Kling
+Bruno Skabowski
+Dagmar Hoffmeister
+Christoph Bogner
+Herr Panowski
+Hubert Koch
+Gert Weinbauer
+Giancarlo
+Bianca Guther
+Matthias Steinbrueck
+Benno Zimmermann
+Gloria Birnbaum
+Dr. Otto Pelsteiner
+Rita Bassermann
+Guenther Rantzow
+Inge Kling
+Dimitri Pallas
+Sue
+Meike Schildknecht
+Dani Schmitz
+Doris Rantzow
+Robert Engel
+Elisabeth Dressler
+Friedemann Traube
+Dr. Ludwig Dressler
+Mary Kling
+Wolf Drewitz
+Marion Beimer
+Vasily Sarikakis
+Carola
+John
+Sarah Ziegler
+Hannes
+Paul Nolte
+Theresa Zenker
+Frau Horowitz
+Chris Barnsteg
+Karl Koch
+Corinna Marx
+Friedhelm Ziegler
+Gottlieb Griese
+Iffi Zenker
+Panaiotis Sarikakis
+Ernst+Lisl Wiesenhuber
+Hubert Panowak
+Frank Dressler
+Paolo Varese
+Timo Zenker
+Herr Hoffmeister
+Nico Zenker
+David Motibe
+Max Zenker-gefunden
+Hilmar Eggers
+*Partition
+Berta Griese
+Fritjof
+Der Englaender
+Klaus Beimer
+Muetze
+Willy Jenner
+Bolle Guenther Bollmann
+Francesco
+Philo Bennarsch
+Dora Witt
+Benny Beimer
+Jean-Luc Mourrait
+Gernot
+Eduard
+Giovanna Varese
+:4
+Er-Schiller
+Boris Ecker
+Enrico Pavarotti
+Martha
+Leo Klamm
+August
+Lydia Nolte
+Kornelia Harnisch
+*Edges
+Chromo Hoyonda
+Fritz
+Herr Huetthusen
+Kaethe Georg Eschweiler
+Gustav Scholz
+Marcella Varese
+Lothar Boedefeld
+Wolf-Dieter Dabelstein
+Flora
+Rosi Koch
+Professor Dr. Rudolf Tenge-Wegemmann
+Harry
+Knut Magirus
+Joschi Bennarsch
+Gabi Zenker-geb.Skawowski
+Hajo Scholz
+Irina Winicki
+Hildegard Scholz
+Egbert
+Dominique Mourrait
+Elvira
+A.clu
+Henny Schildknecht
+Alexandros Kling
+Gina Varese
+Erika
+Manoel Griese
+Katharina Jenner
+Paula Madalena Francesca Winicki
+Margot Rantzow
+Gundel Koch
+Hans Wilhelm Huelsch
+Franz Schildknecht
+Zeki Kurtalan
+Natascha Rantzow
+Tanja Schildknecht-Dressler
+Elfie Kronmayr
+Wanda Winicki
+Fausto Rossini
+Dr. Eva-Maria Sperling
+Theo Nolte
+Sigi Kronmayr
+Momo Sperling
+Dr. Manfred Pauli
+Claudia Kling-Rantzow
+Paul Bennarsch
+Jaruslav Winicki
+Tom Ziegler
+Karin Atter
+Petra Strauss
+Sophie Ziegler
+Celin Otto Wilhelm Kern
+Anna Ziegler
+Amelie von der Marwitz
+Herr Floether
+Carsten Floeter
+Marlene Schmitt
+Alfredo
+Hans Beimer
+Dr. Ahmet Dagdelen
+Else Kling
+Julia von der Marwitz
+Sonia Besirski
+Natale Pavarotti
+Dieter Rantzow
+Pat Wolffson
+Ernst-Hugo von Salen-Priesnitz
+*Vertices
+Philipp Sperling
+Winifred Snyder
+Helga Beimer Schiller
+Vertice com cor azul:
+C
+O maior peso é:
+10
+Vertice com cor azul:
+C
+O maior peso apos update é:
+90
