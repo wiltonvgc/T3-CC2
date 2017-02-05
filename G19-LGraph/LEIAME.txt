@@ -1,0 +1,37 @@
+=== Universidade Federal de São Carlos ==
+== Construção de Compiladores 2 == 2016/2
+
+Integrantes do grupo: Wilton V. G. da Cruz, Guilherme Lemos, Vitor Cid e Wellyson Freitas.
+
+==========================================================================================================================================
+
+Organização dos diretórios entregues:
+
+	=> src : diretório com o código fonte do compilador.
+	=> bin : diretório com o "executável" JAVA. 
+	=> Exemplos : exemplos de programas sem erros em LGraph, explicados no manual, com seus respectivos resultados de compilação.
+	=> Casos_de_Teste: casos de teste com programa em LGraph com erros sintáticos e semânticos.
+	   => ErrosSemanticos: programas com erros semânticos e suas respectivas saídas de compilação.
+		=> Entrada: arquivos a serem compilados.
+		=> Saida: arquivo de erro.
+	  => ErrosSintaticos: programas com erros sintáticos e suas respectivas saídas de compilação.
+		=> Entrada: arquivos a serem compilados.
+		=> Saida: arquivo de erro.
+	=> docs: contém manual de linguagem LGraph ("manualLGraph.pdf") e slides para apresentação.
+	=> DataSetsPaj : conjunto de cinco arquivos de grafo ".paj".
+	
+===========================================================================================================================================
+
+Observações:
+	    1) Leia o manual antes de executar o compilador.
+	    2) Os casos de teste apresentam erros. Nos arquivos de entrada os erros estão comentados.
+	    3) Em Exemplos não há arquivos com erros.
+	    4) É necessária a instalação do módulo "networkx" (Python).
+	    5) O ".jar" foi gerado em Ubuntu - 16.04 - 64 bits,versão de JAVA: 
+
+		openjdk version "1.8.0_121"
+                OpenJDK Runtime Environment (build 1.8.0_121-8u121-b13-0ubuntu1.16.04.2-b13)
+                OpenJDK 64-Bit Server VM (build 25.121-b13, mixed mode)
+	    
+	    7) É provável o aparecimento de "bugs".
+	
